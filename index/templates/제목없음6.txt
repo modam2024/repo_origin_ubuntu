@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Article</title>
+    <style>
+        #article-content, #source-url {
+            width: 100%;
+            box-sizing: border-box;  /* 패딩과 테두리를 너비에 포함 */
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#clearButton").click(function() {
+                $("#article-content").val("");
+                $("#source-url").val("");
+                $("#result").html("");
+            });
+
+            $("#submitButton").click(function() {
+                var articleContent = $("#article-content").val();
+                var sourceUrl = $("#source-url").val();
+
+                $.ajax({
+                    url: "/article/submit-article/",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ 
+                        "article": articleContent,
+                        "sourceUrl": sourceUrl
+                    }),
+                    success: function(response) {
+                        $("#result").html("Status: " + response.status + ", Message: " + response.message);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+<label for="source-url">SOURCE URL:</label><br>
+<input type="text" id="source-url" placeholder="Enter source URL here..."><br><br>
+
+<textarea id="article-content" rows="50" placeholder="Enter article here..."></textarea><br>
+<button id="submitButton">Submit Article</button>
+<button id="clearButton">Clear Text</button>
+<div id="result"></div>
+
+</body>
+</html>

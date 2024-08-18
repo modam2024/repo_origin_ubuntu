@@ -1,0 +1,43 @@
+/* Custom CSS styles */
+.login {
+    background: #fff; /* White background */
+    height: auto;
+    margin: 100px auto;
+    width: 28em;
+    min-width: 300px;
+    border: 1px solid #ccc; /* Grey border */
+    border-radius: 4px;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.login #header {
+    height: auto;
+    padding: 15px 16px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background-color: #007bff; /* Bootstrap primary color for better visibility */
+}
+
+.login #header h1 {
+    font-size: 18px; /* Converted from 1.125rem to px */
+    margin: 0;
+    color: #ffffff; /* White text color for header */
+}
+
+.login #content {
+    padding: 20px;
+    text-align: center; /* 텍스트와 인라인 요소를 중앙 정렬 */
+}
+
+.login .submit-row {
+    padding: 1em 0 0 0;
+    margin: 0;
+    text-align: center;
+    height: auto;
+}
+
+.login .password-reset-link {
+    text-align: center;
+}
