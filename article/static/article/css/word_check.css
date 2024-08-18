@@ -1,0 +1,215 @@
+form {
+    flex: 6; /* 전체 공간의 60% 차지 */
+}
+
+.content-area {
+    display: flex;
+    height: calc(100vh - 14%); /* 상단 헤더 높이를 고려한 윈도우 높이 */
+}
+
+.content-title {
+    flex: 7; /* 전체 공간의 60% 차지 */
+    padding-top: 20px;
+    padding-left: 30px;
+    min-height: 50px; /* 테두리가 내용물 높이까지 이어지도록 설정 */
+    max-height: 50px; /* 최대 높이를 화면의 높이로 설정 */
+}
+
+.content {
+    flex: 7; /* 전체 공간의 60% 차지 */
+    border-left: 1px solid #ddd; /* 왼쪽에만 테두리 적용 */
+    padding-top: 0;
+    padding-left: 30px;
+    overflow-y: auto; /* 세로 스크롤바 자동 추가 */
+    min-height: 100%; /* 테두리가 내용물 높이까지 이어지도록 설정 */
+    max-height: calc(100vh - 14%); /* 최대 높이를 화면의 높이로 설정 */
+}
+
+/* Chrome, Safari, Opera에서 스크롤바 숨기기 */
+.content::-webkit-scrollbar {
+    display: none;
+}
+
+.right-side {
+    display: flex;
+    background-color: #eee;
+    flex-direction: column;
+    justify-content: flex-start; /* Align items to the top */
+    align-items: center;
+    overflow-y: auto; /* 세로 스크롤바 자동 추가 */
+    min-height: 100%; /* 테두리가 내용물 높이까지 이어지도록 설정 */
+    max-height: calc(100vh - 14%); /* 최대 높이를 화면의 높이로 설정 */
+}
+
+.content-wrapper_header {
+    height: 6%;
+    background-color: #4D92AA;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 3px solid #aaa;
+    position: relative; /* 상대적 위치 설정 */
+}
+
+.navigator_header {
+    z-index: 2;
+    height: 10%;
+    background-color: #4D92AA;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.navigator_header ul li a:hover {
+    color: yellow !important;
+    font-size: larger; /* 글자 크기를 기본값보다 크게 설정 */
+    font-weight: bold; /* 글자를 굵게 설정 */
+}
+.navigator_header ul {
+    list-style: none;
+    display: flex;
+    padding: 0;
+}
+
+.navigator_header li {
+    margin-right: 25px; /* Consistent spacing between items */
+}
+
+.right-side-form {
+    flex: 3; /* 전체 공간의 60% 차지 */
+    width: 100%;
+    padding-top: 0;
+}
+
+/*.content {*/
+/*    flex: 8; !* 전체 공간의 80% 차지 *!*/
+/*    border-left: 1px solid #ddd; !* 왼쪽에만 테두리 적용 *!*/
+/*    padding-top: 30px;*/
+/*    padding-left: 30px;*/
+/*    min-height: 100%; !* 테두리가 내용물 높이까지 이어지도록 설정 *!*/
+/*    overflow-y: auto; !* 세로 스크롤바 자동 추가 *!*/
+/*    max-height: 500px; !* 스크롤바가 필요할 때의 최대 높이 설정, 필요에 따라 조절 가능 *!*/
+/*}*/
+
+.table-container {
+    position: relative; /* 상대 위치 */
+}
+
+.label-container {
+    width: 90%; /* .table-container와 동일한 너비 */
+    text-align: center;
+    margin-top: 20px; /* 상단 여백 추가 */    
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 90%;
+    margin-right: 10px !important;
+}
+
+textarea {
+  line-height: 1.5;
+}
+
+/* 테이블 폰트 및 테두리선 설정 */
+table {
+    width: 90%;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+}
+
+/* 테이블 데이터 및 테이블 헤더 설정 */
+table td, table th {
+	border: 1px solid #ddd;
+	padding: 11px;
+}
+
+/* 테이블 행이 짝수 번째일 때의 색상 설정 */
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+/* 테이블 행 위에 마우스 가 올라졌을 때의 색상 지정 */
+table tr:hover { background-color: #ddd;}
+
+/* 테이블 헤더의 스타일 지정 */
+table th {
+	padding-tap: 12px;
+	padding-bottom: 12px;
+	background-color: #4D92AA;
+	text-align: center;
+	color: white;
+} 
+
+table td:nth-child(1) { text-align: center; }
+table td:nth-child(2) { text-align: center; }
+table td:nth-child(3) { text-align: left; }
+table td:nth-child(4) { text-align: left; }
+table td:nth-child(5) { text-align: center; }
+table td:nth-child(6) { text-align: center; }
+
+/* 각 th 태그에 대한 너비를 퍼센트로 설정 */
+table th:nth-child(1) { width: 4%; }  /* 체크 */
+table th:nth-child(2) { width: 4%; }  /* 번호 */
+table th:nth-child(3) { width: 12%; } /* 단어 */
+table th:nth-child(4) { width: 34%; } /* 영문뜻 */
+table th:nth-child(5) { width: 34%; } /* 뜻 */
+table th:nth-child(6) { width: 12%; } /* 생성일자 */
+
+table th {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Add CSS styles to set a consistent width */
+#src_url, #src_title, #artcl_content {
+    width: 100%; /* Set both input and textarea to full width of their container */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    margin-top: 10px; /* Space between label and this container */
+}
+
+/* Flexbox container for buttons and result */
+.button_result_container {
+    display: flex;
+    align-items: center; /* Vertically center items */
+    gap: 10px; /* Spacing between items */
+    margin-top: 10px; /* Space between label and this container */
+    margin-bottom: 10px; /* Space between this container and textarea */
+}
+
+/* Add margin to the label */
+label {
+    margin-top: 20px; /* Space between label and this container */        
+    margin-bottom: 10px; /* Space below each label */
+}
+
+/* 리스트 항목을 세로로 배치하고 간격 조정 */
+.label-container ul {
+    list-style: none; /* 리스트 스타일 제거 */
+    padding: 0; /* 패딩 제거 */
+    margin-top: 20px; /* 라벨과의 간격 조정 */
+}
+
+.label-container li {
+    margin-bottom: 10px; /* 리스트 항목 사이의 간격 */
+}
+
+.label-container a {
+    display: block; /* 링크를 블록 요소로 만들어 전체 영역이 클릭 가능하도록 설정 */
+    padding: 10px 15px;
+    background-color: #4D92AA; /* 버튼 배경 색상 */
+    color: white; /* 버튼 글자 색상 */
+    text-decoration: none; /* 링크 밑줄 제거 */
+    border-radius: 5px; /* 버튼 모서리 둥글게 */
+    transition: background-color 0.3s; /* 배경색 변경 효과 */
+}
+
+.label-container a:hover {
+    background-color: #3B6F85; /* 호버 시 배경 색상 변경 */
+}
+
+#titleList {
+    width:  600px; /* 원하는 폭 값으로 설정 */   
+    overflow-y: auto; /* 옵션이 높이를 초과할 경우 스크롤바 표시 */
+}
