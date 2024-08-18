@@ -25583,7 +25583,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "ToolWindowDatabase.ShowToolbar": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/pyDjangoDEV/mdmproj1/app_news_study/static/app_news_study/css",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -25743,7 +25743,7 @@
       <workItem from="1723683992938" duration="10095000" />
       <workItem from="1723756181723" duration="3672000" />
       <workItem from="1723771439785" duration="4891000" />
-      <workItem from="1723901962549" duration="30877000" />
+      <workItem from="1723901962549" duration="31180000" />
     </task>
     <servers />
   </component>
