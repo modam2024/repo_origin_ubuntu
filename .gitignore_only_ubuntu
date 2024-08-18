@@ -1,0 +1,35 @@
+# Allow .gitignore file itself
+!.gitignore
+
+# Ignore following files
+.data
+.idea/
+.pdata
+.rdata
+.reloc
+.rsrc/
+.text
+.venv/
+balance/
+bothpush.bat
+chromedriver-win64/
+db.sqlite3
+git
+git_add_batch.sh
+hello/
+index/
+init_gitignore_process.txt
+main.py
+manage.py
+overwrite.sh
+qqqqq
+serve.py
+start_server.bat
+
+# etc exception
+mdl_common/common.py
+proj_common/common.py
+templates/home.html
+templates/navigator_word.html
+mdmproj1/asgi.py
+mdmproj1/wsgi.py

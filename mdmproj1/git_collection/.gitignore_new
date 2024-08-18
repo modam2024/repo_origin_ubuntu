@@ -1,0 +1,76 @@
+# Ignore everything
+* 
+
+# Allow .gitignore file itself
+!.gitignore
+
+# mdmproj1 프로젝트 폴더
+!mdmproj1/                    # everything in mdmproj1 directory
+mdmproj1/                    # Ignore everything in mdmproj1 directory
+!mdmproj1/**/*.py            # Allow Python files
+mdmproj1/**/common.py        # Ignore common.py files
+
+# article 어플리케이션 관리
+!article/                     # everything in article directory
+article/                     # Ignore everything in article directory
+!article/**/*.html           # Allow HTML files
+!article/**/*.js             # Allow JavaScript files
+!article/**/*.css            # Allow CSS files
+!article/**/*.png            # Allow PNG files
+!article/**/*.jpg            # Allow JPG files
+!article/**/*.txt            # Allow text files
+!article/**/*.py             # Allow Python files
+article/**/common.py         # Ignore common.py files
+
+# app_news_study 어플리케이션 관리
+!app_news_study/              # everything in app_news_study directory
+app_news_study/              # Ignore everything in app_news_study directory
+!app_news_study/**/*.html    # Allow HTML files
+!app_news_study/**/*.js      # Allow JavaScript files
+!app_news_study/**/*.css     # Allow CSS files
+!app_news_study/**/*.png     # Allow PNG files
+!app_news_study/**/*.jpg     # Allow JPG files
+!app_news_study/**/*.txt     # Allow text files
+!app_news_study/**/*.py      # Allow Python files
+app_news_study/**/common.py  # Ignore common.py files
+
+# mdl_common 공통모듈
+!mdl_common/                  # everything in mdl_common directory
+mdl_common/                  # Ignore everything in mdl_common directory
+!mdl_common/**/*.py          # Allow Python files
+mdl_common/**/common.py      # Ignore common.py files
+
+# mdl_login_info 공통모듈
+!mdl_login_info/              # everything in mdl_login_info directory
+mdl_login_info/              # Ignore everything in mdl_login_info directory
+!mdl_login_info/**/*.py      # Allow Python files
+mdl_login_info/**/common.py  # Ignore common.py files
+
+# proj_common 공통모듈
+!proj_common/                 # everything in proj_common directory
+proj_common/                 # Ignore everything in proj_common directory
+!proj_common/**/*.py         # Allow Python files
+proj_common/common.py        # Ignore common.py file
+
+# static 어플리케이션 관리
+!static/                      # everything in static directory
+static/                      # Ignore everything in static directory
+!static/**/*.html            # Allow HTML files
+!static/**/*.js              # Allow JavaScript files
+!static/**/*.css             # Allow CSS files
+!static/**/*.png             # Allow PNG files
+!static/**/*.jpg             # Allow JPG files
+!static/**/*.txt             # Allow text files
+!static/**/*.py              # Allow Python files
+static/**/common.py          # Ignore common.py files
+
+# templates 공통모듈
+!templates/                   # everything in templates directory
+templates/                   # Ignore everything in templates directory
+!templates/**/*.html         # Allow HTML files
+!templates/**/*.js           # Allow JavaScript files
+!templates/**/*.css          # Allow CSS files
+!templates/**/*.png          # Allow PNG files
+!templates/**/*.jpg          # Allow JPG files
+!templates/**/*.py           # Allow Python files
+templates/**/common.py       # Ignore common.py files
