@@ -1,0 +1,11 @@
+/* 테이블 폰트 및 테두리선 설정 */
+table {
+	font-family: Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+}
+
+/* 테이블 데이터 및 테이블 헤더 설정 */
+table td, table th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}

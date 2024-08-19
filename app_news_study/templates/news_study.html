@@ -1,0 +1,78 @@
+{% load static %}
+<html>
+{# 3. 인라인 이벤트 핸들러와의 호환성 #}
+{# HTML 마크업 내에서 인라인 이벤트 핸들러(onchange="selectedPageDate()" 같은)를 사용할 경우, #}
+{# 해당 함수는 전역 범위에 선언되어 있어야 합니다. #}
+{# $(document).ready() 내에서 선언된 함수는 이러한 인라인 핸들러에서 호출할 수 없습니다. #}
+<head>
+    <title>NEWS 영어학습</title>
+	<link rel="stylesheet" href="{% static 'app_news_study/css/news_study.css' %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- defer 속성을 사용하여 문서 파싱이 끝난 후에 스크립트가 실행되도록 함 -->
+    <script src="{% static 'app_news_study/js/news_study.js' %}" defer></script>
+    <script type="text/javascript">
+        var BASE_URL = "{{ request.scheme }}://{{ request.get_host }}/";
+    </script>
+</head>
+<body>
+    {% include 'navigator_word.html' %}
+    <div class="content-area">
+        <form id="submitForm">
+            <div class="content-wrapper_header">
+               <div id="navigator_header" class="navigator_header">
+                <select id="searchGrpCd">
+                   {% for news_date in news_dates %}
+                    <option value="{{ news_date }}" {% if news_date == selected_date %}selected{% endif %}>
+                        {{ news_date }}
+                    </option>
+                   {% endfor %}
+                </select>&nbsp;
+                <button type="button" id="searchBtn">조회</button>&nbsp; &nbsp;
+                COUNT:&nbsp <input type="text" id="rows_cnt" value="{{ rows_cnt }}" style="text-align:center; width:40px;" readonly></input>&nbsp&nbsp
+               </div>
+            </div>
+            <div class="content-title">
+                <div class="button-container">
+                    <select id="titleList" onchange="selectNewsTitle()">
+                        {% for keyno, title in titles %}
+                        <option value="{{ keyno }}">{{ title }}</option>
+                        {% endfor %}
+                    </select>&nbsp;
+                </div><br>
+            </div>
+            <div class="content">
+
+            </div>
+        </form>
+        <div class="right-side-form">
+            <div class="content-wrapper_header">
+               <div class="navigator_header">
+                    <label style="color:blue;"></label><br><br>
+                    <ul>
+                       <li style="color:#fff;font-weight: bold;">일별 생활 영어</li>
+                    </ul>
+               </div>
+            </div>
+            <div class="right-side">
+                <!-- 좌측 섹션 내용 변경 -->
+                <div class="label-container">
+                    <div class="submit-container">
+                        <button type="button" id="submitButton"><i class="fas fa-save"></i>Save Info</button><br>
+                    </div><br>
+                    <div class="submit-container">
+                        <button type="button" id="completeButton"><i class="fas fa-check"></i>Completion</button><br>
+                    </div>
+                    <div>
+                        <textarea class="news_idiom" id="txt_news_idiom" rows="8" placeholder="Idioms here..." ></textarea>
+                    </div>
+                    <ul>
+                        {% for word in wrd_rows %}
+                          <li><a href="/app_news_study/news_study/?word={{ word }}&wrd_title={{ wrd_title }}" class="word-link"> {{ word }} </a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>      
+</body>
+</html> 
