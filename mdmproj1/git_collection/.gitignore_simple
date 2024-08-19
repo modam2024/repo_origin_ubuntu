@@ -1,4 +1,0 @@
-# Allow .gitignore file itself
-!.gitignore
-
-.venv/

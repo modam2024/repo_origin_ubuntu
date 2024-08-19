@@ -1,7 +1,9 @@
-# .gitignore ÆÄÀÏ
+# .gitignore íŒŒì¼
+.gitignore_*
 
 # Virtual environment
 .venv/
+.venw/
 
 .idea/
 *.pyc
@@ -31,74 +33,76 @@ overwrite.sh
 qqqqq
 *.txt
 
+navigator_word_*.html
+
 mdl_common/common.py
 proj_common/common.py
 
-# mdmproj1 ÇÁ·ÎÁ§Æ® Æú´õ
-!mdmproj1/    # mdl_login_info µğ·ºÅÍ¸®´Â ¹«½ÃÇÏÁö ¾ÊÀ½
-mdmproj1/     # mdl_login_info µğ·ºÅÍ¸® ³»ÀÇ ¸ğµç ÆÄÀÏ ¹«½Ã
-!mdmproj1/**/*.py  # py Çã¿ë
+# mdmproj1 í”„ë¡œì íŠ¸ í´ë”
+!mdmproj1/    # mdl_login_info ë””ë ‰í„°ë¦¬ëŠ” ë¬´ì‹œí•˜ì§€ ì•ŠìŒ
+mdmproj1/     # mdl_login_info ë””ë ‰í„°ë¦¬ ë‚´ì˜ ëª¨ë“  íŒŒì¼ ë¬´ì‹œ
+!mdmproj1/**/*.py  # py í—ˆìš©
 mdmproj1/asgi.py
 mdmproj1/wsgi.py
 
-# article ¾îÇÃ¸®ÄÉÀÌ¼Ç °ü¸®
-!article/            # article µğ·ºÅÍ¸®´Â ¹«½ÃÇÏÁö ¾ÊÀ½
-article/             # article µğ·ºÅÍ¸® ³»ÀÇ ¸ğµç ÆÄÀÏ ¹«½Ã
-!article/**/*.html  # html Çã¿ë
-!article/**/*.js     # js Çã¿ë
-!article/**/*.css   # css Çã¿ë
-!article/**/*.png   # png Çã¿ë
-!article/**/*.jpg   # jpg Çã¿ë
-!article/**/*.txt   # txt Çã¿ë
-!article/**/*.py    # py Çã¿ë
-article/**/common.py  # common.py ÆÄÀÏ ¹«½Ã
+# article ì–´í”Œë¦¬ì¼€ì´ì…˜ ê´€ë¦¬
+!article/            # article ë””ë ‰í„°ë¦¬ëŠ” ë¬´ì‹œí•˜ì§€ ì•ŠìŒ
+article/             # article ë””ë ‰í„°ë¦¬ ë‚´ì˜ ëª¨ë“  íŒŒì¼ ë¬´ì‹œ
+!article/**/*.html  # html í—ˆìš©
+!article/**/*.js     # js í—ˆìš©
+!article/**/*.css   # css í—ˆìš©
+!article/**/*.png   # png í—ˆìš©
+!article/**/*.jpg   # jpg í—ˆìš©
+!article/**/*.txt   # txt í—ˆìš©
+!article/**/*.py    # py í—ˆìš©
+article/**/common.py  # common.py íŒŒì¼ ë¬´ì‹œ
 
-# app_news_study ¾îÇÃ¸®ÄÉÀÌ¼Ç °ü¸®
-!app_news_study/            # app_news_study µğ·ºÅÍ¸®´Â ¹«½ÃÇÏÁö ¾ÊÀ½
-app_news_study/             # app_news_study µğ·ºÅÍ¸® ³»ÀÇ ¸ğµç ÆÄÀÏ ¹«½Ã
-!app_news_study/**/*.html  # html Çã¿ë
-!app_news_study/**/*.js     # js Çã¿ë
-!app_news_study/**/*.css   # css Çã¿ë
-!app_news_study/**/*.png   # png Çã¿ë
-!app_news_study/**/*.jpg   # jpg Çã¿ë
-!app_news_study/**/*.txt   # txt Çã¿ë
-!app_news_study/**/*.py    # py Çã¿ë
-app_news_study/**/common.py  # common.py ÆÄÀÏ ¹«½Ã
+# app_news_study ì–´í”Œë¦¬ì¼€ì´ì…˜ ê´€ë¦¬
+!app_news_study/            # app_news_study ë””ë ‰í„°ë¦¬ëŠ” ë¬´ì‹œí•˜ì§€ ì•ŠìŒ
+app_news_study/             # app_news_study ë””ë ‰í„°ë¦¬ ë‚´ì˜ ëª¨ë“  íŒŒì¼ ë¬´ì‹œ
+!app_news_study/**/*.html  # html í—ˆìš©
+!app_news_study/**/*.js     # js í—ˆìš©
+!app_news_study/**/*.css   # css í—ˆìš©
+!app_news_study/**/*.png   # png í—ˆìš©
+!app_news_study/**/*.jpg   # jpg í—ˆìš©
+!app_news_study/**/*.txt   # txt í—ˆìš©
+!app_news_study/**/*.py    # py í—ˆìš©
+app_news_study/**/common.py  # common.py íŒŒì¼ ë¬´ì‹œ
 
-# mdl_common °øÅë¸ğµâ
-!mdl_common/          # mdl_common µğ·ºÅÍ¸®´Â ¹«½ÃÇÏÁö ¾ÊÀ½
-mdl_common/           # mdl_common µğ·ºÅÍ¸® ³»ÀÇ ¸ğµç ÆÄÀÏ ¹«½Ã
-!mdl_common/**/*.py  # py Çã¿ë
-mdl_common/**/common.py  # common.py ÆÄÀÏ ¹«½Ã
+# mdl_common ê³µí†µëª¨ë“ˆ
+!mdl_common/          # mdl_common ë””ë ‰í„°ë¦¬ëŠ” ë¬´ì‹œí•˜ì§€ ì•ŠìŒ
+mdl_common/           # mdl_common ë””ë ‰í„°ë¦¬ ë‚´ì˜ ëª¨ë“  íŒŒì¼ ë¬´ì‹œ
+!mdl_common/**/*.py  # py í—ˆìš©
+mdl_common/**/common.py  # common.py íŒŒì¼ ë¬´ì‹œ
 
-# mdl_login_info °øÅë¸ğµâ
-!mdl_login_info/         # mdl_login_info µğ·ºÅÍ¸®´Â ¹«½ÃÇÏÁö ¾ÊÀ½
-mdl_login_info/          # mdl_login_info µğ·ºÅÍ¸® ³»ÀÇ ¸ğµç ÆÄÀÏ ¹«½Ã
-!mdl_login_info/**/*.py  # py Çã¿ë
-mdl_login_info/**/common.py  # common.py ÆÄÀÏ ¹«½Ã
+# mdl_login_info ê³µí†µëª¨ë“ˆ
+!mdl_login_info/         # mdl_login_info ë””ë ‰í„°ë¦¬ëŠ” ë¬´ì‹œí•˜ì§€ ì•ŠìŒ
+mdl_login_info/          # mdl_login_info ë””ë ‰í„°ë¦¬ ë‚´ì˜ ëª¨ë“  íŒŒì¼ ë¬´ì‹œ
+!mdl_login_info/**/*.py  # py í—ˆìš©
+mdl_login_info/**/common.py  # common.py íŒŒì¼ ë¬´ì‹œ
 
-# proj_common °øÅë¸ğµâ
-!proj_common/          # proj_common µğ·ºÅÍ¸®´Â ¹«½ÃÇÏÁö ¾ÊÀ½
-proj_common/           # proj_common µğ·ºÅÍ¸® ³»ÀÇ ¸ğµç ÆÄÀÏ ¹«½Ã
-!proj_common/**/*.py  # py Çã¿ë
-proj_common/common.py  # common.py ÆÄÀÏ ¹«½Ã
+# proj_common ê³µí†µëª¨ë“ˆ
+!proj_common/          # proj_common ë””ë ‰í„°ë¦¬ëŠ” ë¬´ì‹œí•˜ì§€ ì•ŠìŒ
+proj_common/           # proj_common ë””ë ‰í„°ë¦¬ ë‚´ì˜ ëª¨ë“  íŒŒì¼ ë¬´ì‹œ
+!proj_common/**/*.py  # py í—ˆìš©
+proj_common/common.py  # common.py íŒŒì¼ ë¬´ì‹œ
 
-# static °øÅë¸ğµâ
-!static/            # static µğ·ºÅÍ¸®´Â ¹«½ÃÇÏÁö ¾ÊÀ½
-static/             # static µğ·ºÅÍ¸® ³»ÀÇ ¸ğµç ÆÄÀÏ ¹«½Ã
-!static/**/*.html  # html Çã¿ë
-!static/**/*.js     # js Çã¿ë
-!static/**/*.css    # css Çã¿ë
-!static/**/*.png   # png Çã¿ë
-!static/**/*.jpg   # jpg Çã¿ë
-!static/**/*.py    # py Çã¿ë
+# static ê³µí†µëª¨ë“ˆ
+!static/            # static ë””ë ‰í„°ë¦¬ëŠ” ë¬´ì‹œí•˜ì§€ ì•ŠìŒ
+static/             # static ë””ë ‰í„°ë¦¬ ë‚´ì˜ ëª¨ë“  íŒŒì¼ ë¬´ì‹œ
+!static/**/*.html  # html í—ˆìš©
+!static/**/*.js     # js í—ˆìš©
+!static/**/*.css    # css í—ˆìš©
+!static/**/*.png   # png í—ˆìš©
+!static/**/*.jpg   # jpg í—ˆìš©
+!static/**/*.py    # py í—ˆìš©
 
-# templates °øÅë¸ğµâ
-!templates/            # templates µğ·ºÅÍ¸®´Â ¹«½ÃÇÏÁö ¾ÊÀ½
-templates/*            # templates µğ·ºÅÍ¸® ³»ÀÇ ¸ğµç ÆÄÀÏ ¹«½Ã
-!templates/**/*.html  # html Çã¿ë
-!templates/**/*.js     # js Çã¿ë
-!templates/**/*.css    # css Çã¿ë
-!templates/**/*.png   # png Çã¿ë
-!templates/**/*.jpg   # jpg Çã¿ë
-!templates/**/*.py    # py Çã¿ë
+# templates ê³µí†µëª¨ë“ˆ
+!templates/            # templates ë””ë ‰í„°ë¦¬ëŠ” ë¬´ì‹œí•˜ì§€ ì•ŠìŒ
+templates/*            # templates ë””ë ‰í„°ë¦¬ ë‚´ì˜ ëª¨ë“  íŒŒì¼ ë¬´ì‹œ
+!templates/**/*.html  # html í—ˆìš©
+!templates/**/*.js     # js í—ˆìš©
+!templates/**/*.css    # css í—ˆìš©
+!templates/**/*.png   # png í—ˆìš©
+!templates/**/*.jpg   # jpg í—ˆìš©
+!templates/**/*.py    # py í—ˆìš©
