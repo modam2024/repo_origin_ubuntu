@@ -58,5 +58,11 @@
 }
 
 textarea {
-  line-height: 1.5;
+    line-height: 1.5;
+}
+
+#resMessage {
+    color:red;
+    width:160px;
+    font-weight: bold;
 }

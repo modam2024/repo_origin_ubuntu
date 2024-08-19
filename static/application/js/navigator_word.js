@@ -7,6 +7,7 @@
     // NEWS SITES 클릭 이벤트
     $("#newsSites").click(function(e) {
         e.preventDefault();
+        $("#resMessage").val("기사 생성(조회) 중입니다.");
         window.location.href = BASE_URL + 'news_study/';
     });
 
