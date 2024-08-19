@@ -1,0 +1,127 @@
+/* REGISTER FORM */
+
+.register {
+    background: #fff; /* White background */
+    height: auto;
+}
+
+.register #header {
+    height: auto;
+    padding: 15px 16px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background-color: #ffd500; /* Bootstrap primary color for better visibility */
+}
+
+.register #header h1 {
+    font-size: 18px; /* Converted from 1.125rem to px */
+    margin: 0;
+    color: #000000; /* White text color for header */
+}
+
+.register #header h1 a {
+    color: #ffffff; /* White color for links in header */
+}
+
+.register #content {
+    padding: 20px;
+}
+
+.register #container {
+    background: #fff; /* White background */
+    border: 1px solid #ccc; /* Grey border */
+    border-radius: 4px;
+    overflow: hidden;
+    width: 28em;
+    min-width: 300px;
+    margin: 100px auto;
+    height: auto;
+    padding: 20px;
+}
+
+.register .form-row {
+    padding: 4px 0;
+}
+
+.register .form-row label {
+    display: block;
+    line-height: 2em;
+}
+
+.register .form-row input {
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.register .submit-row {
+    padding: 1em 0 0 0;
+    margin: 0;
+    text-align: center;
+}
+
+.register .form-row #id_username, .login .form-row #id_password {
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.custom-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;  /* 폼의 전체 너비를 조정하고 싶은 경우 */
+    max-width: 500px; /* 최대 너비를 설정하여 너무 넓게 펼쳐지는 것을 방지 */
+    padding: 8px;
+    margin: auto;  /* 폼을 페이지 중앙에 배치 */
+}
+.form-group {
+    display: flex;
+    flex-direction: column; /* 자식 요소들을 세로로 정렬 */
+    align-items: flex-start; /* 왼쪽 정렬로 변경 */
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.form-group label {
+    min-width: 120px;
+    margin-right: 10px;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 10px;
+}
+
+.input-container {
+    display: flex; /* Flexbox를 활용하여 내부 요소를 가로로 배치 */
+    align-items: center; /* 세로 축 중앙 정렬 */
+    width: 100%; /* 컨테이너 폭 전체 사용 */
+}
+
+.input-container label {
+    margin-right: 2px; /* 라벨과 입력 필드 사이의 간격 */
+}
+
+.input-container input,.input-container textarea  {
+    flex-grow: 1; /* 사용 가능한 공간을 채우되, max-width에 의해 제한됩니다 */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.error-messages {
+    width: 100%; /* 오류 메시지 전체 폭 사용 */
+    margin-top: 5px; /* 입력 필드와 오류 메시지 사이에 약간의 간격 */
+}
+
+.error {
+    color: red; /* 오류 메시지의 색상을 빨간색으로 지정 */
+    margin-top: 5px; /* 오류 메시지와 입력 필드 사이에 약간의 간격을 추가 */
+    font-size: 14px; /* Converted from 1.125rem to px */
+    word-wrap: break-word; /* 긴 단어가 경계를 넘어갈 때 자동으로 줄바꿈 */
+    white-space: normal; /* 공백 문자가 있는 그대로 표시 */
+    max-width: 300px; /* 최대 너비 설정 */
+}
+

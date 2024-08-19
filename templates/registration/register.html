@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'login_info/css/register_info.css' %}">
+</head>
+<body>
+<div class="register">
+    <div id="content">
+        <div id="container">
+            <div id="header">
+                <h1>Registration</h1>
+            </div>
+            <form class="custom-form" method="post" id="register-form">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="form-group">
+                    <div class="input-container">
+                        <label for="{{ form.username.id_for_label }}">Username:</label>
+                        {{ form.username }}
+                    </div>
+                    {% if form.username.errors %}
+                        <div class="error-messages">
+                            {% for error in form.username.errors %}
+                                <div class="error">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <div class="input-container">
+                        <label for="{{ form.password1.id_for_label }}">Password:</label>
+                        {{ form.password1 }}
+                    </div>
+                    {% if form.password1.errors %}
+                        <div class="error-messages">
+                            {% for error in form.password1.errors %}
+                                <div class="error">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <div class="input-container">
+                        <label for="{{ form.password2.id_for_label }}">Password Again:</label>
+                        {{ form.password2 }}
+                    </div>
+                    {% if form.password2.errors %}
+                        <div class="error-messages">
+                            {% for error in form.password2.errors %}
+                                <div class="error">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <div class="input-container">
+                        <label for="{{ form.email.id_for_label }}">Email:</label>
+                        {{ form.email }}
+                    </div>
+                    {% if form.email.errors %}
+                        <div class="error-messages">
+                            {% for error in form.email.errors %}
+                                <div class="error">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="submit-row">
+                    <button type="submit">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

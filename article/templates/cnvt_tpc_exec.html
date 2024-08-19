@@ -1,0 +1,145 @@
+{% load static %}
+<html>
+<head>
+    <title>단어: {{ wrd_word }}</title>
+    <link rel="stylesheet" href="{% static 'article/css/cnvt_tpc_exec.css' %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    {% include 'navigator_word.html' %}
+    {% for row in sent_rows %}
+       <input type="hidden" id="no{{ row.0 }}"                   value="{{ row.0 }}" />
+       <input type="hidden" id="topic_num{{ row.0 }}"            value="{{ row.1 }}" />
+       <input type="hidden" id="src_title{{ row.0 }}"            value="{{ row.2 }}" />
+       <input type="hidden" id="whitespace_converted{{ row.0 }}" value="{{ row.3 }}" />
+       <input type="hidden" id="converted_sentn{{ row.0 }}"      value="{{ row.4 }}" />
+       <input type="hidden" id="original_sentn{{ row.0 }}"       value="{{ row.5 }}" />
+    {% endfor %}
+    <div class="content-area">
+      	<div class="content">
+           <form id="submitForm">
+              <div style="margin-bottom: 30px;">
+                  <label for="txt_topic_title">1. TOPIC</label>&nbsp;
+                  <input type="text" id="txt_topic_title" style="width: 300px;" placeholder="Enter Word here.." value="{{ sent_rows.0.2 }}">
+              </div>
+              <div class="label-div">
+                  <div class="label-button-group">        
+                      <label for="speakSentence0">2. TEXT</label>&nbsp;
+                      <button type="button" class="speakSentence" id="speakSentence0">Speaking</button>&nbsp;
+                      <button type="button" class="originalSpeech" id="originalSpeech0">Original Speech</button>&nbsp;
+<!--                      <button type="button" id="txtTopic">Expand/Collapses</button>-->
+                  </div>
+                  <textarea id="converted_sentn0-1" rows="6"></textarea>
+                  <textarea id="converted_sentn0-2" rows="6" style="display: none;"></textarea>
+                  <textarea id="converted_sentn0" rows="6"   style="display: none;"></textarea>
+              </div>
+              <div class="label-div">
+                  <div class="label-button-group">        
+                      <label for="speakSentence1" style="color:black; font-weight:bold;">1-SENTENCE</label>&nbsp;
+                      <button type="button" class="speakSentence" id="speakSentence1">Speaking</button>&nbsp;
+                      <button type="button" class="originalSpeech" id="originalSpeech1">Original Speech</button>&nbsp;
+                  </div>
+                  <textarea id="txt_cnvt_sentence1" rows="3"  placeholder="Enter SENTENCE here...">{{ sent_rows.0.5  }}</textarea>
+              </div>
+              <div class="label-div">
+                  <div class="label-button-group">
+                      <label for="speakSentence2" style="color:black; font-weight:bold;">2-SENTENCE</label>&nbsp;
+                      <button type="button" class="speakSentence" id="speakSentence2">Speaking</button>&nbsp;
+                      <button type="button" class="originalSpeech" id="originalSpeech2">Original Speech</button>&nbsp;
+                  </div>
+                  <textarea id="txt_cnvt_sentence2" rows="3"  placeholder="Enter SENTENCE here...">{{ sent_rows.1.5 }}</textarea>
+              </div>
+              <div class="label-div">
+                  <div class="label-button-group">
+                      <label for="speakSentence3" style="color:black; font-weight:bold;">3-SENTENCE</label>&nbsp;
+                      <button type="button" class="speakSentence" id="speakSentence3">Speaking</button>&nbsp;
+                      <button type="button" class="originalSpeech" id="originalSpeech3">Original Speech</button>&nbsp;
+                  </div>
+                  <textarea id="txt_cnvt_sentence3" rows="3"  placeholder="Enter SENTENCE here...">{{ sent_rows.2.5 }}</textarea>
+              </div>
+              <div class="label-div">
+                  <div class="label-button-group">
+                      <label for="speakSentence4" style="color:black; font-weight:bold;">4-SENTENCE</label>&nbsp;
+                      <button type="button" class="speakSentence" id="speakSentence4">Speaking</button>&nbsp;
+                      <button type="button" class="originalSpeech" id="originalSpeech4">Original Speech</button>&nbsp;
+                  </div>
+                  <textarea id="txt_cnvt_sentence4" rows="3"  placeholder="Enter SENTENCE here...">{{ sent_rows.3.5 }}</textarea>
+              </div>
+              <div class="label-div">
+                  <div class="label-button-group">
+                      <label for="speakSentence5" style="color:black; font-weight:bold;">5-SENTENCE</label>&nbsp;
+                      <button type="button" class="speakSentence" id="speakSentence5">Speaking</button>&nbsp;
+                      <button type="button" class="originalSpeech" id="originalSpeech5">Original Speech</button>&nbsp;
+                  </div>
+                  <textarea id="txt_cnvt_sentence5" rows="3"  placeholder="Enter SENTENCE here...">{{ sent_rows.4.5 }}</textarea>
+              </div>
+              <div class="label-div">
+                  <div class="label-button-group">
+                      <label for="speakSentence6" style="color:black; font-weight:bold;">6-SENTENCE</label>&nbsp;
+                      <button type="button" class="speakSentence" id="speakSentence6">Speaking</button>&nbsp;
+                      <button type="button" class="originalSpeech" id="originalSpeech6">Original Speech</button>&nbsp;
+                  </div>
+                  <textarea id="txt_cnvt_sentence6" rows="3"  placeholder="Enter SENTENCE here...">{{ sent_rows.5.5 }}</textarea>
+              </div>
+              {% if sent_rows.6.5 %}
+              <div class="label-div">
+                  <div class="label-button-group">
+                      <label for="speakSentence7" style="color:black; font-weight:bold;">7-SENTENCE</label>&nbsp;
+                      <button type="button" class="speakSentence" id="speakSentence7">Speaking</button>&nbsp;
+                      <button type="button" class="originalSpeech" id="originalSpeech7">Original Speech</button>&nbsp;
+                  </div>
+                  <textarea id="txt_cnvt_sentence7" rows="3"  placeholder="Enter SENTENCE here...">{{ sent_rows.6.5 }}</textarea>
+              </div>
+              {% endif %}
+              {% if sent_rows.7.5 %}
+              <div class="label-div">
+                  <div class="label-button-group">
+                      <label for="speakSentence8" style="color:black; font-weight:bold;">8-SENTENCE</label>&nbsp;
+                      <button type="button" class="speakSentence" id="speakSentence8">Speaking</button>&nbsp;
+                      <button type="button" class="originalSpeech" id="originalSpeech8">Original Speech</button>&nbsp;
+                  </div>
+                  <textarea id="txt_cnvt_sentence8" rows="3"  placeholder="Enter SENTENCE here...">{{ sent_rows.7.5 }}</textarea>
+              </div>
+              {% endif %}
+              {% if sent_rows.8.5 %}
+              <div class="label-div">
+                  <div class="label-button-group">
+                      <label for="speakSentence9" style="color:black; font-weight:bold;">9-SENTENCE</label>&nbsp;
+                      <button type="button" class="speakSentence" id="speakSentence9">Speaking</button>&nbsp;
+                      <button type="button" class="originalSpeech" id="originalSpeech9">Original Speech</button>&nbsp;
+                  </div>
+                  <textarea id="txt_cnvt_sentence9" rows="3"  placeholder="Enter SENTENCE here...">{{ sent_rows.8.5 }}</textarea>
+              </div>
+              {% endif %}
+              {% if sent_rows.9.5 %}
+              <div class="label-div">
+                  <div class="label-button-group">
+                      <label for="speakSentence10" style="color:black; font-weight:bold;">10-SENTENCE</label>&nbsp;
+                      <button type="button" class="speakSentence" id="speakSentence10">Speaking</button>&nbsp;
+                      <button type="button" class="originalSpeech" id="originalSpeech10">Original Speech</button>&nbsp;
+                  </div>
+                  <textarea id="txt_cnvt_sentence10" rows="3"  placeholder="Enter SENTENCE here...">{{ sent_rows.9.5 }}</textarea>
+              </div>
+              {% endif %}
+           </form>
+        </div>
+        <div class="right-side">
+            <div class="submit-container">        
+                <button type="button" id="submitButton"><i class="fas fa-save"></i>Save Info</button><br>
+            </div><br>                    
+            <div class="submit-container">
+                <button type="button" id="completeButton"><i class="fas fa-check"></i>Completion</button><br>
+            </div>                    
+            <!-- 좌측 섹션 내용 변경 -->
+            <div class="label-container">
+                <ul>
+                    {% for word in wrd_rows %}
+                      <li><a href="/article/word_detail/?word={{ word }}&wrd_title={{ wrd_title }}" class="word-link"> {{ word }} </a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>                       
+    </div>      
+    <script src="{% static 'article/cnvt_tpc_exec.js' %}"></script>
+</body>
+</html> 
