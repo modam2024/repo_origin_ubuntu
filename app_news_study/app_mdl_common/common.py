@@ -104,6 +104,7 @@ def is_date_string(text):
 
             # strptime을 사용하여 문자열을 datetime 객체로 파싱
             date_obj = datetime.datetime.strptime(date_part, '%Y')
+            print(date_obj)
             return True
     except ValueError:
         # 'date_part'가 연도 형식이 아닌 경우
