@@ -39,6 +39,8 @@ proj_common/common.py
 !mdmproj1/    # mdl_login_info 디렉터리는 무시하지 않음
 mdmproj1/     # mdl_login_info 디렉터리 내의 모든 파일 무시
 !mdmproj1/**/*.py  # py 허용
+
+mdmproj1/serve.py
 mdmproj1/asgi.py
 mdmproj1/wsgi.py
 

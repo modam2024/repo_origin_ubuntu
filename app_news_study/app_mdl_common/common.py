@@ -1,8 +1,9 @@
+import datetime
 import re
-from datetime import datetime
 from typing import List, Dict
 
 import pandas as pd
+import pytz
 
 from app_news_study.app_sql_statement import sql_statement as sql_statement
 from proj_common import common as proj_comn_func
@@ -100,8 +101,9 @@ def is_date_string(text):
         # 마지막 두 부분을 다시 조합하여 날짜 부분을 완성
         if len(parts) >= 2: # 적어도 세 부분으로 나눠져야 함 (요일, 월일, 년도)
             date_part = parts[-1].strip()  # 'July 23, 2024' 형태로 재구성
-            # 올바른 날짜 형식을 '%B %d, %Y'로 설정하고 날짜로 변환을 시도
-            datetime.strptime(date_part, '%Y')
+
+            # strptime을 사용하여 문자열을 datetime 객체로 파싱
+            date_obj = datetime.datetime.strptime(date_part, '%Y')
             return True
     except ValueError:
         # 'date_part'가 연도 형식이 아닌 경우
@@ -214,8 +216,12 @@ def except_rules(text):
         return True
 
 def get_recent_news_date(request):
-    # 현재 날짜와 시간을 가져옵니다
-    now = datetime.now()
+
+    # 서울 시간대를 설정합니다.
+    seoul_timezone = pytz.timezone('Asia/Seoul')
+
+    # 현재 날짜와 시간을 서울 시간대로 가져옵니다.
+    now = datetime.datetime.now(seoul_timezone)
 
     # 날짜를 'YYYY-MM-DD' 형식으로 포맷합니다
     today_news_date = now.strftime('%Y-%m-%d')
