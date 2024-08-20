@@ -47,7 +47,8 @@ def sql_dao(request, sql_name, p_param):
         # 작업     : 뉴스 사이트 타이틀 조회  
         ############################################################# '''
         if sql_name == "sqls_news_info_titles":
-            p_news_date = p_param
+            p_news_date = p_param["today_news_date"]
+            p_max_date  = p_param["max_news_date"]
 
             # tb_news_info_detail 테이블에 keyno 대상 최대 num 을 가져온다.
             select_query =  " SELECT keyno, title      "
@@ -61,6 +62,20 @@ def sql_dao(request, sql_name, p_param):
             cursor.execute(select_query, select_params,)
             news_titles = cursor.fetchall()
             list_news_titles = list(news_titles)
+
+            if len(list_news_titles) == 0:
+                # tb_news_info_detail 테이블에 keyno 대상 최대 num 을 가져온다.
+                select_query2 =  " SELECT keyno, title      "
+                select_query2 += "   FROM tb_news_info_main "
+                select_query2 += "  WHERE user_id = %s      "
+                select_query2 += "    AND DATE_FORMAT(create_date, '%Y-%m-%d') = %s "
+                select_query2 += "  ORDER BY keyno          "
+                select_params2 = (current_username, p_max_date,)
+
+                # 쿼리 실행
+                cursor.execute(select_query2, select_params2,)
+                news_titles = cursor.fetchall()
+                list_news_titles = list(news_titles)
 
             # tb_news_info_detail 테이블에 keyno 대상 최대 num 을 가져온다.
             select_query  = " SELECT DISTINCT DATE_FORMAT(create_date, '%Y-%m-%d') AS news_date "

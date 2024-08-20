@@ -5,7 +5,6 @@ from app_news_study.app_mdl_common import common as app_comn_func
 from app_news_study.app_sql_statement import sql_statement
 from proj_common import common as proj_comn_func
 
-
 def news_study(request):
 
     selected_date = request.GET.get("selected_date")
@@ -18,7 +17,11 @@ def news_study(request):
        check_today_news = True
 
     if check_today_news:
-       titles, news_dates = sql_statement.sql_dao(request, "sqls_news_info_titles", today_news_date)
+       list_param = {
+           "today_news_date": today_news_date,
+           "max_news_date": max_news_date
+       }
+       titles, news_dates = sql_statement.sql_dao(request, "sqls_news_info_titles", list_param)
 
        values = {
            "titles": titles,
@@ -88,7 +91,14 @@ def news_study(request):
     # 저장처리가 완료된 이후에 불필요한 데이터 삭제
     sql_statement.sql_dao(request, "sqld_invalid_news_info", "")
 
-    titles, news_dates = sql_statement.sql_dao(request, "sqls_news_info_titles", today_news_date)
+    max_news_date
+
+    list_param = {
+        "today_news_date": today_news_date,
+        "max_news_date": max_news_date
+    }
+
+    titles, news_dates = sql_statement.sql_dao(request, "sqls_news_info_titles", list_param)
 
     values = {
         "titles": titles,
@@ -97,6 +107,7 @@ def news_study(request):
     }
 
     print("response completed2")
+
     return render(request, "news_study.html", values)
 
 def news_info_eng(request):
