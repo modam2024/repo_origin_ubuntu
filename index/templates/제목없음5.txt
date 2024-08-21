@@ -1,0 +1,122 @@
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from nltk import pos_tag, word_tokenize
+from nltk.corpus import wordnet
+from nltk.stem import WordNetLemmatizer
+import nltk
+import mysql.connector
+import json
+import re
+
+# nltk 리소스 다운로드 (서버 시작 시 한 번만 수행하면 됩니다)
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('wordnet')
+
+def get_wordnet_pos(treebank_tag, lemma):
+    if treebank_tag.startswith('J'):
+        return wordnet.ADJ
+    elif treebank_tag.startswith('V'):
+        # 동사 중에서도 특정 동사 유형을 제외
+        if treebank_tag in ['MD']:
+            return None  # None을 반환하여 해당 단어를 무시
+        if lemma.lower() in ['do', 'did', 'don', 'didn', 'be', 'been', 'is', 'was', 'were', 'have', 'has', 'had', 'haven', 'hasn', 'hadn']:
+            return None  # "be"와 "have" 동사의 여러 형태를 제외합니다.
+        else:
+            return wordnet.VERB
+    elif treebank_tag.startswith('N'):
+        return wordnet.NOUN
+    elif treebank_tag.startswith('R'):
+        return wordnet.ADV
+    else:
+        return None
+        
+def main_view(request):
+   return render(request, 'article.html')
+
+@csrf_exempt
+def submit_article(request):
+    # POST 요청일 때만 처리
+    if request.method == 'POST':
+        try:
+            # 요청의 본문을 JSON으로 파싱
+            data = json.loads(request.body)
+            article_content = data.get('article')
+            source_url = data.get('sourceUrl')  # 소스 URL 추가
+
+            # 데이터베이스 설정
+            conn = mysql.connector.connect(
+                host="modamtech.com",
+                port=3306,
+                user="aeit",
+                password="susx2020",
+                database="aeit"
+            )
+
+            # 커서 생성
+            cursor = conn.cursor()
+            
+            # WordNetLemmatizer 초기화
+            lemmatizer = WordNetLemmatizer()
+
+            # 텍스트 처리
+            tokens = word_tokenize(article_content)
+            tagged = pos_tag(tokens)
+
+            for word, tag in tagged:
+                wntag = get_wordnet_pos(tag, word)
+                if wntag:
+                    lemma = lemmatizer.lemmatize(word, pos=wntag)
+                    # 알파벳 이외의 문자 및 길이가 2글자 이하인 단어 및 마침표로 끝나는 단어 필터링
+                    if re.match(r'^[a-zA-Z]+$', lemma) and len(lemma) > 2 :
+                        # 마지막에 점이 있는 경우 제거
+                        if lemma.endswith('.'):
+                            lemma = lemma[:-1]  # 마지막 점 제거
+                        
+                        # 단어를 소문자로 변환
+                        lemma = lemma.lower()                    
+                        
+                        # 이미 데이터베이스에 해당 단어가 있는지 확인
+                        cursor.execute("SELECT word FROM processed_words WHERE word = %s", (lemma,))
+                        existing_word = cursor.fetchone()
+            
+                        if not existing_word:
+                            # 데이터베이스에 해당 단어가 없으면 INSERT 쿼리 실행
+                            try:
+                                cursor.execute("INSERT INTO processed_words (word, source_url) VALUES (%s, %s)", (lemma, source_url,))
+                            except mysql.connector.IntegrityError as e:
+                                # IntegrityError는 중복 오류를 나타냅니다.
+                                if e.errno == 1062:
+                                    # 중복된 단어를 무시하고 계속 진행
+                                    pass
+                                else:
+                                    # 다른 IntegrityError에 대한 예외 처리
+                                    raise
+            
+            conn.commit()
+            cursor.close()
+
+            # 처리 성공 응답
+            return JsonResponse({"status": "success", "message": "Article processed successfully"})
+
+        except json.JSONDecodeError:
+            # JSON 파싱 에러 처리
+            return JsonResponse({"status": "error", "message": "Invalid JSON"}, status=400)
+
+        except mysql.connector.Error as e:
+            # MySQL 연결 또는 쿼리 실행 오류 처리
+            return JsonResponse({"status": "error", "message": str(e)}, status=500)
+
+        except Exception as e:
+            # 기타 예외 처리
+            return JsonResponse({"status": "error", "message": str(e)}, status=500)
+
+        finally:
+            # 연결 닫기
+            if conn:
+                conn.close()
+
+    else:
+        # POST 요청이 아닐 때의 처리
+        return JsonResponse({"status": "error", "message": "Invalid request"}, status=400)

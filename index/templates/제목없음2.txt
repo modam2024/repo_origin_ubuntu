@@ -1,0 +1,34 @@
+CREATE TABLE `daily_voca` (
+	`word` VARCHAR(50) NOT NULL COMMENT 'PK' COLLATE 'utf8_general_ci',
+	`mean` TEXT NULL DEFAULT NULL COMMENT '뜻' COLLATE 'utf8_general_ci',
+	`tag` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`source` VARCHAR(10) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`frequency` INT(11) NULL DEFAULT 0,
+	`status` VARCHAR(20) NULL DEFAULT 'C' COMMENT 'C:생성/S:시작/F:완료' COLLATE 'utf8_general_ci',
+	`order_priority` VARCHAR(2) NOT NULL DEFAULT 'L' COLLATE 'utf8_general_ci',
+	`word_eng_example` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`word_kor_example` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`word_eng_example2` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`word_kor_example2` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`start_date` VARCHAR(20) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`create_date` VARCHAR(20) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`priority_date` VARCHAR(20) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`finish_date` VARCHAR(20) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	PRIMARY KEY (`num`, `word`) USING BTREE
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+;
+
+CREATE TABLE `processed_words` (
+	`word`        VARCHAR(255) NOT NULL COLLATE 'utf8_general_ci',
+	`tag` TEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',	
+	`status` VARCHAR(20) NULL DEFAULT 'C' COMMENT 'C:생성/S:시작/F:완료' COLLATE 'utf8_general_ci',
+	`create_date` VARCHAR(15) NULL DEFAULT NULL COLLATE 'utf8_general_ci',	
+	PRIMARY KEY (`word`) USING BTREE
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;

@@ -1,0 +1,26 @@
+rmdir /s /q .git  ( ubuntu 버젼 : rm -rf .git)
+
+git init
+
+git remote add origin https://github.com/modam2024/mdmproj1.git
+
+git remote add ubuntu https://github.com/modam2024/proj_mdm_main.git
+
+git remote add both_repo https://github.com/modam2024/repo_origin_ubuntu.git
+
+git rm -r --cached .
+
+git add -f .gitignore
+
+git commit -m "commit .gitignore"
+
+git add .   
+
+git status
+
+git branch -m master main
+
+git commit -m "initial first repo"
+
+git push -u origin main --force   
+( git push -u ubuntu main --force )  
