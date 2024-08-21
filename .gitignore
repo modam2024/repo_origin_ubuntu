@@ -1,2 +1,107 @@
+# .gitignore 파일
+.gitignore_*
+
 # Virtual environment
 .venv/
+.venw/
+
+.idea/
+*.pyc
+git
+
+.data
+.pdata
+.rdata
+.rsrc/MANIFEST/2
+.text
+
+chromedriver-win64/
+.gitignore_20240818
+
+serve.py
+requirements_ubuntu.txt
+home.*
+
+# SQLite database file
+db.sqlite3
+
+git_add_batch.sh
+overwrite.sh
+qqqqq
+*.txt
+
+navigator_word_*.html
+
+mdl_common/common.py
+proj_common/common.py
+
+# mdmproj1 프로젝트 폴더
+!mdmproj1/    # mdl_login_info 디렉터리는 무시하지 않음
+mdmproj1/     # mdl_login_info 디렉터리 내의 모든 파일 무시
+!mdmproj1/**/*.py  # py 허용
+
+mdmproj1/serve.py
+mdmproj1/asgi.py
+mdmproj1/wsgi.py
+
+# article 어플리케이션 관리
+!article/            # article 디렉터리는 무시하지 않음
+article/             # article 디렉터리 내의 모든 파일 무시
+!article/**/*.html  # html 허용
+!article/**/*.js     # js 허용
+!article/**/*.css   # css 허용
+!article/**/*.png   # png 허용
+!article/**/*.jpg   # jpg 허용
+!article/**/*.txt   # txt 허용
+!article/**/*.py    # py 허용
+article/**/common.py  # common.py 파일 무시
+
+# app_news_study 어플리케이션 관리
+!app_news_study/            # app_news_study 디렉터리는 무시하지 않음
+app_news_study/             # app_news_study 디렉터리 내의 모든 파일 무시
+!app_news_study/**/*.html  # html 허용
+!app_news_study/**/*.js     # js 허용
+!app_news_study/**/*.css   # css 허용
+!app_news_study/**/*.png   # png 허용
+!app_news_study/**/*.jpg   # jpg 허용
+!app_news_study/**/*.txt   # txt 허용
+!app_news_study/**/*.py    # py 허용
+app_news_study/**/common.py  # common.py 파일 무시
+
+# mdl_common 공통모듈
+!mdl_common/          # mdl_common 디렉터리는 무시하지 않음
+mdl_common/           # mdl_common 디렉터리 내의 모든 파일 무시
+!mdl_common/**/*.py  # py 허용
+mdl_common/**/common.py  # common.py 파일 무시
+
+# mdl_login_info 공통모듈
+!mdl_login_info/         # mdl_login_info 디렉터리는 무시하지 않음
+mdl_login_info/          # mdl_login_info 디렉터리 내의 모든 파일 무시
+!mdl_login_info/**/*.py  # py 허용
+mdl_login_info/**/common.py  # common.py 파일 무시
+
+# proj_common 공통모듈
+!proj_common/          # proj_common 디렉터리는 무시하지 않음
+proj_common/           # proj_common 디렉터리 내의 모든 파일 무시
+!proj_common/**/*.py  # py 허용
+proj_common/common.py  # common.py 파일 무시
+
+# static 공통모듈
+!static/            # static 디렉터리는 무시하지 않음
+static/             # static 디렉터리 내의 모든 파일 무시
+!static/**/*.html  # html 허용
+!static/**/*.js     # js 허용
+!static/**/*.css    # css 허용
+!static/**/*.png   # png 허용
+!static/**/*.jpg   # jpg 허용
+!static/**/*.py    # py 허용
+
+# templates 공통모듈
+!templates/            # templates 디렉터리는 무시하지 않음
+templates/*            # templates 디렉터리 내의 모든 파일 무시
+!templates/**/*.html  # html 허용
+!templates/**/*.js     # js 허용
+!templates/**/*.css    # css 허용
+!templates/**/*.png   # png 허용
+!templates/**/*.jpg   # jpg 허용
+!templates/**/*.py    # py 허용
