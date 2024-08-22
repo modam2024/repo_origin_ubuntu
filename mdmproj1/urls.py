@@ -18,7 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.staticfiles.storage import staticfiles_storage
-from django.urls import path
+from django.urls import include, path
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 
@@ -26,12 +26,13 @@ from app_news_study import views as news_study_views
 from article import cnvrt_tpc_exec as cnvrt_tpc_exec
 from article import morph_analysis as morph_analysis
 from article import views as article_views
-from article import views_five_feedback as article_views_feedback
-from article import views_five_test as article_views_test
 from balance import views as balance_views
 from mdl_login_info import views as login_views
 
 urlpatterns = [
+    # 어플리케이션 url 참조
+    path('app_test_timer/', include('app_test_timer.urls')),
+
     # 기타 url 패턴들
     path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('favicon.ico'))),
     path('admin/',   admin.site.urls),
@@ -58,9 +59,6 @@ urlpatterns = [
     path('article/uncomplete-chapter/' , article_views.uncomplete_chapter,  name='uncomplete_chapter'),
     path('article/save-topic/'         , article_views.save_topic,          name='save-topic'),
     path('article/create-word/'        , article_views.create_word,         name='create-word'),
-
-    path('article/test-english/'       , article_views_test.test_english,         name='test_english'),
-    path('article/feedback-english/'   , article_views_feedback.feedback_english, name='feedback_english'),
 
     path('article/cnvrt_tpc_exec/'     , cnvrt_tpc_exec.main_cnvrt_tpc_exec, name='cnvrt_tpc_exec'),
     path('article/morph_analysis/'     , morph_analysis.submit_topic,        name='submit_topic'),

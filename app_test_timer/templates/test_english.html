@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>토익 PART5 문제</title>
-    <link rel="stylesheet" href="{% static 'article/css/test_english.css' %}" />
+    <link rel="stylesheet" href="{% static 'app_test_timer/css/test_english.css' %}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
@@ -42,8 +42,13 @@
                         {% endif %}
                   </div>
                   {% with question1=test_page_content.0 %}
-                  <label>question 1.</label>
-                  <textarea id="artcl_content1" rows="3" placeholder="Enter article here..." readonly>{{  question1.question_content }}</textarea><br>
+                  <div class="time_block">
+                      <div class="labels_container">
+                          <label style="margin-right: 10px;">question 1.</label>
+                          <label id="stop_time1" class="time_input">{{ 0 }}</label>
+                      </div>
+                      <textarea id="artcl_content1" rows="3" placeholder="Enter article here..." readonly>{{ question1.question_content }}</textarea>
+                  </div>
                   <div class="toeic-test1">
                     <dl>
                         <dd>
@@ -58,7 +63,10 @@
                   </div>
                   {% endwith %}
                   {% with question2=test_page_content.1 %}
-                  <label>question 2.</label>
+                  <div class="time_block" >
+                      <label for="stop_time2" style="margin-right: 10px;">question 2.</label>
+                      <input type="text" id="stop_time2" value="{{ 0 }}" />
+                  </div>
                   <textarea id="artcl_content2" rows="3" placeholder="Enter article here..." readonly>{{  question2.question_content }}</textarea><br>
                   <div class="toeic-test2">
                     <dl>
@@ -74,7 +82,10 @@
                   </div>
                   {% endwith %}
                   {% with question3=test_page_content.2 %}
-                  <label>question 3.</label>
+                  <div class="time_block" >
+                      <label for="stop_time3" style="margin-right: 10px;">question 3.</label>
+                      <input type="text" id="stop_time3" value="{{ 0 }}" />
+                  </div>
                   <textarea id="artcl_content3" rows="3" placeholder="Enter article here..." readonly>{{  question3.question_content }}</textarea><br>
                   <div class="toeic-test3">
                     <dl>
@@ -102,6 +113,10 @@
                </div>
             </div>
             <div class="right-side">
+                <div class="time-container">
+                  <div id="time">01:30 <button id="start_btn">Start</button>
+                  </div>
+                </div>
 <!--                <div class="submit-container">-->
 <!--                    <button type="button" id="rs_submitButton"><i class="fas fa-save"></i>Save Info</button><br>-->
 <!--                </div><br>-->
@@ -119,7 +134,7 @@
             </div>
         </div>
     </div>
-    <script src="{% static 'article/test_english.js' %}"></script>
+    <script src="{% static 'app_test_timer/js/test_english.js' %}"></script>
     <!--
     {% if test_page_info.0.last_page_flag == "Y" %}
     <script>

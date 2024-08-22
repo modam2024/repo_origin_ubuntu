@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'balance',
     'article',
     'corsheaders',
-    "app_news_study",
+    "app_test_timer",
 ]
 
 MIDDLEWARE = [

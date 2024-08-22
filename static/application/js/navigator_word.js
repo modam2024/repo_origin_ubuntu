@@ -36,7 +36,7 @@
         e.preventDefault();
         $("#resMessage").val("조회 중입니다.");
         var url = BASE_URL;
-        url = url + "article/test-english/?check=max&chapter=&status=C";
+        url = url + "app_test_timer/test-english/?check=max&chapter=&status=C";
         window.location.href = url;
     });
 
@@ -166,10 +166,14 @@
             status:  "C",
             wdate:   pageDate,
         };
-        var url = BASE_URL + "article/test-english/?" + $.param(back_data);
+        var url = BASE_URL + "app_test_timer/test-english/?" + $.param(back_data);
         window.location.href = url;
     }
 
     window.onunload = function() {
         fnLogout();
     };
+
+    var timerInterval;
+    var remainingTime = 90; // 타이머 시작 시간을 초 단위로 설정 (예: 1분 30초)
+    var lastRemainingTime = 90; // 직전 클릭 시의 남은 시간을 저장할 변수

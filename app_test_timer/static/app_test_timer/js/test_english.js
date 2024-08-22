@@ -12,14 +12,14 @@
             e.preventDefault();
             $("#resMessage").val("조회 중입니다.");
             str_prve_page_date = $("#prve_page_date").val();
-            window.location.href = BASE_URL + 'article/test-english/?wdate='+str_prve_page_date +'&check=none&chapter=&status=C';
+            window.location.href = BASE_URL + 'app_test_timer/test-english/?wdate='+str_prve_page_date +'&check=none&chapter=&status=C';
         });
 
         $("#last_page_flag_y").click(function(e) {
             e.preventDefault();
             $("#resMessage").val("조회 중입니다.");
             str_next_page_date = $("#next_page_date").val();
-            window.location.href = BASE_URL + 'article/test-english/?wdate='+str_next_page_date +'&check=none&chapter=&status=C';
+            window.location.href = BASE_URL + 'app_test_timer/test-english/?wdate='+str_next_page_date +'&check=none&chapter=&status=C';
         });
 
         $("#submitForm").submit(function(e) {
@@ -84,29 +84,41 @@
             let url = BASE_URL + "article/living-english/?chapter="+selectdChapter+"&status=C";
             window.open(url, '_self');
         });
-        
+
         $("#completeButton").click(function() {
+            // 마우스 커서를 모래시계로 변경
+            $('body').css('cursor', 'wait');
 
-            $("#resMessage").val("정답 제출 중입니다.");
+            let opt_ans1 = $('input[name="question1"]:checked').val() || "1";
+            let opt_ans2 = $('input[name="question2"]:checked').val() || "2";
+            let opt_ans3 = $('input[name="question3"]:checked').val() || "3";
 
-            // 선택된 라디오 버튼의 value를 가져옵니다.
-            let checked_answer1 = $('input[name="question1"]:checked').val();
-            let checked_answer2 = $('input[name="question2"]:checked').val();
-            let checked_answer3 = $('input[name="question3"]:checked').val();
-            let test_order_no   = $("#test_order_no").val();
-            let test_page_date  = $("#test_page_date").val();
+            let unselected = [];
+            if (opt_ans1 === "1") { unselected.push("문제 1"); }
+            if (opt_ans2 === "2") { unselected.push("문제 2"); }
+            if (opt_ans3 === "3") { unselected.push("문제 3"); }
 
-            // 선택된 라디오 버튼의 value와 기타 필요한 데이터를 객체로 구성합니다.
+            if (unselected.length > 0) {
+                $('body').css('cursor', 'default');  // 커서를 원래대로 복원
+                alert("정답 선택이 안된 문제가 있습니다: [" + unselected.join(", ") + "]");
+                return;  // 함수 실행 중단
+            }
+
             let checked_data = {
-                test_answer1: $('input[name="question1"]:checked').val(),
-                test_answer2: $('input[name="question2"]:checked').val(),
-                test_answer3: $('input[name="question3"]:checked').val(),
+                test_answer1: opt_ans1,
+                test_answer2: opt_ans2,
+                test_answer3: opt_ans3,
                 test_order_no: $("#test_order_no").val(),
                 test_page_date: $("#test_page_date").val(),
             };
 
-            var url = BASE_URL + "article/feedback-english/?" + $.param(checked_data);
-            window.location.href = url;
+            var url = BASE_URL + "app_test_timer/feedback-english/?" + $.param(checked_data);
+
+            // 데이터 전송 전에 일시적으로 지연을 주고 페이지 이동
+            setTimeout(function() {
+                window.location.href = url;
+                // 페이지가 이동하면 자동으로 커서가 원래 상태로 돌아갈 것입니다
+            }, 2000); // 2초 동안 기다린 후 페이지 이동
         });
 
         // #2024.03.20-titleList 셀렉터에 대한 change 이벤트 핸들러를 설정
@@ -171,6 +183,36 @@
             var currentText = $(this).val();
             $(this).val(currentText.replace(/\n/g, " "));
             $(this).val(currentText.replace(/  /g, " "));
+        });
+
+        $('#start_btn').click(function() {
+            // 타이머가 이미 작동 중인지 확인
+            if (!timerInterval) {
+                timerInterval = setInterval(function() {
+                    remainingTime -= 1;
+                    var minutes = Math.floor(remainingTime / 60);
+                    var seconds = remainingTime % 60;
+                    $('#time').text(minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0'));
+
+                    // 타이머가 0에 도달하면 자동으로 중지
+                    if (remainingTime <= 0) {
+                        // clearInterval(timerInterval);
+                        // timerInterval = null;
+                        $('#time').text('00:00');
+                    }
+                }, 1000);
+            }
+        });
+
+        // 라디오 버튼 클릭 이벤트 핸들러를 각 문제에 대해 설정
+        ['question1', 'question2', 'question3'].forEach(function(question, index) {
+            $('input[type="radio"][name="' + question + '"]').click(function() {
+                if (timerInterval) {
+                    var timeSpent = lastRemainingTime - remainingTime;
+                    $('#stop_time' + (index + 1)).text(timeSpent);
+                    lastRemainingTime = remainingTime;
+                }
+            });
         });
 
         $("#resMessage").val("조회가 완료됐습니다.");

@@ -119,19 +119,23 @@
                 test_page_date: $("#test_page_date").val(),
             };
 
-            var url = BASE_URL + "article/feedback-english/?" + $.param(checked_data);
+            var url = BASE_URL + "app_test_timer/feedback-english/?" + $.param(checked_data);
             window.location.href = url;
         });
 
         // TEST ENGLISH 클릭 이벤트
         $("#backButton").click(function() {
+            // 마우스 커서를 모래시계로 변경
+            $('body').css('cursor', 'wait');
+
             $("#resMessage").val("테스트 페이지로 이동중입니다.");
+
             let back_data = {
                 check:   "none",
                 status:  "C",
                 wdate:   $("#test_page_date").val(),
             };
-            var url = BASE_URL + "article/test-english/?" + $.param(back_data);
+            var url = BASE_URL + "app_test_timer/test-english/?" + $.param(back_data);
             window.location.href = url;
         });
 
