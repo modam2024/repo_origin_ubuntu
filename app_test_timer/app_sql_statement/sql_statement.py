@@ -349,7 +349,7 @@ def sql_dao(request, sql_name, p_param):
         # CALL ID : sqli_test_page_content_cnt
         # 함수명   : 토익 PART 5 테스트 정보 저장
         # 작성일   : 2024.08.23
-        # 작업     : tb_test_page_info 테이블에 데이터 생성한다.         
+        # 작업     : tb_part5_test_page 테이블에 데이터 생성한다.         
         ############################################################  '''
         if sql_name == "sqli_test_page_content_cnt":
 
@@ -369,7 +369,7 @@ def sql_dao(request, sql_name, p_param):
             v_test_page_content_cnt = sql_dao(request, "sqls_test_page_content_cnt", v_trgt_page_date)
 
             if v_test_page_content_cnt < 3:
-                insert_query = " INSERT INTO tb_test_page_info "
+                insert_query = " INSERT INTO tb_part5_test_page "
                 insert_query += " (user_id, trgt_order_no, trgt_page_date, prve_page_date, next_page_date, last_page_flag,  "
                 insert_query += " question_no, question_content, choice_a, choice_b, choice_c, choice_d ) "
                 insert_query += " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
