@@ -3,7 +3,7 @@ import re
 
 import pandas as pd
 
-from mdl_common import common as comn_func
+from app_common import app_common_mdl as comn_func
 from mdl_sql_mapping import create_connection, close_connection, handle_sql_error
 
 '''
@@ -26,7 +26,7 @@ def sql_dao(request, sql_name, p_param):
         # CALL ID : sqls_select_db_converted_sentn
         # 함수명   : 변환 문장을 조회한다.   
         # 작성일   : 2024.07.10
-        # 작업     : db_converted_sentn 에 저장된 자료를 죄회한다.   
+        # 작업     : db_converted_sentn 에 저장된 자료를 조회한다.   
         ############################################################ '''
         if sql_name == "sqls_select_tb_converted_sentn":
             topic_param = ""

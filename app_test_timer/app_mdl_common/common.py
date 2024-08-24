@@ -6,28 +6,8 @@ import pandas as pd
 import pytz
 
 from app_test_timer.app_sql_statement import sql_statement as sql_statement
-from proj_common import common as proj_comn_func
+from proj_common import proj_common_mdl as proj_comn_func
 
-
-def filter_text(text):
-    # 정규 표현식 패턴: 영어 대소문자, 공백, 특수문자, 한글 문자 포함
-    pattern = re.compile(r'[a-zA-Z\s\W가-힣]')
-
-    # 정규 표현식과 일치하는 문자만 남기고 합침
-    filtered_text = ''.join(pattern.findall(text))
-
-    return filtered_text
-
-def filter_eng_text(text):
-    # 정규 표현식 패턴: 영어 대소문자, 공백, 특수문자, 한글 문자 포함
-    text = text.replace("A :", "")
-    text = text.replace("B :", "")
-
-    pattern = re.compile(r'[a-zA-Z\s\'\’]')
-    # 정규 표현식과 일치하는 문자만 남기고 합침
-    filter_eng_text = ''.join(pattern.findall(text))
-
-    return filter_eng_text
 '''
 ########################################################
 # tag_decompose 함수 선언
@@ -230,27 +210,3 @@ def get_recent_news_date(request):
     is_recent_news, max_news_date = sql_statement.sql_dao(request, "sqls_recent_news_date", today_news_date)
 
     return is_recent_news, today_news_date, max_news_date
-
-def update_non_eng_type_groupno(request, param):
-    detail_info = param
-
-    tmp_news_groupno = 0
-    for news_data in detail_info:
-        news_keyno, news_num, news_newstype, news_groupno = news_data
-        if news_newstype == "ENG":
-            tmp_news_groupno = news_groupno
-        else:
-            if tmp_news_groupno != 0:
-               trgt_news_data = {
-                   "news_keyno"    : news_keyno,
-                   "news_num"      : news_num,
-                   "news_newstype" : news_newstype,
-                   "news_groupno"  : tmp_news_groupno,
-               }
-               # 뉴스 사이트 정보를 문장 단락별로 그룹화 한다.
-               result_value = sql_statement.sql_dao(request, "sqlu_non_eng_type_groupno", trgt_news_data)
-
-    # 뉴스 사이트 정보를 문장 단락별로 그룹화 한다.
-    result_value = sql_statement.sql_dao(request, "sqld_less_couple_groupno", "")
-
-    return "OK"

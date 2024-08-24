@@ -1,6 +1,13 @@
     $(document).ready(function() {
+
+        setTimeout(function() {
+            $("body").css('cursor', 'default');
+        }, 100); // 100 밀리초 후에 커서 스타일 적용
+
         // Part 5 테스트 문제의 밑줄을 만들어 주는 함수
         replaceText();
+
+        $("body").css('cursor', 'default');
 
         // WORD CLASS LIST 클릭 이벤트
         $("#wordClassList").click(function(e) {
@@ -11,6 +18,8 @@
         $("#prve_page_flag_y").click(function(e) {
             e.preventDefault();
             $("#resMessage").val("조회 중입니다.");
+            $('body, body *').css('cursor', 'wait');
+            $(this).css('background-color', 'lightgray');
             str_prve_page_date = $("#prve_page_date").val();
             window.location.href = BASE_URL + 'app_test_timer/test-english/?wdate='+str_prve_page_date +'&check=none&chapter=&status=C';
         });
@@ -18,26 +27,34 @@
         $("#last_page_flag_y").click(function(e) {
             e.preventDefault();
             $("#resMessage").val("조회 중입니다.");
+            $('body, body *').css('cursor', 'wait');
             str_next_page_date = $("#next_page_date").val();
             window.location.href = BASE_URL + 'app_test_timer/test-english/?wdate='+str_next_page_date +'&check=none&chapter=&status=C';
+        });
+
+        // "Submit Article" 링크에 클릭 이벤트 리스너 추가
+        $('#submitButton').click(function(e) {
+            e.preventDefault(); // 기본 앵커 클릭 이벤트 중지
+            $('#submitForm').submit(); // 폼 제출
         });
 
         $("#submitForm").submit(function(e) {
             e.preventDefault();
             $("#resMessage").val('Status: Starting');
-            let hddnUrl = $('#hddn_url');
-            
-            let articleContent = $("#artcl_content1").val()+ $("#artcl_content3").val();
-            let selChapter = $("#selChapter").val();
-            let sourceUrl  = hddnUrl.val();
-            if (sourceUrl === "https://free.ybmclass.com/free/eng/eng_ybm_view.asp?idx=")
-               sourceUrl   = sourceUrl + selChapter;
-            
-            hddnUrl.val(sourceUrl)
-               
-            let sourceTitle = $("#selTitle").val();
-            let sourceType  = $("#searchGrpCd").val();
+            $('body, body *').css('cursor', 'wait');  // body 의 모든 객체 위에서 모래시계 유지할 용도
 
+            let sourceType  = "YBM(TEST)";
+            let selChapter  = $('#pagedateList option:selected').val();
+            let sourceTitle = selChapter + " : " + $('#pagedateList option:selected').text().trim() + " Part 5" ;
+
+            let articleContent = $("#artcl_content1").val() + " " + $("#artcl_content2").val() + " " + $("#artcl_content3").val() + " ";
+            articleContent += $("#lbl_a1").text() + " " + $("#lbl_a2").text() + " " + $("#lbl_a3").text() + " "
+            articleContent += $("#lbl_b1").text() + " " + $("#lbl_b2").text() + " " + $("#lbl_b3").text() + " "
+            articleContent += $("#lbl_c1").text() + " " + $("#lbl_c2").text() + " " + $("#lbl_c3").text() + " "
+
+            let sourceUrl   = "http://localhost:8001/app_test_timer/test-english/?trgt_order_no=" + selChapter;
+
+            var new_url = ""
             $.ajax({
                 url: "/article/submit-article/",
                 type: "POST",
@@ -49,11 +66,15 @@
                     "sourceType": sourceType
                 }),
                 success: function(response) {
-                    $("#resMessage").val("Count: " +  response.word_insert_count + " / " + response.word_count + ", Message: " + response.message);
+                    alert("정상 작업 완료");
+                    $('body').css('cursor', 'default');
+                    new_url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&source_status=C';
+                    window.location.href = new_url;
                 },
                 error: function(xhr) {
                     // Handle the error response
                     // `xhr` is the XMLHttpRequest object
+                    $('body').css('cursor', 'default');
                     let errorMessage = xhr.status + ': ' + xhr.statusText;
                     $("#result").html("Error - " + errorMessage);
                 }
@@ -70,6 +91,7 @@
 
         $("#wordCheckButton").click(function(e) {
             e.preventDefault();
+            $('body, body *').css('cursor', 'wait');
             let sourceUrl   = $("#hddn_url").val();
             let sourceTitle = $("#selChapter").val();
             let sourceType  = $("#searchGrpCd").val();
@@ -80,6 +102,7 @@
         
         $("#searchButton").click(function() {
             $("#resMessage").val("조회 중입니다.");
+            $('body, body *').css('cursor', 'wait');
             let selectdChapter = $('#titleList option:selected').val();
             let url = BASE_URL + "article/living-english/?chapter="+selectdChapter+"&status=C";
             window.open(url, '_self');
@@ -87,11 +110,15 @@
 
         $("#completeButton").click(function() {
             // 마우스 커서를 모래시계로 변경
-            $('body').css('cursor', 'wait');
+            $('body, body *').css('cursor', 'wait');
 
-            let opt_ans1 = $('input[name="question1"]:checked').val() || "1";
-            let opt_ans2 = $('input[name="question2"]:checked').val() || "2";
-            let opt_ans3 = $('input[name="question3"]:checked').val() || "3";
+            let opt_ans1   = $('input[name="question1"]:checked').val() || "1";
+            let opt_ans2   = $('input[name="question2"]:checked').val() || "2";
+            let opt_ans3   = $('input[name="question3"]:checked').val() || "3";
+
+            let test_time1 = parseInt($("#stop_time1").text(), 10);
+            let test_time2 = parseInt($("#stop_time2").text(), 10);
+            let test_time3 = parseInt($("#stop_time3").text(), 10);
 
             let unselected = [];
             if (opt_ans1 === "1") { unselected.push("문제 1"); }
@@ -99,8 +126,8 @@
             if (opt_ans3 === "3") { unselected.push("문제 3"); }
 
             if (unselected.length > 0) {
-                $('body').css('cursor', 'default');  // 커서를 원래대로 복원
                 alert("정답 선택이 안된 문제가 있습니다: [" + unselected.join(", ") + "]");
+                $("body").css('cursor', 'default');
                 return;  // 함수 실행 중단
             }
 
@@ -108,17 +135,30 @@
                 test_answer1: opt_ans1,
                 test_answer2: opt_ans2,
                 test_answer3: opt_ans3,
+                test_time1  : test_time1,
+                test_time2  : test_time2,
+                test_time3  : test_time3,
                 test_order_no: $("#test_order_no").val(),
                 test_page_date: $("#test_page_date").val(),
             };
 
-            var url = BASE_URL + "app_test_timer/feedback-english/?" + $.param(checked_data);
-
-            // 데이터 전송 전에 일시적으로 지연을 주고 페이지 이동
-            setTimeout(function() {
-                window.location.href = url;
-                // 페이지가 이동하면 자동으로 커서가 원래 상태로 돌아갈 것입니다
-            }, 2000); // 2초 동안 기다린 후 페이지 이동
+            $.ajax({
+                url: "/app_test_timer/test-result/",
+                type: 'GET',
+                data: checked_data,
+                success: function(response) {
+                    $('body').css('cursor', 'default');
+                    var url = BASE_URL + "app_test_timer/feedback-english/?" + $.param(checked_data);
+                    // 데이터 전송 전에 일시적으로 지연을 주고 페이지 이동
+                    setTimeout(function() {
+                        window.location.href = url;
+                        // 페이지가 이동하면 자동으로 커서가 원래 상태로 돌아갈 것입니다
+                    }, 2000); // 2초 동안 기다린 후 페이지 이동
+                },
+                error: function(xhr, status, error) {
+                  $("#resMessage").val("error : " + error);
+                }
+            });
         });
 
         // #2024.03.20-titleList 셀렉터에 대한 change 이벤트 핸들러를 설정
@@ -190,16 +230,11 @@
             if (!timerInterval) {
                 timerInterval = setInterval(function() {
                     remainingTime -= 1;
-                    var minutes = Math.floor(remainingTime / 60);
-                    var seconds = remainingTime % 60;
-                    $('#time').text(minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0'));
+                    var seconds = Math.abs(remainingTime);  // 음수가 되면 절대값을 사용하여 표시
 
-                    // 타이머가 0에 도달하면 자동으로 중지
-                    if (remainingTime <= 0) {
-                        // clearInterval(timerInterval);
-                        // timerInterval = null;
-                        $('#time').text('00:00');
-                    }
+                    // 초를 화면에 표시, 음수일 때는 부호를 유지
+                    $('#time').text((remainingTime < 0 ? "-" : "") + seconds.toString().padStart(2, '0') + " 초");
+
                 }, 1000);
             }
         });
@@ -207,9 +242,20 @@
         // 라디오 버튼 클릭 이벤트 핸들러를 각 문제에 대해 설정
         ['question1', 'question2', 'question3'].forEach(function(question, index) {
             $('input[type="radio"][name="' + question + '"]').click(function() {
+                var init_time = $('#stop_time' + (index + 1)).text(); // 텍스트를 가져옴
+                init_time = parseInt(init_time, 10); // 문자열을 정수로 변환
+
+                // 타이머가 작동 중인지 확인
                 if (timerInterval) {
                     var timeSpent = lastRemainingTime - remainingTime;
+
+                    timeSpent = parseInt(timeSpent, 10) + init_time;
+
+                    // 다른 질문이 선택되었다면 새로운 시간을 표시
                     $('#stop_time' + (index + 1)).text(timeSpent);
+
+                    // 현재 질문을 마지막 질문으로 업데이트
+                    lastQuestion = question;
                     lastRemainingTime = remainingTime;
                 }
             });

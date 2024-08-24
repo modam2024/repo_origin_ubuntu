@@ -1,12 +1,11 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from app_news_study.app_mdl_common import common as app_comn_func
+from app_news_study.app_mdl_common    import common as app_comn_func
 from app_news_study.app_sql_statement import sql_statement
-from proj_common import common as proj_comn_func
+from proj_common import proj_common_mdl as proj_comn_func
 
 def news_study(request):
-
     selected_date = request.GET.get("selected_date")
 
     # tb_news_info_main 테이블에 오늘 날짜의 데이터가 있는지 확인한다.
@@ -91,8 +90,6 @@ def news_study(request):
     # 저장처리가 완료된 이후에 불필요한 데이터 삭제
     sql_statement.sql_dao(request, "sqld_invalid_news_info", "")
 
-    max_news_date
-
     list_param = {
         "today_news_date": today_news_date,
         "max_news_date": max_news_date
@@ -105,8 +102,6 @@ def news_study(request):
         "news_dates": news_dates,
         "selected_date": today_news_date
     }
-
-    print("response completed2")
 
     return render(request, "news_study.html", values)
 

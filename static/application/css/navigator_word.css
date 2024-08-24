@@ -1,3 +1,7 @@
+body {
+    cursor: default;
+}
+
 .content-wrapper {
     height: 6%;
     background-color: #8C0028;

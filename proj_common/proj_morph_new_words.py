@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from nltk import pos_tag, word_tokenize
 from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
-from mdl_common import common as comn_func
+from app_common import app_common_mdl as comn_func
 from mdl_sql_mapping import create_connection, close_connection
 
 

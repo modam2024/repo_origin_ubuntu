@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{% static 'app_test_timer/css/feedback_english.css' %}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<body>
+<body  style="cursor: default;">
     {% include 'navigator_word.html' %}
     <div class="content-area">
         <form class="content-form" id="submitForm">
@@ -39,7 +39,7 @@
                       <strong style="{% if question1.result_value == 'Y' %} color: blue {% else %} color: red {% endif %}">
                         {% if question1.result_value == 'Y' %}정답{% else %}오답{% endif %}
                       </strong>
-                      <strong>, Answer : {{ question1.your_answer | upper }}</strong>
+                      <strong>, Your Answer : {{ question1.your_answer | upper }}</strong>
                     ]
                   </label>
                   <textarea id="artcl_content1" rows="3" placeholder="Enter article here..." readonly>{{  question1.question_content }}</textarea><br>
@@ -64,7 +64,7 @@
                       <strong style="{% if question2.result_value == 'Y' %} color: blue {% else %} color: red {% endif %}">
                         {% if question2.result_value == 'Y' %}정답{% else %}오답{% endif %}
                       </strong>
-                      <strong>, Answer : {{ question2.your_answer | upper }}</strong>
+                      <strong>, Your Answer : {{ question2.your_answer | upper }}</strong>
                     ]
                   </label>
                   <textarea id="artcl_content2" rows="3" placeholder="Enter article here..." readonly>{{  question2.question_content }}</textarea><br>
@@ -89,7 +89,7 @@
                       <strong style="{% if question3.result_value == 'Y' %} color: blue {% else %} color: red {% endif %}">
                         {% if question3.result_value == 'Y' %}정답{% else %}오답{% endif %}
                       </strong>
-                      <strong>, Answer : {{ question3.your_answer | upper }}</strong>
+                      <strong>, Your Answer : {{ question3.your_answer | upper }}</strong>
                     ]
                   </label>
                   <textarea id="artcl_content3" rows="3" placeholder="Enter article here..." readonly>{{  question3.question_content }}</textarea><br>
@@ -121,20 +121,18 @@
                </div>
             </div>
             <div class="right-side">
-<!--                <div class="submit-container">-->
-<!--                    <button type="button" id="rs_submitButton"><i class="fas fa-save"></i>Save Info</button><br>-->
-<!--                </div><br>-->
-<!--                <div class="submit-container">-->
-<!--                    <button type="button" id="rs_completeButton"><i class="fas fa-check"></i>Completion</button><br>-->
-<!--                </div>-->
-                <!-- 좌측 섹션 내용 변경 -->
-                <div class="label-container">
+                {% if lst_test_time and lst_test_time|length > 0 and lst_test_time|first|length > 0 %}
+                <div class="time-display-container">
+                    <label>test time: {{ sum_test_time }} sec [ remain time: {{ remaining_time }} sec ]</label>
                     <ul>
-                        {% for word in wrd_rows %}
-                          <li><a href="/article/word_detail/?word={{ word }}&wrd_title={{ wrd_title }}" class="word-link"> {{ word }} </a></li>
+                        {% for inner_list in lst_test_time %}
+                            {% for item in inner_list %}
+                                <li>{{ item.0 }} : {{ item.1 }} Sec</li>
+                            {% endfor %}
                         {% endfor %}
                     </ul>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -1,15 +1,15 @@
-import re
 import json
+import re
 
-import spacy
 import mysql.connector
+import spacy
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from googletrans import Translator
 
-from mdl_common import common as comn_func
+from app_common import app_common_mdl as comn_func
 from mdl_sql_mapping import sql_mapping as sql_statement
-
-from django.views.decorators.csrf import csrf_exempt
+from proj_common import proj_common_mdl as proj_comn_func
 
 
 # 축약형을 변환하는 함수 정의
@@ -32,7 +32,7 @@ def submit_sentence(request):
 
         try:
             # 데이터베이스 설정
-            conn = comn_func.fn_connector(request)
+            conn = proj_comn_func.fn_connector(request)
             cursor = conn.cursor()
         except mysql.connector.Error as e:
             # MySQL 연결 또는 쿼리 실행 오류 처리

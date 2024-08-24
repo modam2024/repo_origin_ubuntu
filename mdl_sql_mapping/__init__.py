@@ -1,11 +1,11 @@
 # mdl_sql_mapping/__init__.py
 
-from mdl_common import common as comn_func
+from proj_common import proj_common_mdl as proj_comn_func
 
 def create_connection(request):
     """데이터베이스 연결 생성 및 반환."""
     try:
-        conn = comn_func.fn_connector(request)
+        conn = proj_comn_func.fn_connector(request)
         cursor = conn.cursor()
         current_username = request.user.username
         return conn, cursor, current_username

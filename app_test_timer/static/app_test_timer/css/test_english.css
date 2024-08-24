@@ -1,3 +1,7 @@
+body {
+    cursor: default;
+}
+
  textarea {
     font-size: 18px; /* 텍스트 크기 조정 */
     font-weight: bold; /* 굵은 글씨로 만들기 */
@@ -224,12 +228,54 @@ label {
     flex-direction: column; /* 세로 방향으로 요소를 나열합니다. */
     width: 100%;
     align-items: stretch; /* 자식 요소들이 컨테이너 너비를 꽉 채우도록 합니다. */
+    flex-wrap: nowrap;
 }
 
 .labels_container {
     display: flex;
     justify-content: space-between; /* 라벨들을 양 끝으로 정렬합니다. */
     width: 100%;
+    flex-wrap: nowrap;
+}
+
+#timer_container1, #timer_container2, #timer_container3  {
+    display: flex;
+    min-width: 50px;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    margin-right: 10px; /* 라벨과의 간격을 설정합니다. */
+}
+
+.time_input {
+    min-width: 24px;
+    text-align: right;
+    color: grey !important;
+    font-weight: bold; /* 글자를 굵게 설정 */
+}
+
+#time {
+    min-width: 60px;
+    min-height: 20px;
+    color: red !important;
+    font-size: larger; /* 글자 크기를 기본값보다 크게 설정 */
+    font-weight: bold; /* 글자를 굵게 설정 */
+}
+
+#start_btn {
+    min-width: 50px;
+    min-height: 20px;
+    font-size: larger; /* 글자 크기를 기본값보다 크게 설정 */
+    font-weight: bold; /* 글자를 굵게 설정 */
+}
+
+#time-display-container
+{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: center; /* 내부 요소들을 가운데로 정렬 */
 }
 
 #artcl_content1 {

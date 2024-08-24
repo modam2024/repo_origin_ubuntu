@@ -1,6 +1,6 @@
 # mdl_sql_mapping/__init__.py
 
-from proj_common import common as proj_comn_func
+from proj_common import proj_common_mdl as proj_comn_func
 
 def create_connection(request):
     """데이터베이스 연결 생성 및 반환."""

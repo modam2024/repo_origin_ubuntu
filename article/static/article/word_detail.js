@@ -33,38 +33,6 @@
             window.location.href = BASE_URL + 'article/';
         });
 
-        $("#submitForm").submit(function(e) {
-            e.preventDefault();
-
-            $("#result").html("Status: Starting");                
-            
-            var articleContent = $("#artcl_content").val();
-            var sourceUrl      = $("#src_url").val(); 
-            var sourceTitle    = $("#src_title").val(); 
-            var sourceType     = $("#src_type").val(); 
-
-            $.ajax({
-                url: "/article/submit-article/",
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify({ 
-                    "article": articleContent,
-                    "sourceUrl": sourceUrl,
-                    "sourceTitle": sourceTitle,
-                    "sourceType": sourceType
-                }),
-                success: function(response) {
-                    $("#result").html("Status: " + response.status + ", Count: " +  response.word_insert_count + " / " + response.word_count + ", Message: " + response.message);
-                },
-                error: function(xhr, status, error) {
-                    // Handle the error response
-                    // `xhr` is the XMLHttpRequest object
-                    var errorMessage = xhr.status + ': ' + xhr.statusText;
-                    $("#result").html("Error - " + errorMessage);
-                }
-            });
-        });
-        
         // 단어 클릭 이벤트 핸들러 추가
         $("#txt_word").click(function() {
             var word = $(this).val();

@@ -15,7 +15,7 @@ git
 .rsrc/MANIFEST/2
 .text
 
-chromedriver-win64/
+proj_common/chromedriver-win64/
 .gitignore_20240818
 
 serve.py
@@ -32,8 +32,8 @@ qqqqq
 
 navigator_word_*.html
 
-mdl_common/common.py
-proj_common/common.py
+app_common/app_common_mdl.py
+proj_common/proj_common_mdl.py
 
 # mdmproj1 프로젝트 폴더
 !mdmproj1/    # mdl_login_info 디렉터리는 무시하지 않음
@@ -69,10 +69,10 @@ app_news_study/             # app_news_study 디렉터리 내의 모든 파일 �
 app_news_study/**/common.py  # common.py 파일 무시
 
 # mdl_common 공통모듈
-!mdl_common/          # mdl_common 디렉터리는 무시하지 않음
-mdl_common/           # mdl_common 디렉터리 내의 모든 파일 무시
+!app_common/          # mdl_common 디렉터리는 무시하지 않음
+app_common/           # mdl_common 디렉터리 내의 모든 파일 무시
 !mdl_common/**/*.py  # py 허용
-mdl_common/**/common.py  # common.py 파일 무시
+app_common/**/common.py  # common.py 파일 무시
 
 # mdl_login_info 공통모듈
 !mdl_login_info/         # mdl_login_info 디렉터리는 무시하지 않음
@@ -84,7 +84,7 @@ mdl_login_info/**/common.py  # common.py 파일 무시
 !proj_common/          # proj_common 디렉터리는 무시하지 않음
 proj_common/           # proj_common 디렉터리 내의 모든 파일 무시
 !proj_common/**/*.py  # py 허용
-proj_common/common.py  # common.py 파일 무시
+proj_common/proj_common_mdl.py  # common.py 파일 무시
 
 # static 공통모듈
 !static/            # static 디렉터리는 무시하지 않음

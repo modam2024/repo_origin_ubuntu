@@ -22,7 +22,6 @@ from django.urls import include, path
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 
-from app_news_study import views as news_study_views
 from article import cnvrt_tpc_exec as cnvrt_tpc_exec
 from article import morph_analysis as morph_analysis
 from article import views as article_views
@@ -31,6 +30,7 @@ from mdl_login_info import views as login_views
 
 urlpatterns = [
     # 어플리케이션 url 참조
+    path('app_news_study/', include('app_news_study.urls')),
     path('app_test_timer/', include('app_test_timer.urls')),
 
     # 기타 url 패턴들
@@ -62,13 +62,5 @@ urlpatterns = [
 
     path('article/cnvrt_tpc_exec/'     , cnvrt_tpc_exec.main_cnvrt_tpc_exec, name='cnvrt_tpc_exec'),
     path('article/morph_analysis/'     , morph_analysis.submit_topic,        name='submit_topic'),
-
-    path('news_study/', news_study_views.news_study, name='news_study'),
-    path('news_study/news_info_eng/', news_study_views.news_info_eng, name='news_info_eng'),
-    path('news_study/news_info_inf/', news_study_views.news_info_inf, name='news_info_inf'),
-
-    path('save-wordinfo/', news_study_views.save_wordinfo, name='save_wordinfo'),
-    path('complete-word/', news_study_views.complete_word, name='complete_word'),
-
 ]
  

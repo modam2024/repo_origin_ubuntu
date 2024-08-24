@@ -10,7 +10,8 @@ from django.views.decorators.csrf import csrf_exempt
 from googletrans import Translator
 from nltk.corpus import wordnet
 
-from mdl_common import common_morph_process as comn_mph_process, common as comn_func
+from proj_common import proj_common_mdl as proj_comn_func
+from proj_common import proj_morph_new_words as morph_new_words
 from mdl_sql_mapping import sql_mapping_article as sql_statement_article
 from mdl_sql_mapping import create_connection, close_connection
 
@@ -113,7 +114,7 @@ def make_page_info(request):
             )
 
             # 공통 함수의 webdriver를 사용해서 파싱한다.
-            html, soup = comn_func.url_parsing_with_webdriver(url, "1")
+            html, soup = proj_comn_func.url_parsing_with_webdriver(url, "1")
 
             # <audio> 태그 찾기
             audio_tag = soup.find("audio")
@@ -271,7 +272,7 @@ def get_mean_kr_from_naver_dic(en_word):
         url = "http://en.dict.naver.com/#/search?&query={}".format(en_word)
 
         # 공통 함수의 webdriver를 사용해서 파싱한다.
-        html, soup = comn_func.url_parsing_with_webdriver(url, "1")
+        html, soup = proj_comn_func.url_parsing_with_webdriver(url, "1")
 
         # 단어의 의미 추출
         meanings = []
@@ -280,7 +281,7 @@ def get_mean_kr_from_naver_dic(en_word):
         if mean_list is not None:
             print("meaning of {} is completed(1)".format(en_word))
         else:
-            html, soup = comn_func.url_parsing_with_webdriver(url, "2")
+            html, soup = proj_comn_func.url_parsing_with_webdriver(url, "2")
             meanings = []
             mean_list = soup.find(class_=["mean_list", "mean_list_multi", "mean_list multi", "word_class"])
             # mean_list가 None이 아니면 실행될 코드
@@ -589,9 +590,7 @@ def submit_article(request):
     # POST 요청일 때만 처리
     if request.method == "POST":
         # 기존의 submit-article 함수를 모듈화 시켰다.
-        rtn_result = comn_mph_process.submit_topic(request)
-        # if rtn_result["status"] == "success":
-        #    comn_morph.submit_sentence(request)
+        rtn_result = morph_new_words.submit_topic(request)
         return JsonResponse(rtn_result)
     else:
         # POST 요청이 아닐 때의 처리

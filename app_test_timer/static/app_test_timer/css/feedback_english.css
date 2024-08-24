@@ -52,7 +52,6 @@ select {
     max-height: calc(100vh - 14%); /* 최대 높이를 화면의 높이로 설정 */
 }
 
-
 /* Chrome, Safari, Opera에서 스크롤바 숨기기 */
 .content::-webkit-scrollbar {
     display: none;
@@ -73,7 +72,6 @@ textarea#artcl_content1, textarea#artcl_content2, textarea#artcl_content3 {
     margin-right: auto; /* 가운데 정렬을 위해 */
     display: block;
 }
-
 
 /* 리스트 항목을 세로로 배치하고 간격 조정 */
 .label-container ul {
@@ -204,3 +202,31 @@ label {
 .title-view a.btn-v { position:absolute; top:50%; margin:-19px 0 0 0; display:block; height:38px; width:35px; overflow:hidden; text-indent:-9999em; border:1px solid #c7c7c7; border-radius:2px; }
 .title-view a.btn-prve { left:2px; background:url(../../../../app_test_timer/static/app_test_timer/img/icon_arr4_p.png) center center no-repeat; }
 .title-view a.btn-next { right:2px; background:url(../../../../app_test_timer/static/app_test_timer/img/icon_arr4_n.png) center center no-repeat; }
+
+#pagedateList {
+    font-size: 16px; /* 텍스트 크기 조정 */
+    font-weight: bold; /* 굵은 글씨로 만들기 */
+}
+
+#time {
+    min-width: 60px;
+    min-height: 20px;
+    color: red !important;
+    font-size: larger; /* 글자 크기를 기본값보다 크게 설정 */
+    font-weight: bold; /* 글자를 굵게 설정 */
+}
+
+#time-display-container
+{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: center; /* 내부 요소들을 가운데로 정렬 */
+}
+
+#artcl_content1 {
+    width: 100%; /* 너비를 부모와 동일하게 설정합니다. */
+    margin-top: 10px; /* 라벨과의 간격을 설정합니다. */
+}

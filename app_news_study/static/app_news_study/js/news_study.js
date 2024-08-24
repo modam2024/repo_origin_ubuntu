@@ -12,7 +12,7 @@ function callEngIdiom(keyno, groupno) {
     $(".news_idiom").empty();
 
     $.ajax({
-        url: BASE_URL + 'news_study/news_info_inf/',
+        url: BASE_URL + 'app_news_study/news_info_inf/',
         type: 'GET',
         data: {
             'keyno'  : in_keyno,
@@ -48,7 +48,7 @@ $(document).ready(function() {
         var selectedKeyno = $('#titleList option:selected').val();
 
         $.ajax({
-            url: BASE_URL + 'news_study/news_info_eng/',
+            url: BASE_URL + 'app_news_study/news_info_eng/',
             type: 'GET',
             data: {
                 'selected_keyno': selectedKeyno,
@@ -170,7 +170,7 @@ $(document).ready(function() {
     // 일자별 기사 조회 버튼 클릭시
     $("#searchBtn").click(function() {
         var send_date = $('#searchGrpCd option:selected').val();
-        window.location.href = BASE_URL + 'news_study/?selected_date=' + encodeURIComponent(send_date) ;
+        window.location.href = BASE_URL + 'app_news_study/?selected_date=' + encodeURIComponent(send_date) ;
     });
 
     //proj_mdm_prep 사용
@@ -225,7 +225,7 @@ $(document).ready(function() {
             success: function(response) {
               $("#resMessage").val(response.message);
               var complt_voca     = "completed-go-to-next-word";
-              window.location.href = BASE_URL + 'news_study/?word=' + encodeURIComponent(complt_voca)  + '&wrd_title=' + encodeURIComponent(complt_title);
+              window.location.href = BASE_URL + 'app_news_study/?word=' + encodeURIComponent(complt_voca)  + '&wrd_title=' + encodeURIComponent(complt_title);
             },
             error: function(xhr, status, error) {
               $("#resMessage").val("error : " + error);
