@@ -1,9 +1,7 @@
-import pandas as pd
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-import app_test_timer.app_sql_statement as app_con
 import app_test_timer.app_sql_statement.sql_statement as sql_statement
-from app_common import app_common_mdl as comn_func
 
 '''
 #######################################################
@@ -11,6 +9,7 @@ from app_common import app_common_mdl as comn_func
 # 작성일 : 2024.06.20
 # 브라우져에서 호출하면 실행되는 main function
 #######################################################  '''
+@login_required(login_url='/login/')
 def feedback_english(request):
     selectd_wdate = request.GET.get('test_page_date')
 

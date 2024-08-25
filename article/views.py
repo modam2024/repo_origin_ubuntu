@@ -10,10 +10,10 @@ from django.views.decorators.csrf import csrf_exempt
 from googletrans import Translator
 from nltk.corpus import wordnet
 
+from mdl_sql_mapping import create_connection, close_connection
+from mdl_sql_mapping import sql_mapping_article as sql_statement_article
 from proj_common import proj_common_mdl as proj_comn_func
 from proj_common import proj_morph_new_words as morph_new_words
-from mdl_sql_mapping import sql_mapping_article as sql_statement_article
-from mdl_sql_mapping import create_connection, close_connection
 
 # nltk 리소스 다운로드 (서버 시작 시 한 번만 수행하면 됩니다)
 nltk.download("punkt")
@@ -988,6 +988,8 @@ def call_process(request):
     return JsonResponse(
         {"process_cnt": curr_undone_cnt, "undone_tot_cnt": undone_tot_cnt}
     )
+
+# 단어검증 화면 초기화 버튼 클릭시
 @login_required(login_url='/login/')
 def goto_mobile(request):
 
@@ -1017,12 +1019,8 @@ def goto_mobile(request):
         mobile_params = (current_username, srcTitle, current_username, srcTitle)
         cursor.execute(mobile_query, mobile_params)
 
-        mobile_query  = " UPDATE process_info       "
-        mobile_query += "    SET goto_mobile_cnt    = goto_mobile_cnt + 1 "
-        mobile_query += "  WHERE user_id     = %s   "
-        mobile_query += "    AND src_title   = %s   "
-        mobile_params = (current_username, srcTitle)
-        cursor.execute(mobile_query, mobile_params)
+        # process_info 삭제
+        rtn_code = sql_statement_article.sql_dao(request, "sqld_confirm_word_check", srcTitle)
 
     except Exception as e:
         print("mobile update failed:", e)

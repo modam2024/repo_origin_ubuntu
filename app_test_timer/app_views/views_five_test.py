@@ -1,7 +1,7 @@
-import json
 import re
 
 import pandas as pd
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -16,6 +16,7 @@ from proj_common import proj_common_mdl as proj_comn_func
 # 브라우져에서 호출하면 실행되는 main function
 #######################################################
 '''
+@login_required(login_url='/login/')
 def test_english(request):
     selectd_version = request.GET.get("check")
     selectd_chapter = request.GET.get("chapter")
@@ -122,6 +123,7 @@ def test_english(request):
 # 토익 파트 5 테스트 결과 저장
 #######################################################
 '''
+@login_required(login_url='/login/')
 def test_result(request):
     df_page_info, df_feedback_page_content = feedback_test_page_info(request)
     dict_feedback_page_content = df_feedback_page_content.to_dict('records')
