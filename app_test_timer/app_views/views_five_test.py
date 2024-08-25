@@ -86,8 +86,9 @@ def test_english(request):
     existing_pagedates = sql_statement.sql_dao(request, "sqls_test_page_result_info", "")
 
     # dict_page_info 리스트 초기화
-    lst_page_date_info = []
-    lst_test_time = []
+    lst_page_date_info   = []
+    lst_test_time        = []
+    lst_classified_words = []
 
     for rec_page_date in existing_pagedates:
         trgt_order_no, trgt_page_date = rec_page_date
@@ -113,6 +114,11 @@ def test_english(request):
     values['lst_test_time']   = lst_test_time
     values['sum_test_time']   = sum_test_time
     values['remaining_time']  = 90 - sum_test_time
+
+    # 어휘분석의 결과 리스트
+    v_classified_words = sql_statement.sql_dao(request, "sqls_classified_words", selectd_wdate)
+    lst_classified_words.append(v_classified_words)
+    values['lst_classified_words']   = lst_classified_words
 
     return render(request, "test_english.html", values)
 

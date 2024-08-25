@@ -146,6 +146,11 @@
                     <label>test time: {{ sum_test_time }} sec [ remain time: {{ remaining_time }} sec ]</label>
                 </div>
                 {% endif %}
+                {% if lst_classified_words and lst_classified_words|length > 0 %}
+                <div class="label-container">
+                    <label>uncompleted words: {{ lst_classified_words.undone_tot_cnt }} / completed words: {{ lst_classified_words.done_tot_cnt }} </label>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -296,6 +296,36 @@ def sql_dao(request, sql_name, p_param):
                                         columns=[ 'question_no', 'question_content', 'choice_a', 'choice_b', 'choice_c', 'choice_d' ])
             return df_question
 
+        '''
+        #########################################################
+        # CALL ID : sqls_classified_words
+        # 테스트 질문 정보 쿼리 함수
+        # 작성일 : 2024.06.20
+        # 작업 : 특정 일자에 해당하는 저장된 테스트 질문 데이터를 읽어온다.
+        ######################################################### '''
+        if sql_name == "sqls_classified_words":
+           v_trgt_page_date = p_param
+
+           select_query  = " SELECT  undone_tot_cnt, done_tot_cnt  "
+           select_query += "   FROM  process_info           "
+           select_query += "  WHERE  user_id = %s           "
+           select_query += "    AND  src_title      like %s "
+
+           select_param = (current_username, '%' + v_trgt_page_date + '%',)
+
+           # 쿼리 실행
+           cursor.execute(select_query, select_param)
+           v_words_cnt    = cursor.fetchone()
+           v_undone_tot_cnt = int(v_words_cnt[0])
+           v_done_tot_cnt   = int(v_words_cnt[1])
+
+           rtn_value = {
+               "undone_tot_cnt" : v_undone_tot_cnt,
+               "done_tot_cnt"   : v_done_tot_cnt,
+           }
+
+           return rtn_value
+
         ''' 
         ##############
          INSERT BLOCK
