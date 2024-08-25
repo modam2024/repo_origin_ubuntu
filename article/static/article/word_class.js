@@ -1,6 +1,8 @@
-    $(document).ready(function() {
+    $(document).ready(function() { // applied
+        // 1초 동안 마우스 변경;
+        setCursorShap(1000);
 
-        // WORD CLASS LIST Ŭ�� �̺�Ʈ
+        // WORD CLASS LIST
         $("#wordClassList").click(function(e) {
             e.preventDefault();
             window.location.href = BASE_URL + 'article/';
@@ -9,6 +11,8 @@
         // "Submit Article" 링크에 클릭 이벤트 리스너 추가
         $('#submitButton').click(function(e) {
             e.preventDefault(); // 기본 앵커 클릭 이벤트 중지
+            // 10초 동안 마우스 변경
+            setCursorShap(10000);
             $('#submitForm').submit(); // 폼 제출
         });
 
@@ -59,6 +63,8 @@
 
         $("#wordCheckButton").click(function(e) {
             e.preventDefault();
+            // 10초 동안 마우스 변경
+            setCursorShap(10000);
             var sourceUrl = $("#src_url").val();
             var sourceTitle = $("#src_title").val(); 
             var sourceType  = $("#src_type").val(); 

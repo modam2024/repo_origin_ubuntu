@@ -4,7 +4,10 @@
         window.open(url, '_blank'); // Opens the URL in a new tab or window
     }
 
-    $(document).ready(function() {
+    $(document).ready(function() { // applied
+        // 1초 동안 마우스 변경;
+        setCursorShap(1000);
+
         var sourceTitle   = $('#sourceTitle').val();
         var sourceUrl     = $('#sourceUrl').val();
         var sourceStatus  = $('#sourceStatus').val();
@@ -28,7 +31,9 @@
            window.open(decodeURIComponent(sourceUrl), '_blank');
         });
   
-        $("#wordCheckBtn").click(function() {
+        $("#wordCheckBtn, #wordCheckBtn2" ).click(function() {
+            // 5초 동안 마우스 변경;
+            setCursorShap(5000);
             $("#resMessage").val("Starting");
             var checkedWords = $('input[name="rowCheck"]:checked').map(function() {
                 return $(this).closest('tr').find('td:nth-child(3)').text(); // üũ�� �ܾ� ���� �ؽ�Ʈ ����
@@ -61,7 +66,9 @@
         });
         
         $("#unDoneProcess").click(function() {
-        
+            // 5초 동안 마우스 변경;
+            setCursorShap(5000);
+
             if ($('#wordStatus').val() !== 'D') {
                 // Show alert and exit the function
                 alert("test alert");
@@ -103,6 +110,8 @@
         });
         
         $("#callProcess").click(function() {
+            // 5초 동안 마우스 변경;
+            setCursorShap(5000);
         
             var sourceTitle   = $('#titleList option:selected').text();
 
@@ -143,12 +152,20 @@
         });
         
         $("#refreshBtn").click(function() {
+            // 3초 동안 마우스 변경;
+            setCursorShap(3000);
+
             var selectedTitle = $('#titleList option:selected').text();
             var selectedStatus = $('#wordStatus option:selected').val();
-        
+
+            var searchGrpCd = $('#searchGrpCd option:selected').text();
             //selectedTitle  = encodeURIComponent(selectedTitle);
             //selectedStatus = encodeURIComponent(selectedStatus);
-        
+
+            if (searchGrpCd != "NEWS") {
+                $("#sourceBtn").css("display", "none");
+            }
+
             $.ajax({
                 url: BASE_URL + 'article/main-wordtable/',
                 type: 'GET',
@@ -190,6 +207,9 @@
         });
         
         $("#deleteBtn").click(function() {
+            // 5초 동안 마우스 변경;
+            setCursorShap(5000);
+
             var selectedTitle = $('#titleList option:selected').text();
         
             $.ajax({
@@ -241,6 +261,12 @@
                 $('#checkAll').prop('checked', false);
             }
         });
-        
+
+        $("#backBtn").click(function(){
+            // 2초 동안 마우스 변경;
+            setCursorShap(2000);
+            window.history.back();
+        });
+
         $("#refreshBtn").click();
     });

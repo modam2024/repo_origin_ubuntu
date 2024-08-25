@@ -1,4 +1,6 @@
-    $(document).ready(function() {
+    $(document).ready(function() { // applied
+        // 1초 동안 마우스 변경;
+        setCursorShap(1000);
 
         let init_fix_currentTime = $("#topicDurStart").val();
         let end_fix_currentTime  = $("#topicDurEnd").val();

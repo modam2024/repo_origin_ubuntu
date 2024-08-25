@@ -34,7 +34,9 @@ function callEngIdiom(keyno, groupno) {
     });
 };
 
-$(document).ready(function() {
+$(document).ready(function() { // applied
+    // 1초 동안 마우스 변경;
+    setCursorShap(1000);
 
     // initAllTextArea();
     // applyActiveWordStyle();
@@ -169,30 +171,16 @@ $(document).ready(function() {
 
     // 일자별 기사 조회 버튼 클릭시
     $("#searchBtn").click(function() {
+        // 10초 동안 마우스 변경
+        setCursorShap(10000);
         var send_date = $('#searchGrpCd option:selected').val();
-        window.location.href = BASE_URL + 'app_news_study/?selected_date=' + encodeURIComponent(send_date) ;
+        window.location.href = BASE_URL + 'app_news_study/news_study/?selected_date=' + encodeURIComponent(send_date) ;
     });
 
     //proj_mdm_prep 사용
     $("#submitButton").click(function() {
-        var data = {
-        };
-
-        $.ajax({
-            url: '/save-wordinfo/',
-            type: 'GET',
-            data: data,
-            success: function(response) {
-              $("#resMessage").val(response.message);
-            },
-            error: function(xhr, status, error) {
-              $("#resMessage").val("error : " + error);
-            }
-        });
-    });
-
-    //proj_mdm_prep 사용
-    $("#submitButton").click(function() {
+        // 10초 동안 마우스 변경
+        setCursorShap(10000);
         var data = {
         };
 
@@ -211,8 +199,10 @@ $(document).ready(function() {
 
     //proj_mdm_prep 사용
     $("#completeButton").click(function() {
+        // 10초 동안 마우스 변경
+        setCursorShap(10000);
 
-       var complt_title = $("#wrd_title").val();
+        var complt_title = $("#wrd_title").val();
 
         var data = {
             complt_word: $("#txt_word").val(),
@@ -225,7 +215,7 @@ $(document).ready(function() {
             success: function(response) {
               $("#resMessage").val(response.message);
               var complt_voca     = "completed-go-to-next-word";
-              window.location.href = BASE_URL + 'app_news_study/?word=' + encodeURIComponent(complt_voca)  + '&wrd_title=' + encodeURIComponent(complt_title);
+              window.location.href = BASE_URL + 'app_news_study/news_study/?word=' + encodeURIComponent(complt_voca)  + '&wrd_title=' + encodeURIComponent(complt_title);
             },
             error: function(xhr, status, error) {
               $("#resMessage").val("error : " + error);

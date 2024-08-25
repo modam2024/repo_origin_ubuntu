@@ -30,7 +30,7 @@
                     <a id="prve_page_flag_y" href="#" class="btn-v btn-prve">이전</a>
                     <strong>토익 PART5 ( </strong>
                     <select id="pagedateList" onchange="selectedPageDate(this)">
-                        {{ select_tag_info }}
+
                         {% for item in select_tag_info %}
                         <option value="{{ item.order_no }}" data-page_date="{{ item.page_date }}"
                              {% if item.page_date == test_page_info.0.trgt_page_date %}selected="selected"{% endif %}>
@@ -48,8 +48,9 @@
                   <div class="labels_container">
                       <label style="margin-right: 10px;">question 1.</label>
                       <div id="timer_container1">
-                          <label style="margin-right: 10px;">경과 시간 : </label>
+                          <label style="margin-right: 10px;">Elapsed Time : </label>
                           <label id="stop_time1" class="time_input">{{ 0 }} </label>
+                          <label>&nbsp;Sec</label>
                       </div>
                   </div>
                   <textarea id="artcl_content1" rows="3" placeholder="Enter article here..." readonly>{{ question1.question_content }}</textarea>
@@ -72,8 +73,9 @@
                   <div class="labels_container">
                       <label style="margin-right: 10px;">question 2.</label>
                       <div id="timer_container2">
-                          <label style="margin-right: 10px;">경과 시간 : </label>
+                          <label style="margin-right: 10px;">Elapsed Time : </label>
                           <label id="stop_time2" class="time_input">{{ 0 }} </label>
+                          <label>&nbsp;Sec</label>
                       </div>
                   </div>
                   <textarea id="artcl_content2" rows="3" placeholder="Enter article here..." readonly>{{  question2.question_content }}</textarea><br>
@@ -96,8 +98,9 @@
                   <div class="labels_container">
                       <label style="margin-right: 10px;">question 3.</label>
                       <div id="timer_container3">
-                          <label style="margin-right: 10px;">경과 시간 : </label>
+                          <label style="margin-right: 10px;">Elapsed Time : </label>
                           <label id="stop_time3" class="time_input">{{ 0 }} </label>
+                          <label>&nbsp;Sec</label>
                       </div>
                   </div>
                   <textarea id="artcl_content3" rows="3" placeholder="Enter article here..." readonly>{{  question3.question_content }}</textarea><br>

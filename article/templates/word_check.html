@@ -18,6 +18,7 @@
                 </select>&nbsp;
                 <button type="button" id="searchBtn">조회</button>&nbsp; &nbsp;
                 COUNT:&nbsp <input type="text" id="rows_cnt" value="{{ rows_cnt }}" style="text-align:center; width:40px;" readonly></input>&nbsp&nbsp
+                <button type="button" id="backBtn">되돌아가기</button>&nbsp; &nbsp;
                </div>
             </div>
             <div class="content-title">
@@ -70,12 +71,13 @@
                 <div class="label-container">
                     <label>WORD CHECK LIST</label>
                     <ul>
-                        <li><a href="#" id="sourceBtn">GO SOURCE</a></li>
-                        <li><a href="#" id="wordCheckBtn">DONE (미완료-> 완료)</a></li>
+                        <li><a href="#" id="wordCheckBtn">1차 (미완료->완료)</a></li>
                         <li><a href="#" id="callProcess" style="background-color:#aaa;color:black;">DONE 진행상태</a></li>
-                        <li><a href="#" id="unDoneProcess">BACK (완료-> 미완료)</a></li>
+                        <li><a href="#" id="wordCheckBtn2">전체체크빼기>대상체크하기(미완료->완료)</a></li>
+                        <li><a href="#" id="unDoneProcess">완료조회>체크빼기(완료->미완료)</a></li>
                         <li style="border-bottom: 3px solid #aaa;"></li>
-                        <li><a href="#" id="gotoMobile" style="background-color:#aaa;color:black;">분류상태 초기화</a></li>
+                        <li><a href="#" id="gotoMobile" style="background-color:#aaa;color:black;">초기화</a></li>
+                        <li><a href="#" id="sourceBtn">GO SOURCE</a></li>
                     </ul>
                 </div>
             </div>

@@ -1,13 +1,9 @@
-    $(document).ready(function() {
-
-        setTimeout(function() {
-            $("body").css('cursor', 'default');
-        }, 100); // 100 밀리초 후에 커서 스타일 적용
+    $(document).ready(function() { // applied
+        // 1초 동안 마우스 변경;
+        setCursorShap(1000);
 
         // Part 5 테스트 문제의 밑줄을 만들어 주는 함수
         replaceText();
-
-        $("body").css('cursor', 'default');
 
         // WORD CLASS LIST 클릭 이벤트
         $("#wordClassList").click(function(e) {
@@ -17,8 +13,9 @@
 
         $("#prve_page_flag_y").click(function(e) {
             e.preventDefault();
+            // 20초 동안 마우스 변경
+            setCursorShap(20000);
             $("#resMessage").val("조회 중입니다.");
-            $('body, body *').css('cursor', 'wait');
             $(this).css('background-color', 'lightgray');
             str_prve_page_date = $("#prve_page_date").val();
             window.location.href = BASE_URL + 'app_test_timer/test-english/?wdate='+str_prve_page_date +'&check=none&chapter=&status=C';
@@ -26,8 +23,10 @@
 
         $("#last_page_flag_y").click(function(e) {
             e.preventDefault();
+            // 20초 동안 마우스 변경
+            setCursorShap(20000);
             $("#resMessage").val("조회 중입니다.");
-            $('body, body *').css('cursor', 'wait');
+            $(this).css('background-color', 'lightgray');
             str_next_page_date = $("#next_page_date").val();
             window.location.href = BASE_URL + 'app_test_timer/test-english/?wdate='+str_next_page_date +'&check=none&chapter=&status=C';
         });
@@ -40,8 +39,9 @@
 
         $("#submitForm").submit(function(e) {
             e.preventDefault();
+            // 10초 동안 마우스 변경
+            setCursorShap(10000);
             $("#resMessage").val('Status: Starting');
-            $('body, body *').css('cursor', 'wait');  // body 의 모든 객체 위에서 모래시계 유지할 용도
 
             let sourceType  = "YBM(TEST)";
             let selChapter  = $('#pagedateList option:selected').val();
@@ -66,15 +66,12 @@
                     "sourceType": sourceType
                 }),
                 success: function(response) {
-                    alert("정상 작업 완료");
-                    $('body').css('cursor', 'default');
                     new_url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&source_status=C';
                     window.location.href = new_url;
                 },
                 error: function(xhr) {
                     // Handle the error response
                     // `xhr` is the XMLHttpRequest object
-                    $('body').css('cursor', 'default');
                     let errorMessage = xhr.status + ': ' + xhr.statusText;
                     $("#result").html("Error - " + errorMessage);
                 }
@@ -91,7 +88,9 @@
 
         $("#wordCheckButton").click(function(e) {
             e.preventDefault();
-            $('body, body *').css('cursor', 'wait');
+            // 10초 동안 마우스 변경
+            setCursorShap(10000);
+
             let sourceUrl   = $("#hddn_url").val();
             let sourceTitle = $("#selChapter").val();
             let sourceType  = $("#searchGrpCd").val();
@@ -101,16 +100,18 @@
         });
         
         $("#searchButton").click(function() {
+            // 10초 동안 마우스 변경
+            setCursorShap(10000);
             $("#resMessage").val("조회 중입니다.");
-            $('body, body *').css('cursor', 'wait');
+
             let selectdChapter = $('#titleList option:selected').val();
             let url = BASE_URL + "article/living-english/?chapter="+selectdChapter+"&status=C";
             window.open(url, '_self');
         });
 
         $("#completeButton").click(function() {
-            // 마우스 커서를 모래시계로 변경
-            $('body, body *').css('cursor', 'wait');
+            // 10초 동안 마우스 변경
+            setCursorShap(10000);
 
             let opt_ans1   = $('input[name="question1"]:checked').val() || "1";
             let opt_ans2   = $('input[name="question2"]:checked').val() || "2";
@@ -127,7 +128,6 @@
 
             if (unselected.length > 0) {
                 alert("정답 선택이 안된 문제가 있습니다: [" + unselected.join(", ") + "]");
-                $("body").css('cursor', 'default');
                 return;  // 함수 실행 중단
             }
 
@@ -147,7 +147,6 @@
                 type: 'GET',
                 data: checked_data,
                 success: function(response) {
-                    $('body').css('cursor', 'default');
                     var url = BASE_URL + "app_test_timer/feedback-english/?" + $.param(checked_data);
                     // 데이터 전송 전에 일시적으로 지연을 주고 페이지 이동
                     setTimeout(function() {

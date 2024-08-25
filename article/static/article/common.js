@@ -1,4 +1,7 @@
-    $(document).ready(function() {
+    $(document).ready(function() { // applied
+        // 1초 동안 마우스 변경;
+        setCursorShap(1000);
+
         function splitCnvtText(text) {
             var cnvt_text = ""
             var cnvt_text_arr = text.split(":");  // 텍스트 영역의 값을 가져옵니다.

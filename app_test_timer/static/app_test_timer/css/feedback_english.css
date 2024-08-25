@@ -58,13 +58,14 @@ select {
 }
 
 textarea#artcl_content1, textarea#artcl_content2, textarea#artcl_content3 {
+    font-family: 'Malgun Gothic', sans-serif;
+    font-weight: normal; /* 더 가늘게 하려면 'lighter', '300' 등으로 설정 */
     font-size: 18px; /* 텍스트 크기 조정 */
-    font-weight: bold; /* 굵은 글씨로 만들기 */
     width: 100%; /* 부모 컨테이너(.content)의 너비를 따름 */
     min-height: 40px; /* 기본 최소 높이 */
     padding: 10px; /* 내용물과 경계 사이에 10px의 패딩 추가 */
     overflow-y: auto; /* 스크롤바 숨김 */
-    resize: vertical; /* 크기 조절 비활성화 */
+    resize: none; /* 크기 조절 비활성화 */
     text-align: left;
     margin-top: 6px; /* 상단에만 마진 추가 */
     margin-bottom: 0; /* 하단 마진 없음 */
@@ -141,11 +142,13 @@ textarea#artcl_content1, textarea#artcl_content2, textarea#artcl_content3 {
 }
 
 textarea#feedback_content1, textarea#feedback_content2, textarea#feedback_content3 {
+    font-family: 'Malgun Gothic', sans-serif;
+    font-weight: normal; /* 더 가늘게 하려면 'lighter', '300' 등으로 설정 */
     width: 100%; /* 부모 컨테이너(.content)의 너비를 따름 */
     min-height: 10px; /* 기본 최소 높이 */
     padding: 10px; /* 내용물과 경계 사이에 10px의 패딩 추가 */
     overflow-y: auto; /* 스크롤바 숨김 */
-    resize: vertical; /* 크기 조절 비활성화 */
+    resize: none; /* 크기 조절 비활성화 */
     text-align: left;
     margin-top: 20px; /* 상단에만 마진 추가 */
     margin-bottom: 0; /* 하단 마진 없음 */

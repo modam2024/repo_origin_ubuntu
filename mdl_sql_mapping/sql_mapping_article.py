@@ -40,9 +40,6 @@ def sql_dao(request, sql_name, p_param):
                 params = (current_username, source_status, source_title, source_type)
                 cursor.execute(query, params)
 
-                print(query)
-                print(params)
-
             except Exception as e:
                 print("Database query failed:", e)
 

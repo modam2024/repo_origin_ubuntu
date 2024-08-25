@@ -1,4 +1,6 @@
-    $(document).ready(function() {
+    $(document).ready(function() { // applied
+        // 1초 동안 마우스 변경;
+        setCursorShap(1000);
       
         // Hidden 필드의 값들을 읽어서 입력 필드나 텍스트 영역에 설정
         $('#txt_word').val($('#wrd_word').val());

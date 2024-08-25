@@ -88,7 +88,6 @@ def test_english(request):
     lst_page_date_info = []
     lst_test_time = []
 
-    print(existing_pagedates)
     for rec_page_date in existing_pagedates:
         trgt_order_no, trgt_page_date = rec_page_date
 

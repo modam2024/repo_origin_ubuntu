@@ -998,20 +998,23 @@ def goto_mobile(request):
     try:
         mobile_query  = " UPDATE processed_words    "
         mobile_query += "    SET status      = 'C'  "
+        mobile_query += "      , init_status = 'A'  "
+        mobile_query += "      , start_date  = null "
         mobile_query += "      , finish_date = null "
         mobile_query += "  WHERE user_id     = %s   "
         mobile_query += "    AND src_title   = %s   "
-        mobile_query += "    AND init_status = %s   "
-        mobile_params = (current_username, srcTitle, "B")
+        mobile_params = (current_username, srcTitle)
         cursor.execute(mobile_query, mobile_params)
 
         mobile_query  = " UPDATE daily_voca  "
-        mobile_query += "    SET status      = 'C'  "
-        mobile_query += "      , finish_date = null "
+        mobile_query += "    SET status         = 'C'  "
+        mobile_query += "      , start_date     = null "
+        mobile_query += "      , priority_date  = null "
+        mobile_query += "      , finish_date    = null "
         mobile_query += "  WHERE user_id     = %s   "
         mobile_query += "    AND src_title   = %s   "
-        mobile_query += "    AND word in ( SELECT word FROM processed_words WHERE user_id = %s AND src_title = %s AND init_status = %s ) "
-        mobile_params = (current_username, srcTitle, current_username, srcTitle, "B")
+        mobile_query += "    AND word in ( SELECT word FROM processed_words WHERE user_id = %s AND src_title = %s ) "
+        mobile_params = (current_username, srcTitle, current_username, srcTitle)
         cursor.execute(mobile_query, mobile_params)
 
         mobile_query  = " UPDATE process_info       "

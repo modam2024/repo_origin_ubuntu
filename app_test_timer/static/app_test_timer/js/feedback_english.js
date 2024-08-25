@@ -1,8 +1,6 @@
-    $(document).ready(function() {
-
-        setTimeout(function() {
-            $("body").css('cursor', 'default');
-        }, 100); // 100 밀리초 후에 커서 스타일 적용
+    $(document).ready(function() { // applied
+        // 1초 동안 마우스 변경;
+        setCursorShap(1000);
 
         let init_fix_currentTime = $("#topicDurStart").val();
         let end_fix_currentTime  = $("#topicDurEnd").val();
@@ -129,8 +127,8 @@
 
         // TEST ENGLISH 클릭 이벤트
         $("#backButton").click(function() {
-            // 마우스 커서를 모래시계로 변경
-            $('body, body *').css('cursor', 'wait');
+            // 10초 동안 마우스 변경
+            setCursorShap(10000);
 
             $("#resMessage").val("테스트 페이지로 이동중입니다.");
 
