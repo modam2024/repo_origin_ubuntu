@@ -299,25 +299,31 @@ def sql_dao(request, sql_name, p_param):
         '''
         #########################################################
         # CALL ID : sqls_classified_words
-        # 테스트 질문 정보 쿼리 함수
-        # 작성일 : 2024.06.20
-        # 작업 : 특정 일자에 해당하는 저장된 테스트 질문 데이터를 읽어온다.
+        # 단어 학습 진행 상황 조회
+        # 작성일 : 2024.08.26
+        # 작업 : daily_voca 데이블의 타이틀에 대한 미완료, 완료 건수 조회
         ######################################################### '''
         if sql_name == "sqls_classified_words":
            v_trgt_page_date = p_param
 
-           select_query  = " SELECT  undone_tot_cnt, done_tot_cnt  "
-           select_query += "   FROM  process_info           "
-           select_query += "  WHERE  user_id = %s           "
-           select_query += "    AND  src_title      like %s "
-
+           select_query  = " SELECT "
+           select_query += "     SUM(CASE WHEN status = 'C' THEN 1 ELSE 0 END) as undone_tot_cnt, "
+           select_query += "     SUM(CASE WHEN status = 'D' THEN 1 ELSE 0 END) as done_tot_cnt    "
+           select_query += "   FROM  daily_voca            "
+           select_query += "  WHERE  user_id   =  %s       "
+           select_query += "    AND  src_title like %s     "
            select_param = (current_username, '%' + v_trgt_page_date + '%',)
 
            # 쿼리 실행
            cursor.execute(select_query, select_param)
            v_words_cnt    = cursor.fetchone()
-           v_undone_tot_cnt = int(v_words_cnt[0])
-           v_done_tot_cnt   = int(v_words_cnt[1])
+
+           if v_words_cnt:
+              v_undone_tot_cnt = v_words_cnt[0]
+              v_done_tot_cnt   = v_words_cnt[1]
+           else:
+               v_undone_tot_cnt = 0
+               v_done_tot_cnt   = 0
 
            rtn_value = {
                "undone_tot_cnt" : v_undone_tot_cnt,

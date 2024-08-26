@@ -45,7 +45,10 @@
 
             let sourceType  = "YBM(TEST)";
             let selChapter  = $('#pagedateList option:selected').val();
-            let sourceTitle = selChapter + " : " + $('#pagedateList option:selected').text().trim() + " Part 5" ;
+            let arr_pagedateList = $('#pagedateList option:selected').text().trim().split(":")
+            let v_pagedateList = arr_pagedateList[0].trim()
+
+            let sourceTitle = `Part 5 : ${selChapter} : ${v_pagedateList}`;
 
             let articleContent = $("#artcl_content1").val() + " " + $("#artcl_content2").val() + " " + $("#artcl_content3").val() + " ";
             articleContent += $("#lbl_a1").text() + " " + $("#lbl_a2").text() + " " + $("#lbl_a3").text() + " "
