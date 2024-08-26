@@ -269,22 +269,19 @@ def get_mean_kr_from_naver_dic(en_word):
     try:
         # Chrome 드라이버 경로 지정
         # driver_path = r'C:\pyDjangoDEV\mdmproj1\chromedriver-win64\chromedriver.exe'
-        print("1")
         url = "http://en.dict.naver.com/#/search?&query={}".format(en_word)
-        print("2")
+
         # 공통 함수의 webdriver를 사용해서 파싱한다.
         html, soup = proj_comn_func.url_parsing_with_webdriver(url, "1")
-        print("3")
+
         # 단어의 의미 추출
         meanings = []
         mean_list = soup.find(class_=["mean_list", "mean_list_multi", "mean_list multi", "word_class"])
-        print("4")
+
         # mean_list가 None이 아니면 실행될 코드
         if mean_list is not None:
-            print("5")
             print("meaning of {} is completed(1)".format(en_word))
         else:
-            print("6")
             html, soup = proj_comn_func.url_parsing_with_webdriver(url, "2")
             meanings = []
             mean_list = soup.find(class_=["mean_list", "mean_list_multi", "mean_list multi", "word_class"])
@@ -293,7 +290,7 @@ def get_mean_kr_from_naver_dic(en_word):
                print("meaning of {} is completed(2)".format(en_word))
             else:
                print("No elements found with the specified class(3).")
-        print("7")
+
         if mean_list:
             for li in mean_list.find_all("li"):
                 meaning = li.find("p", class_="mean")
@@ -306,7 +303,7 @@ def get_mean_kr_from_naver_dic(en_word):
                         meanings.append(extracted_text)
 
         meaning_kr = ""
-        print("8")
+
         for meaning in meanings:
             meaning_kr += meaning + "\n"
 
