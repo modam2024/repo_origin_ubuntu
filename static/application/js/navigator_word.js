@@ -206,3 +206,5 @@
 
     var remainingTime     = 90; // 타이머 시작 시간을 초 단위로 설정 (예: 1분 30초)
     var lastRemainingTime = 90; // 직전 클릭 시의 남은 시간을 저장할 변수
+
+    g_pagedateList2 = "";

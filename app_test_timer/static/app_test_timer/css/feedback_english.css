@@ -74,6 +74,20 @@ textarea#artcl_content1, textarea#artcl_content2, textarea#artcl_content3 {
     display: block;
 }
 
+.label-container {
+    width: 80%; /* .table-container와 동일한 너비 */
+    text-align: center;
+    margin-top: 8px; /* 상단 여백 추가 */
+    overflow-y: auto; /* 세로 스크롤바 자동 추가 */
+    max-height: 760px; /* 스크롤바가 필요할 때의 최대 높이 설정, 필요에 따라 조절 가능 */
+}
+
+/* Add margin to the label */
+label {
+    margin-top: 20px; /* Space between label and this container */
+    margin-bottom: 10px; /* Space below each label */
+}
+
 /* 리스트 항목을 세로로 배치하고 간격 조정 */
 .label-container ul {
     list-style: none; /* 리스트 스타일 제거 */

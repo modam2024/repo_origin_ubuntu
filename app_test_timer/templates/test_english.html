@@ -13,9 +13,11 @@
                <div id="navigator_header" class="navigator_header">
                     <ul>
                        <li><a href="#" id="submitButton"         style="color:#fff;font-weight: bold;">어휘분석</a></li>
-                       <li><a href="#" id="completeButton"       style="color:#fff;font-weight: bold;">정답보기</a></li>
+                       <li><a href="#" id="feedbackButton"       style="color:#fff;font-weight: bold;">해석보기</a></li>
+                       <li><a href="#"                           style="color:#fff;font-weight: bold;"> >| </a></li>
+                       <li><a href="#" id="completeButton"       style="color:#fff;font-weight: bold;">정답제출</a></li>
+                       <li><a href="#"                           style="color:#fff;font-weight: bold;"> | </a></li>
                        <li><a href="#" id="rs_completeButton"    style="color:#fff;font-weight: bold;">완료처리</a></li>
-
                     </ul>
                </div>
             </div>
@@ -32,7 +34,7 @@
                     <select id="pagedateList" onchange="selectedPageDate(this)">
 
                         {% for item in select_tag_info %}
-                        <option value="{{ item.order_no }}" data-page_date="{{ item.page_date }}"
+                        <option value="{{ item.order_no }}" data-page_date="{{ item.page_date }}" data-test_frq="{{ item.test_frq }}"
                              {% if item.page_date == test_page_info.0.trgt_page_date %}selected="selected"{% endif %}>
                             {{ item.page_date }} : {{ item.test_frq }}
                         </option>
@@ -134,30 +136,31 @@
                     <div id="time" style="margin-right: 10px;"><span style="color:black">Given Time:</span>  90 Sec</div>
                   <button id="start_btn">Start</button>
                 </div>
-                {% if lst_test_time and lst_test_time|length > 0 and lst_test_time|first|length > 0 %}
                 <div class="label-container">
-                    <ul>
-                        {% for inner_list in lst_test_time %}
-                            {% for item in inner_list %}
-                                <li>{{ item.0 }} : {{ item.1 }} Sec</li>
+                    {% if sum_test_time > 0 %}
+                        <ul>
+                            {% for inner_list in lst_test_time %}
+                                {% for item in inner_list %}
+                                    <li>{{ item.0 }} : {{ item.1 }} Sec</li>
+                                {% endfor %}
                             {% endfor %}
-                        {% endfor %}
-                    </ul>
-                    <label>test time: {{ sum_test_time }} sec [ remain time:
-                          {% if remaining_time < 0 %}
-                                <span style="color: red;"> {{ remaining_time }}</span> sec
-                           {% else %}
-                                remain time: {{ remaining_time }} sec
-                           {% endif %} ]</label>
-                </div>
-                {% endif %}
-                {% for item in lst_classified_words %}
-                    {% if item.undone_tot_cnt > 0 %}
-                        <div class="label-container">
-                            <p>- uncompleted words: {{ item.undone_tot_cnt }}</p>
-                        </div>
+                        </ul>
+                        <hr style="border: 2px solid rgb(170, 170, 170);">
+                        <label>overall test duration: {{ sum_test_time }} sec <br>
+                              [ remain time:
+                              {% if remaining_time < 0 %}
+                                    <span style="color: red;"> {{ remaining_time }}</span> sec
+                               {% else %}
+                                    {{ remaining_time }} sec
+                               {% endif %} / res.ratio: {{ crrct_res_ratio }} %]</label>
                     {% endif %}
-                {% endfor %}
+                    <hr style="border: 2px solid rgb(170, 170, 170);">
+                    {% for item in lst_classified_words %}
+                        {% if item.undone_tot_cnt > 0 %}
+                            <label> uncompleted words: {{ item.undone_tot_cnt }}</label>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>

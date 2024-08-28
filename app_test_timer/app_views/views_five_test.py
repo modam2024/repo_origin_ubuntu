@@ -105,7 +105,7 @@ def test_english(request):
         # 리스트에 딕셔너리 추가
         lst_page_date_info.append(dict_page_date_info)
 
-    v_test_time, sum_test_time = sql_statement.sql_dao(request, "sqls_test_times", selectd_wdate)
+    v_test_time, sum_test_time, remaining_time, crrct_res_ratio = sql_statement.sql_dao(request, "sqls_test_times", selectd_wdate)
 
     lst_test_time.append(v_test_time)
 
@@ -113,7 +113,8 @@ def test_english(request):
     values['select_tag_info'] = lst_page_date_info
     values['lst_test_time']   = lst_test_time
     values['sum_test_time']   = sum_test_time
-    values['remaining_time']  = 90 - sum_test_time
+    values['remaining_time']  = remaining_time
+    values['crrct_res_ratio'] = crrct_res_ratio
 
     # 어휘분석의 결과 리스트
     v_classified_words = sql_statement.sql_dao(request, "sqls_classified_words", selectd_wdate)
@@ -149,7 +150,7 @@ def test_result(request):
 
         int_test_no = int(v_test_no) + 1
 
-        # tb_part5_feedback_page 에는 마지막 결과만 남기기 위해서 먼저 삭제한다.
+        # tb_part5_feedback_page 와 tb_part5_feedback_page_statistic 에는 마지막 결과만 남기기 위해서 먼저 삭제한다.
         if int_test_no > 0:
             feedback_page_value = {
                 'trgt_order_no' : v_trgt_order_no,
@@ -157,11 +158,22 @@ def test_result(request):
             }
             res_sql_delete = sql_statement.sql_dao(request, "sqld_feedback_page_content", feedback_page_value)
 
+        statistic_value = {
+            'trgt_order_no'  : "",
+            'trgt_page_date' : "",
+        }
+
         for each_feedback_page_content in dict_feedback_page_content:
             each_feedback_page_content['test_no']         = int_test_no
             each_feedback_page_content['trgt_order_no']   = v_trgt_order_no
             each_feedback_page_content['trgt_page_date']  = v_trgt_page_date
+
+            statistic_value['trgt_order_no']   = v_trgt_order_no
+            statistic_value['trgt_page_date']  = v_trgt_page_date
+
             res_sql_insert = sql_statement.sql_dao(request, "sqli_feedback_page_content", each_feedback_page_content)
+
+        res_sql_statistc = sql_statement.sql_dao(request, "sqli_feedback_page_statistic", statistic_value)
 
     except Exception as e:
         print("feedback & test_result content creation failed:", e)

@@ -99,11 +99,12 @@
             let sourceUrl   = $("#hddn_url").val();
             let sourceTitle = $("#selChapter").val();
             let sourceType  = $("#searchGrpCd").val();
+
             let url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&source_status=C';
             //window.location.href = url;
             window.open(url, '_blank');
         });
-        
+
         $("#searchButton").click(function() {
             $("#resMessage").val("조회 중입니다.");
             let selectdChapter = $('#titleList option:selected').val();
@@ -168,7 +169,40 @@
                 }
             });
         });
-        
+
+        $("#convertExampleEng1").click(function() {
+            var question_no    = 1
+            var test_order_no  = $("#test_order_no").val();
+            var test_page_date = $("#test_page_date").val();
+
+            let sourceTitle = `Part 5 : ${test_order_no} : ${test_page_date}`;
+
+            var articleContent = $("#artcl_content1").val();
+            let sourceUrl  = BASE_URL + "app_test_timer/feedback-english/?&test_order_no=" + test_order_no + "&test_page_date=" + test_page_date;
+            let sourceType = "YBM(TEST)";
+
+            $.ajax({
+                url: "/app_test_timer/convert_sentence/",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    "question_no" : question_no,
+                    "article"     : articleContent,
+                    "sourceUrl"   : sourceUrl,
+                    "sourceTitle" : sourceTitle,
+                    "sourceType"  : sourceType,
+                    "topic_num"   : test_order_no
+                }),
+                success: function (response) {
+                    $("#resMessage").val("OK");
+                },
+                error: function (xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText;
+                    $("#result").html("Error - " + errorMessage);
+                }
+            });
+        });
+
         // txt_word 값과 일치하는 word 링크에 스타일 적용하는 함수
         function applyActiveWordStyle() {
             // 현재 txt_word 값 가져오기
@@ -216,6 +250,20 @@
             var currentText = $(this).val();
             $(this).val(currentText.replace(/\n/g, " "));
             $(this).val(currentText.replace(/  /g, " "));
+        });
+
+        // 영문 예문 클릭 이벤트 핸들러 추가
+        $("#speakExampleEng1").click(function() {
+           var txtAreaExampleEng1 = $('#artcl_content1').text().trim();
+           splitTextAndSpeakBySentence(txtAreaExampleEng1);
+        });
+        $("#speakExampleEng2").click(function() {
+           var txtAreaExampleEng2 = $('#artcl_content2').text().trim();
+           splitTextAndSpeakBySentence(txtAreaExampleEng2);
+        });
+        $("#speakExampleEng3").click(function() {
+           var txtAreaExampleEng3 = $('#artcl_content3').text().trim();
+           splitTextAndSpeakBySentence(txtAreaExampleEng3);
         });
     });
     

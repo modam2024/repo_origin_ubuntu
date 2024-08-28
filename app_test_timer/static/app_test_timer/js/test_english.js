@@ -112,6 +112,21 @@
             window.open(url, '_self');
         });
 
+        $("#feedbackButton").click(function() {
+            let sel_orderno      = $('#pagedateList').val();
+            let selectedText     = $('#pagedateList option:selected').text();
+            let arr_selectedText = selectedText.split(":");
+            selectedText         = arr_selectedText[0].trim();
+            let sel_feqno        = parseInt(arr_selectedText[1].trim());
+
+            if (sel_feqno > 0) {
+                let feedback_url = BASE_URL + "app_test_timer/feedback-english/?&test_order_no=" + sel_orderno + "&test_page_date=" + selectedText;
+                window.open(feedback_url, "_blank")
+            } else {
+                alert("제출된 회차가 없습니다.")
+            }
+        });
+
         $("#completeButton").click(function() {
             // 10초 동안 마우스 변경
             setCursorShap(10000);
@@ -124,13 +139,22 @@
             let test_time2 = parseInt($("#stop_time2").text(), 10);
             let test_time3 = parseInt($("#stop_time3").text(), 10);
 
+            let sum_test_time = test_time1 + test_time2 + test_time3;
+
+            if (sum_test_time === 0) {
+                alert("문제 푼 시간이 0 입니다.");
+                $('body, body *').css('cursor', 'default');
+                return;  // 함수 실행 중단
+            }
+
             let unselected = [];
             if (opt_ans1 === "1") { unselected.push("문제 1"); }
             if (opt_ans2 === "2") { unselected.push("문제 2"); }
             if (opt_ans3 === "3") { unselected.push("문제 3"); }
 
-            if (unselected.length > 0) {
+            if ( unselected.length > 0 && unselected.length < 3 ) {
                 alert("정답 선택이 안된 문제가 있습니다: [" + unselected.join(", ") + "]");
+                $('body, body *').css('cursor', 'default');
                 return;  // 함수 실행 중단
             }
 
@@ -265,4 +289,3 @@
 
         $("#resMessage").val("조회가 완료됐습니다.");
     });
-    

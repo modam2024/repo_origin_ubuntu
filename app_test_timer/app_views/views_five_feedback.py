@@ -60,14 +60,15 @@ def feedback_english(request):
             # 리스트에 딕셔너리 추가
             lst_page_date_info.append(dict_page_date_info)
 
-        v_test_time, sum_test_time = sql_statement.sql_dao(request, "sqls_test_times", selectd_wdate)
+        v_test_time, sum_test_time, remaining_time, crrct_res_ratio = sql_statement.sql_dao(request, "sqls_test_times", selectd_wdate)
         lst_test_time.append(v_test_time)
 
         # 값을 딕셔너리에 할당할 때는 키를 사용하여 접근
-        values['select_tag_info'] = lst_page_date_info
-        values['lst_test_time']   = lst_test_time
-        values['sum_test_time']   = sum_test_time
-        values['remaining_time']  = 90 - sum_test_time
+        values['select_tag_info']  = lst_page_date_info
+        values['lst_test_time']    = lst_test_time
+        values['sum_test_time']    = sum_test_time
+        values['remaining_time']   = remaining_time
+        values['crrct_res_ratio']  = crrct_res_ratio
 
     except Exception as e:
         print("feedback content failed:", e)

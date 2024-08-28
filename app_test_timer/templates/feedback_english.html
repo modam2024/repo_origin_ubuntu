@@ -40,7 +40,9 @@
                         {% if question1.result_value == 'Y' %}정답{% else %}오답{% endif %}
                       </strong>
                       <strong>, Your Answer : {{ question1.your_answer | upper }}</strong>
-                    ]
+                    ] &nbsp;
+                  <button type="button" id="speakExampleEng1">Speaking</button>&nbsp;
+                  <button type="button" id="convertExampleEng1">converting</button>&nbsp;
                   </label>
                   <textarea id="artcl_content1" rows="3" placeholder="Enter article here..." readonly>{{  question1.question_content }}</textarea><br>
                   <div class="toeic-test1">
@@ -65,7 +67,8 @@
                         {% if question2.result_value == 'Y' %}정답{% else %}오답{% endif %}
                       </strong>
                       <strong>, Your Answer : {{ question2.your_answer | upper }}</strong>
-                    ]
+                    ] &nbsp;
+                  <button type="button" id="speakExampleEng2">Speaking</button>&nbsp;
                   </label>
                   <textarea id="artcl_content2" rows="3" placeholder="Enter article here..." readonly>{{  question2.question_content }}</textarea><br>
                   <div class="toeic-test2">
@@ -90,7 +93,8 @@
                         {% if question3.result_value == 'Y' %}정답{% else %}오답{% endif %}
                       </strong>
                       <strong>, Your Answer : {{ question3.your_answer | upper }}</strong>
-                    ]
+                    ]&nbsp;
+                  <button type="button" id="speakExampleEng3">Speaking</button>&nbsp;
                   </label>
                   <textarea id="artcl_content3" rows="3" placeholder="Enter article here..." readonly>{{  question3.question_content }}</textarea><br>
                   <div class="toeic-test3">
@@ -121,17 +125,25 @@
                </div>
             </div>
             <div class="right-side">
-                {% if lst_test_time and lst_test_time|length > 0 and lst_test_time|first|length > 0 %}
-                <div class="time-display-container">
-                    <label>test time: {{ sum_test_time }} sec [ remain time: {{ remaining_time }} sec ]</label>
-                    <ul>
-                        {% for inner_list in lst_test_time %}
-                            {% for item in inner_list %}
-                                <li>{{ item.0 }} : {{ item.1 }} Sec</li>
+                {% if sum_test_time > 0 %}
+                    <div class="label-container">
+                        <span>TEST INFORMATION</span>
+                        <ul>
+                            {% for inner_list in lst_test_time %}
+                                {% for item in inner_list %}
+                                    <li>{{ item.0 }} : {{ item.1 }} Sec</li>
+                                {% endfor %}
                             {% endfor %}
-                        {% endfor %}
-                    </ul>
-                </div>
+                        </ul>
+                        <label>overall test duration: {{ sum_test_time }} sec <br>
+                        <hr style="border: 2px solid rgb(170, 170, 170);">
+                        [ remain time:
+                          {% if remaining_time < 0 %}
+                                <span style="color: red;"> {{ remaining_time }}</span> sec
+                           {% else %}
+                                {{ remaining_time }} sec
+                           {% endif %} / res.ratio: {{ crrct_res_ratio }} %]</label>
+                    </div>
                 {% endif %}
             </div>
         </div>

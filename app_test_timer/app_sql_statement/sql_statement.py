@@ -76,33 +76,56 @@ def sql_dao(request, sql_name, p_param):
 
         '''
         ############################################################
-        # 최대 테스트 횟수 조회 함수
-        # 작성일 : 2024.06.20
-        # 작업 : 테스트 페이지별 최대 테스트 횟수를 가져온다.   
+        # 문항별 테스트 시간 & 통계 조회 (feedback 테이블)
+        # 작성일 : 2024.08.27
+        # 작업 : feedback 테이블에서 문항별 테스트 시간과 통계을 읽어온다.   
         ######################################################### '''
         if sql_name == "sqls_test_times":
             v_trgt_page_date = p_param
 
-            select_query = "  SELECT question_no, test_time "
-            select_query += "   FROM tb_part5_feedback_page  "
-            select_query += "  WHERE user_id = %s           "
-            select_query += "    AND  trgt_page_date = %s   "
-            select_param = (current_username, v_trgt_page_date,)
-
-            # 쿼리 실행
-            cursor.execute(select_query, select_param)
-            res_test_times = cursor.fetchall()
-
-            sum_test_time = 0
+            res_test_times  = []
+            sum_test_time   = 0
+            remaining_time  = 0
+            crrct_res_ratio = 0
 
             try:
-                for res_test_time in res_test_times:
-                    sum_test_time += int(res_test_time[1])
+                select_query = "  SELECT question_no, test_time "
+                select_query += "   FROM tb_part5_feedback_page  "
+                select_query += "  WHERE user_id = %s           "
+                select_query += "    AND  trgt_page_date = %s   "
+                select_param = (current_username, v_trgt_page_date,)
+
+                # 쿼리 실행
+                cursor.execute(select_query, select_param)
+                res_test_times = cursor.fetchall()
+
+                if len(res_test_times) == 0:
+                    res_test_times = []
+
+                select_sttc_query  = "  SELECT sum_test_time, remaining_time, crrct_res_ratio "
+                select_sttc_query += "   FROM tb_part5_feedback_page_statistic               "
+                select_sttc_query += "  WHERE user_id = %s           "
+                select_sttc_query += "    AND  trgt_page_date = %s   "
+                select_sttc_param  = (current_username, v_trgt_page_date,)
+
+                # 쿼리 실행
+                cursor.execute(select_sttc_query, select_sttc_param)
+                statistic_results = cursor.fetchone()
+
+                if statistic_results is None:
+                    sum_test_time   = 0
+                    remaining_time  = 0
+                    crrct_res_ratio = 0
+                else:
+                    sum_test_time   = statistic_results[0]
+                    remaining_time  = statistic_results[1]
+                    crrct_res_ratio = statistic_results[2]
+
             except ValueError:
                 # 적절한 오류 처리
                 print("Error: Non-integer data found.")
 
-            return res_test_times, sum_test_time
+            return res_test_times, sum_test_time, remaining_time, crrct_res_ratio
 
         '''
         #######################################################
@@ -416,6 +439,80 @@ def sql_dao(request, sql_name, p_param):
                 cursor.execute(insert_query, insert_params)
             return "OK"
 
+        '''
+        ############################################################
+        # CALL ID : sqli_feedback_page_statistic
+        # 함수명   : 토익 PART 5 피드백 화면 정보 저장
+        # 작성일   : 2024.08.23
+        # 작업     : tb_part5_feedback_page 테이블과 tb_part5_result_hist
+        #            테이블에 데이터 생성한다.         
+        ############################################################  '''
+        if sql_name == "sqli_feedback_page_statistic":
+            each_feedback_page_content = p_param
+            v_trgt_order_no = each_feedback_page_content['trgt_order_no']
+            v_trgt_page_date = each_feedback_page_content['trgt_page_date']
+
+            insert_sttc_query = " INSERT INTO tb_part5_feedback_page_statistic "
+            insert_sttc_query += " (user_id, trgt_order_no, trgt_page_date, sum_test_time, remaining_time, crrct_res_ratio ) "
+            insert_sttc_query += " SELECT user_id, trgt_order_no, trgt_page_date, SUM(test_time), 90-SUM(test_time), ROUND(SUM(test_time) / 90 * 100, 1) "
+            insert_sttc_query += "   FROM  tb_part5_feedback_page  "
+            insert_sttc_query += "  WHERE  user_id        = %s     "
+            insert_sttc_query += "    AND  trgt_order_no  = %s     "
+            insert_sttc_query += "    AND  trgt_page_date = %s     "
+            insert_sttc_query += "  GROUP BY user_id, trgt_order_no, trgt_page_date "
+            insert_sttc_params = ( current_username, v_trgt_order_no, v_trgt_page_date )
+
+            cursor.execute(insert_sttc_query, insert_sttc_params)
+
+        '''    
+        ############################################################
+        # CALL ID : sqli_insert_tb_converted_sentn
+        # 함수명   : 변환된 문장을 저장한다.   
+        # 작성일   : 2024.07.02
+        # 작업     : 변환된 문장을 저장한다.   
+        ############################################################  '''
+        if sql_name == "sqli_insert_tb_converted_sentn":
+            question_no      = p_param["question_no"]
+            source_url       = p_param["source_url"]
+            source_title     = p_param["source_title"]
+            source_type      = p_param["source_type"]
+            topic_num        = p_param["topic_num"]
+            list_rslt_sentns = p_param["list_rslt_sentns"]
+
+            int_test_cnt = 0
+
+            for converted_sentn, original_sentn in list_rslt_sentns:
+                str_converted_sentn      = converted_sentn
+                str_original_sentn       = original_sentn
+                str_whitespace_converted = ""
+                str_translated_sentn     = ""
+
+                topic_num = topic_num + "-" + question_no
+
+                int_test_cnt += 1
+
+                ins_query = " INSERT INTO tb_converted_sentn "
+                ins_query += " (no, user_id, topic_num, whitespace_converted, converted_sentn, original_sentn, translated_sentn, src_url, group_code, src_title) "
+                ins_query += (
+                    " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
+                )
+                ins_params = (
+                    question_no,
+                    current_username,
+                    topic_num,
+                    str_whitespace_converted,
+                    str_converted_sentn,
+                    str_original_sentn,
+                    str_translated_sentn,
+                    source_url,
+                    source_type,
+                    source_title,
+                )
+
+                cursor.execute(ins_query, ins_params)
+
+            return int_test_cnt
+
         ''' 
         ##############
          UPDATE BLOCK
@@ -438,6 +535,13 @@ def sql_dao(request, sql_name, p_param):
             p_trgt_page_date = p_param['trgt_page_date']
 
             delete_query  = " DELETE FROM tb_part5_feedback_page "
+            delete_query += "  WHERE  user_id        = %s "
+            delete_query += "    AND  trgt_order_no  = %s "
+            delete_query += "    AND  trgt_page_date = %s "
+            delete_param = (current_username, p_trgt_order_no, p_trgt_page_date,)
+            cursor.execute(delete_query, delete_param)
+
+            delete_query  = " DELETE FROM tb_part5_feedback_page_statistic "
             delete_query += "  WHERE  user_id        = %s "
             delete_query += "    AND  trgt_order_no  = %s "
             delete_query += "    AND  trgt_page_date = %s "
