@@ -13,16 +13,16 @@
     // WORD CLASS LIST 클릭 이벤트
     $("#wordClassList").click(function(e) {
         e.preventDefault();
-        // 30초 동안 마우스 변경;
-        setCursorShap(30000);
+        // 3초 동안 마우스 변경;
+        setCursorShap(3000);
         window.location.href = BASE_URL + 'article/';
     });
 
     // NEWS SITES 클릭 이벤트
     $("#newsSites").click(function(e) {
         e.preventDefault();
-        // 30초 동안 마우스 변경;
-        setCursorShap(30000);
+        // 3초 동안 마우스 변경;
+        setCursorShap(3000);
 
         $("#resMessage").val("기사 생성(조회) 중입니다.");
         window.location.href = BASE_URL + 'app_news_study/news_study/';
@@ -31,8 +31,8 @@
     // WORD CHECK LIST 클릭 이벤트
     $("#wordCheckList").click(function(e) {
         e.preventDefault();
-        // 30초 동안 마우스 변경;
-        setCursorShap(30000);
+        // 3초 동안 마우스 변경;
+        setCursorShap(3000);
         window.location.href = BASE_URL + 'article/main-wordcheck/?source_url=&source_title=&source_type=NEWS&source_status=C';
     });
     
@@ -53,8 +53,8 @@
     $("#testEnglish").click(function(e) {
         e.preventDefault();
         $("#resMessage").val("조회 중입니다.");
-        // 30초 동안 마우스 변경;
-        setCursorShap(30000);
+        // 3초 동안 마우스 변경;
+        setCursorShap(3000);
 
         var url = BASE_URL;
         url = url + "app_test_timer/test-english/?check=max&chapter=&status=C";
@@ -62,8 +62,8 @@
     });
 
     function openDic(word) {
-        // 30초 동안 마우스 변경;
-        setCursorShap(30000);
+        // 3초 동안 마우스 변경;
+        setCursorShap(3000);
         var encodedWord = encodeURIComponent(word); // Encodes the word for URL
         var url = "http://en.dict.naver.com/#/search?query=" + encodedWord;
         var popupSpecs = "width=600,height=1000,left=200,top=10,resizable=yes,scrollbars=yes,status=yes";
@@ -179,8 +179,8 @@
     // TEST ENGLISH 클릭 이벤트
     function selectedPageDate(selectElement) {
         $("#resMessage").val("조회 중입니다.");
-        // 30초 동안 마우스 변경;
-        setCursorShap(30000);
+        // 3초 동안 마우스 변경;
+        setCursorShap(3000);
         // 현재 선택된 옵션을 찾습니다.
         var selectedOption = selectElement.options[selectElement.selectedIndex];
         // 선택된 옵션에서 data-page_date 속성을 읽어옵니다.
@@ -204,7 +204,7 @@
     // 이전에 선택한 질문을 저장할 변수
     var lastQuestion = null;
 
-    var remainingTime     = 90; // 타이머 시작 시간을 초 단위로 설정 (예: 1분 30초)
+    var remainingTime     = 90; // 타이머 시작 시간을 초 단위로 설정 (예: 1분 3초)
     var lastRemainingTime = 90; // 직전 클릭 시의 남은 시간을 저장할 변수
 
     g_pagedateList2 = "";
