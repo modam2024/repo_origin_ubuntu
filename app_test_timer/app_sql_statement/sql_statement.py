@@ -507,11 +507,12 @@ def sql_dao(request, sql_name, p_param):
 
             if v_test_batch_hist_cnt == 1:
                 print("already inserted in tb_part5_batch_hist")
+                sql_dao(request, "sqlu_batch_update_date", p_param)
             else:
                 batch_query = " INSERT INTO tb_part5_batch_hist "
-                batch_query += " ( trgt_order_no, trgt_page_date, prve_page_date, next_page_date ) "
-                batch_query += " VALUES ( %s, %s, %s, %s ) "
-                batch_params = ( v_trgt_order_no, v_trgt_page_date, v_prve_page_date, v_next_page_date )
+                batch_query += " ( trgt_order_no, trgt_page_date, prve_page_date, next_page_date, update_date ) "
+                batch_query += " VALUES ( %s, %s, %s, %s, date_format(now(), '%Y-%m-%d %H:%i:%S') ) "
+                batch_params = ( v_trgt_order_no, v_trgt_page_date, v_prve_page_date, v_next_page_date, )
 
                 cursor.execute(batch_query, batch_params)
 
@@ -595,6 +596,27 @@ def sql_dao(request, sql_name, p_param):
         ##############
          UPDATE BLOCK
         ############## '''
+        '''
+        ############################################################
+        # CALL ID : sqlu_batch_update_date
+        # 함수명   : 배치 히스토리 테이블의 update_date 갱신  
+        # 작성일   : 2024.08.31
+        # 작업     : 배치 히스토리 테이블의 update_date 갱신 작업   
+        ############################################################ '''
+        if sql_name == "sqlu_batch_update_date":
+
+            v_trgt_order_no  = p_param['trgt_order_no']
+            v_trgt_page_date = p_param['trgt_page_date']
+
+            upd_batch_query  = " UPDATE tb_part5_batch_hist  "
+            upd_batch_query += "    SET update_date = date_format(now(),'%Y-%m-%d %H:%i:%S')   "
+            upd_batch_query += " WHERE  trgt_order_no  = %s  "
+            upd_batch_query += "   AND  trgt_page_date = %s  "
+            upd_batch_params = (
+                v_trgt_order_no,
+                v_trgt_page_date,
+            )
+            cursor.execute(upd_batch_query, upd_batch_params)
 
         ''' 
         ##############
