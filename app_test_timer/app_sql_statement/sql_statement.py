@@ -206,7 +206,6 @@ def sql_dao(request, sql_name, p_param):
         ############################################################# '''
         if sql_name == "sqls_test_info_if_first":
 
-            selectd_version = request.GET.get("check")
             temp_next_page_date = ""
 
             select_query = "  SELECT DISTINCT trgt_page_date, next_page_date, last_page_flag, prve_page_date "
@@ -216,7 +215,6 @@ def sql_dao(request, sql_name, p_param):
             select_param  = (current_username,)
 
             try:
-                temp_trgt_page_date = ""
                 # 쿼리 실행
                 cursor.execute(select_query, select_param)
                 existing_pagedates = cursor.fetchall()
@@ -227,9 +225,9 @@ def sql_dao(request, sql_name, p_param):
                 temp_trgt_page_date = first_page_data_list[0]
                 temp_next_page_date = first_page_data_list[1]
                 temp_last_page_flag = first_page_data_list[2]
-                temp_prve_page_date = first_page_data_list[3]
 
                 if temp_last_page_flag == "Y":  # last_page_flag는 튜플의 2번째 요소이므로 인덱스는 1
+                   # Y 일 경우 trgt_page_date 에 해당하는 사이트를 다시 파싱해서 next_page_date 가 존재하는지 알아본다.
                    temp_next_page_date = call_sql_update_next_page_date(request, temp_trgt_page_date)
 
                 if temp_next_page_date == "":
@@ -294,6 +292,25 @@ def sql_dao(request, sql_name, p_param):
             return int_batch_cnt
 
         '''
+        ############################################################
+        # CALL ID : sqls_batch_max_date
+        # 함수명   : 배치 히스토리 테이블의 가장 최근 일자 조회  
+        # 작성일   : 2024.08.31
+        # 작업     : 배치 히스토리 테이블의 가장 최근 일자 확인   
+        ############################################################ '''
+        if sql_name == "sqls_batch_max_date":
+
+            select_batch_query  = " SELECT  max(trgt_page_date) "
+            select_batch_query += "   FROM  tb_part5_batch_hist "
+
+            # 쿼리 실행
+            cursor.execute(select_batch_query,)
+            v_batch_max_date = cursor.fetchone()
+            batch_max_date   = v_batch_max_date[0]
+
+            return batch_max_date
+
+        '''
         #############################################################
         # 테스트 정보 쿼리 함수
         # 작성일 : 2024.06.20
@@ -304,8 +321,8 @@ def sql_dao(request, sql_name, p_param):
 
             df_page_info = pd.DataFrame()
 
-            select_query = "  SELECT DISTINCT trgt_order_no, trgt_page_date, prve_page_date, next_page_date, last_page_flag  "
-            select_query += "   FROM tb_part5_test_page   "
+            select_query  = " SELECT DISTINCT trgt_order_no, trgt_page_date, prve_page_date, next_page_date, last_page_flag  "
+            select_query += "   FROM tb_part5_test_page  "
             select_query += "  WHERE user_id = %s        "
             select_query += "    AND trgt_page_date = %s "
             select_param = (current_username, v_trgt_page_date,)

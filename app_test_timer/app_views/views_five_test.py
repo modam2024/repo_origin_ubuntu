@@ -26,8 +26,14 @@ def test_english(request):
 
     if selectd_version == "max":
        # request.GET을 mutable로 만들기
-       request.GET   = request.GET.copy()
-       tmp_selectd_wdate = sql_statement.sql_dao(request, "sqls_test_info_if_first", "")
+       request.GET = request.GET.copy()
+
+       if selectd_status == "C":
+           # 배치 작업을 경우는 배치 테이블의 최대 일자를 읽어 온다. 형태소 분석 안한다.
+           tmp_selectd_wdate = sql_statement.sql_dao(request, "sqls_batch_max_date", "")
+       else:
+           tmp_selectd_wdate = sql_statement.sql_dao(request, "sqls_test_info_if_first", "")
+
        # 새로운 값 추가
        request.GET['wdate'] = tmp_selectd_wdate
 
