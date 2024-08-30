@@ -405,12 +405,12 @@ def sql_dao(request, sql_name, p_param):
 
         '''
         ############################################################
-        # CALL ID : sqli_test_page_content_cnt
+        # CALL ID : sqli_test_page_content_create
         # 함수명   : 토익 PART 5 테스트 정보 저장
         # 작성일   : 2024.08.23
         # 작업     : tb_part5_test_page 테이블에 데이터 생성한다.         
         ############################################################  '''
-        if sql_name == "sqli_test_page_content_cnt":
+        if sql_name == "sqli_test_page_content_create":
 
             v_trgt_order_no  = p_param['trgt_order_no']
             v_trgt_page_date = p_param['trgt_page_date']

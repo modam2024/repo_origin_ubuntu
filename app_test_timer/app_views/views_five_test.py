@@ -75,7 +75,7 @@ def test_english(request):
                 'choice_d': v_choice_d,
             }
 
-            res_value = sql_statement.sql_dao(request, "sqli_test_page_content_cnt", test_values)
+            res_value = sql_statement.sql_dao(request, "sqli_test_page_content_create", test_values)
 
     except Exception as e:
         print("test insert failed:", e)
