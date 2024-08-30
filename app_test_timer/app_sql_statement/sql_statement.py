@@ -438,6 +438,21 @@ def sql_dao(request, sql_name, p_param):
 
                 cursor.execute(insert_query, insert_params)
 
+            return "OK"
+
+        '''
+        ############################################################
+        # CALL ID : sqli_part5_batch_hist
+        # 함수명   : 토익 PART 5 문제 자동 생성 스크립트용
+        # 작성일   : 2024.08.31
+        # 작업     : 한시간 단위로 신규 토익 PART 5 문제 자동 생성 한다.           
+        ############################################################  '''
+        if sql_name == "sqli_part5_batch_hist":
+
+            v_trgt_order_no  = p_param['trgt_order_no']
+            v_trgt_page_date = p_param['trgt_page_date']
+            v_prve_page_date = p_param['prve_page_date']
+            v_next_page_date = p_param['next_page_date']
 
             batch_query = " INSERT INTO tb_part5_batch_hist "
             batch_query += " ( trgt_order_no, trgt_page_date, prve_page_date, next_page_date ) "
