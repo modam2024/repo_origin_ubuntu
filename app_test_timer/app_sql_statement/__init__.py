@@ -7,11 +7,9 @@ def create_connection(request):
     try:
         conn = proj_comn_func.fn_connector(request)
         cursor = conn.cursor()
-        # current_username = request.user.username
-        # if current_username == "":
-        #     current_username = "polomono"
-
-        current_username = "polomono"
+        current_username = request.user.username
+        if current_username == "":
+            current_username = "polomono"
 
         return conn, cursor, current_username
     except Exception as e:
