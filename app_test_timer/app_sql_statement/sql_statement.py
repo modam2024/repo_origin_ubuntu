@@ -248,20 +248,50 @@ def sql_dao(request, sql_name, p_param):
         # 작업     : 테스트 문제 존재 여부로 판단해서 INSERT 여부 결정 목적   
         ############################################################ '''
         if sql_name == "sqls_test_page_content_cnt":
-            v_trgt_page_date = p_param
+            v_trgt_order_no  = p_param['trgt_order_no']
+            v_trgt_page_date = p_param['trgt_page_date']
+            v_question_no    = p_param['question_no']
 
             select_query  = " SELECT  count(*) as cnt     "
             select_query += "   FROM  tb_part5_test_page  "
             select_query += "  WHERE  user_id = %s        "
+            select_query += "    AND  trgt_order_no  = %s "
             select_query += "    AND  trgt_page_date = %s "
+            select_query += "    AND  question_no    = %s "
 
-            select_param = (current_username, v_trgt_page_date,)
+            select_param = (current_username, v_trgt_order_no, v_trgt_page_date, v_question_no)
 
             # 쿼리 실행
             cursor.execute(select_query, select_param)
             v_test_cnt   = cursor.fetchone()
             int_test_cnt = int(v_test_cnt[0])
+
             return int_test_cnt
+
+        '''
+        ############################################################
+        # CALL ID : sqls_part5_batch_hist
+        # 함수명   : 배치 히스토리 입력 여부 판단 함수  
+        # 작성일   : 2024.08.31
+        # 작업     : 배치 히스토리에 입력된 데이터가 있는지 확인   
+        ############################################################ '''
+        if sql_name == "sqls_part5_batch_hist":
+            v_trgt_order_no  = p_param['trgt_order_no']
+            v_trgt_page_date = p_param['trgt_page_date']
+
+            select_batch_query  = " SELECT  count(*) as cnt     "
+            select_batch_query += "   FROM  tb_part5_batch_hist "
+            select_batch_query += "  WHERE  trgt_order_no  = %s "
+            select_batch_query += "    AND  trgt_page_date = %s "
+
+            select_batch_param = ( v_trgt_order_no, v_trgt_page_date )
+
+            # 쿼리 실행
+            cursor.execute(select_batch_query, select_batch_param)
+            v_batch_cnt   = cursor.fetchone()
+            int_batch_cnt = int(v_batch_cnt[0])
+
+            return int_batch_cnt
 
         '''
         #############################################################
@@ -425,9 +455,11 @@ def sql_dao(request, sql_name, p_param):
             v_choice_c = p_param['choice_c']
             v_choice_d = p_param['choice_d']
 
-            v_test_page_content_cnt = sql_dao(request, "sqls_test_page_content_cnt", v_trgt_page_date)
+            v_test_page_content_cnt = sql_dao(request, "sqls_test_page_content_cnt", p_param)
 
-            if v_test_page_content_cnt < 3:
+            if v_test_page_content_cnt == 1:
+                print("already inserted in tb_part5_test_page")
+            else:
                 insert_query = " INSERT INTO tb_part5_test_page "
                 insert_query += " (user_id, trgt_order_no, trgt_page_date, prve_page_date, next_page_date, last_page_flag,  "
                 insert_query += " question_no, question_content, choice_a, choice_b, choice_c, choice_d ) "
@@ -454,12 +486,17 @@ def sql_dao(request, sql_name, p_param):
             v_prve_page_date = p_param['prve_page_date']
             v_next_page_date = p_param['next_page_date']
 
-            batch_query = " INSERT INTO tb_part5_batch_hist "
-            batch_query += " ( trgt_order_no, trgt_page_date, prve_page_date, next_page_date ) "
-            batch_query += " VALUES ( %s, %s, %s, %s ) "
-            batch_params = ( v_trgt_order_no, v_trgt_page_date, v_prve_page_date, v_next_page_date )
-            print(batch_query, batch_params)
-            cursor.execute(batch_query, batch_params)
+            v_test_batch_hist_cnt = sql_dao(request, "sqls_part5_batch_hist", p_param)
+
+            if v_test_batch_hist_cnt == 1:
+                print("already inserted in tb_part5_batch_hist")
+            else:
+                batch_query = " INSERT INTO tb_part5_batch_hist "
+                batch_query += " ( trgt_order_no, trgt_page_date, prve_page_date, next_page_date ) "
+                batch_query += " VALUES ( %s, %s, %s, %s ) "
+                batch_params = ( v_trgt_order_no, v_trgt_page_date, v_prve_page_date, v_next_page_date )
+
+                cursor.execute(batch_query, batch_params)
 
             return "OK"
 
