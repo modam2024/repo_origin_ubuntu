@@ -300,8 +300,8 @@ def sql_dao(request, sql_name, p_param):
         ############################################################ '''
         if sql_name == "sqls_batch_max_date":
 
-            select_batch_query  = " SELECT  ifnull(max(trgt_page_date) ,'0') as trgt_page_date  "
-            select_batch_query += "   FROM  tb_part5_test_page "
+            select_batch_query  = " SELECT  ifnull(max(trgt_page_date) ,'00000000') as trgt_page_date  "
+            select_batch_query += "   FROM  tb_part5_batch_hist "
 
             # 쿼리 실행
             cursor.execute(select_batch_query,)
