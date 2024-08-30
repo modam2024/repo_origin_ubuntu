@@ -70,7 +70,6 @@ def test_batch(request):
                 'choice_b': v_choice_b,
                 'choice_c': v_choice_c,
                 'choice_d': v_choice_d,
-                'work_type': "batch",
             }
 
             res_value = sql_statement.sql_dao(request, "sqli_test_page_content_create", test_values)
