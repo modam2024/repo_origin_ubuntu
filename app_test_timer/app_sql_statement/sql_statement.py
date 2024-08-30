@@ -440,10 +440,10 @@ def sql_dao(request, sql_name, p_param):
 
 
             batch_query = " INSERT INTO tb_part5_batch_hist "
-            batch_query += " ( user_id, trgt_order_no, trgt_page_date, prve_page_date, next_page_date ) "
-            batch_query += " VALUES ( %s, %s, %s, %s, %s ) "
-            batch_params = ( current_username, v_trgt_order_no, v_trgt_page_date, v_prve_page_date, v_next_page_date )
-
+            batch_query += " ( trgt_order_no, trgt_page_date, prve_page_date, next_page_date ) "
+            batch_query += " VALUES ( %s, %s, %s, %s ) "
+            batch_params = ( v_trgt_order_no, v_trgt_page_date, v_prve_page_date, v_next_page_date )
+            print(batch_query, batch_params)
             cursor.execute(batch_query, batch_params)
 
             return "OK"
