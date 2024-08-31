@@ -27,6 +27,7 @@ from article import morph_analysis as morph_analysis
 from article import views as article_views
 from balance import views as balance_views
 from mdl_login_info import views as login_views
+from proj_batch import views_five_test_batch
 
 urlpatterns = [
     # 어플리케이션 url 참조
@@ -62,5 +63,7 @@ urlpatterns = [
 
     path('article/cnvrt_tpc_exec/'     , cnvrt_tpc_exec.main_cnvrt_tpc_exec, name='cnvrt_tpc_exec'),
     path('article/morph_analysis/'     , morph_analysis.submit_topic,        name='submit_topic'),
+
+    path('test-batch/'                 , views_five_test_batch.test_batch,   name='test_batch'),
 ]
  
