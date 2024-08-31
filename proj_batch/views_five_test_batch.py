@@ -82,7 +82,7 @@ def test_batch(request):
     finally:
         app_con.close_connection(conn, cursor)
 
-    return HttpResponse(status=200)
+    return HttpResponse(v_trgt_page_date)
 
 '''
 #######################################################
