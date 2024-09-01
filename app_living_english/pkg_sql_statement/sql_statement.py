@@ -4,7 +4,7 @@ import re
 import pandas as pd
 
 import app_living_english.pkg_sql_statement as att
-from proj_common import mdl_common_prj as proj_comn_func
+from proj_common import mdl_common_proj as proj_comn_func
 
 '''
 #######################################################

@@ -12,7 +12,7 @@ from nltk.corpus import wordnet
 
 from proj_sql_mapping import create_connection, close_connection
 from proj_sql_mapping import sql_mapping_article as sql_statement_article
-from proj_common import mdl_common_prj as proj_comn_func
+from proj_common import mdl_common_proj as proj_comn_func
 from proj_common import view_morph_new_words as morph_new_words
 
 # nltk 리소스 다운로드 (서버 시작 시 한 번만 수행하면 됩니다)

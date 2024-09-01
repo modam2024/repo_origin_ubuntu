@@ -6,7 +6,7 @@ import pandas as pd
 import pytz
 
 from app_news_study.pkg_sql_statement import sql_statement as sql_statement
-from proj_common import mdl_common_prj as proj_comn_func
+from proj_common import mdl_common_proj as proj_comn_func
 
 '''
 ########################################################

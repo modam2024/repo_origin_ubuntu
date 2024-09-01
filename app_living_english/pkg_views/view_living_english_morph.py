@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from googletrans import Translator
 
-from app_common import mdl_common as comn_func
+from app_common import mdl_common_app as comn_func
 from proj_sql_mapping import fn_connector as proj_connector
 from proj_sql_mapping import mdl_sql_mapping as sql_statement
 

@@ -32,7 +32,7 @@ qqqqq
 
 navigator_word_*.html
 
-proj_common/mdl_common_prj.py
+proj_common/mdl_common_proj.py
 
 # mdmproj1 프로젝트 폴더
 !mdmproj1/    # mdl_login_info 디렉터리는 무시하지 않음

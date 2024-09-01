@@ -7,7 +7,7 @@ from django.shortcuts import render
 
 import app_test_timer.pkg_sql_statement as app_con
 import app_test_timer.pkg_sql_statement.sql_statement as sql_statement
-from proj_common import mdl_common_prj as proj_comn_func
+from proj_common import mdl_common_proj as proj_comn_func
 
 '''
 #######################################################
