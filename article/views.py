@@ -16,9 +16,9 @@ from proj_common import mdl_common_proj as proj_comn_func
 from proj_common import view_morph_new_words as morph_new_words
 
 # nltk 리소스 다운로드 (서버 시작 시 한 번만 수행하면 됩니다)
-# nltk.download("punkt")
-# nltk.download("averaged_perceptron_tagger")
-# nltk.download("wordnet")
+nltk.download("punkt")
+nltk.download("averaged_perceptron_tagger")
+nltk.download("wordnet")
 
 def fn_word_syns_kr(p_word):
     translator = Translator()
