@@ -27,6 +27,7 @@ from article import views as article_views
 from balance import views as balance_views
 from mdl_login_info import views as login_views
 from proj_batch import btch_five_test
+from proj_batch import btch_living_english
 
 urlpatterns = [
     # 어플리케이션 url 참조
@@ -60,8 +61,9 @@ urlpatterns = [
     path('article/save-topic/'         , article_views.save_topic,          name='save-topic'),
     path('article/create-word/'        , article_views.create_word,         name='create-word'),
 
-    path('article/morph_analysis/'     , morph_analysis.submit_topic,        name='submit_topic'),
+    path('article/morph_analysis/'     , morph_analysis.submit_topic,       name='submit_topic'),
 
-    path('test-batch/'                 , views_five_test_batch.test_batch,   name='test_batch'),
+    path('test-batch/'                 , btch_five_test.test_batch,         name='test_batch'),
+    path('engl-batch/'                 , btch_living_english.living_english_batch,  name='test_batch'),
 ]
  
