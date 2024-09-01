@@ -1,7 +1,7 @@
 from django.urls import path
 
-from app_living_english.app_views import views_living_english
-from app_living_english.app_views import living_english_cnvt_tpc
+from app_living_english.pkg_views import views_living_english
+from app_living_english.pkg_views import living_english_cnvt_tpc
 
 urlpatterns = [
     path('living-english/',   views_living_english.living_english, name='living_english'),
