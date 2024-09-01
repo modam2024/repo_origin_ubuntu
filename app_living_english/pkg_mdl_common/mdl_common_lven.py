@@ -169,6 +169,7 @@ def make_page_info(request):
                 break
             else:
                 err_cnt += 1
+
     return new_chapter_cnt  # while 수행 완료 후 return 함
 
 def show_current_living_english(request, selectd_chapter, selectd_status):
@@ -308,6 +309,9 @@ def do_insert_page_info(request, p_chapter_num, p_title_text, p_audio_name):
     }
 
     res_value = sql_statement.sql_dao(request, "sqli_page_info", chapter_values)
+
+    # 2024.09.02 - 신규 생활회화 생성 배치 히스토리 저장
+    hist_value = sql_statement.sql_dao(request, "sqli_batch_living_english_hist", chapter_values)
 
     return res_value
 

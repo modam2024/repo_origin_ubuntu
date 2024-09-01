@@ -56,8 +56,6 @@ def sql_dao(request, sql_name, p_param):
 
             return v_topic_dur_start, v_topic_dur_end
 
-
-
         '''
         #############################################################
         # CALL ID : sqls_existing_max_chapter_num
@@ -141,80 +139,6 @@ def sql_dao(request, sql_name, p_param):
 
         '''
         ############################################################
-        # 최대 테스트 횟수 조회 함수
-        # 작성일 : 2024.06.20
-        # 작업 : 테스트 페이지별 최대 테스트 횟수를 가져온다.   
-        ######################################################### '''
-        if sql_name == "sqls_max_frq_test_page":
-            v_trgt_page_date = p_param
-
-            select_query  = "  SELECT ifnull(max(test_no) ,'0') as test_no "
-            select_query += "   FROM  tb_part5_result_hist "
-            select_query += "  WHERE  user_id = %s         "
-            select_query += "    AND  trgt_page_date = %s  "
-            select_param = (current_username, v_trgt_page_date,)
-
-            # 쿼리 실행
-            cursor.execute(select_query, select_param)
-            v_test_no = cursor.fetchone()
-            int_test_no = int(v_test_no[0])
-            return int_test_no
-
-        '''
-        ############################################################
-        # CALL ID : sqls_test_page_content_cnt
-        # 함수명   : 테스트 문제 입력 여부 판단 함수  
-        # 작성일   : 2024.06.20
-        # 작업     : 테스트 문제 존재 여부로 판단해서 INSERT 여부 결정 목적   
-        ############################################################ '''
-        if sql_name == "sqls_test_page_content_cnt":
-            v_trgt_order_no  = p_param['trgt_order_no']
-            v_trgt_page_date = p_param['trgt_page_date']
-            v_question_no    = p_param['question_no']
-
-            select_query  = " SELECT  count(*) as cnt     "
-            select_query += "   FROM  tb_part5_test_page  "
-            select_query += "  WHERE  user_id = %s        "
-            select_query += "    AND  trgt_order_no  = %s "
-            select_query += "    AND  trgt_page_date = %s "
-            select_query += "    AND  question_no    = %s "
-
-            select_param = (current_username, v_trgt_order_no, v_trgt_page_date, v_question_no)
-
-            # 쿼리 실행
-            cursor.execute(select_query, select_param)
-            v_test_cnt   = cursor.fetchone()
-            int_test_cnt = int(v_test_cnt[0])
-
-            return int_test_cnt
-
-        '''
-        ############################################################
-        # CALL ID : sqls_part5_batch_hist
-        # 함수명   : 배치 히스토리 입력 여부 판단 함수  
-        # 작성일   : 2024.08.31
-        # 작업     : 배치 히스토리에 입력된 데이터가 있는지 확인   
-        ############################################################ '''
-        if sql_name == "sqls_part5_batch_hist":
-            v_trgt_order_no  = p_param['trgt_order_no']
-            v_trgt_page_date = p_param['trgt_page_date']
-
-            select_batch_query  = " SELECT  count(*) as cnt     "
-            select_batch_query += "   FROM  tb_part5_batch_hist "
-            select_batch_query += "  WHERE  trgt_order_no  = %s "
-            select_batch_query += "    AND  trgt_page_date = %s "
-
-            select_batch_param = ( v_trgt_order_no, v_trgt_page_date )
-
-            # 쿼리 실행
-            cursor.execute(select_batch_query, select_batch_param)
-            v_batch_cnt   = cursor.fetchone()
-            int_batch_cnt = int(v_batch_cnt[0])
-
-            return int_batch_cnt
-
-        '''
-        ############################################################
         # CALL ID : sqls_batch_max_date
         # 함수명   : 배치 히스토리 테이블의 가장 최근 일자 조회  
         # 작성일   : 2024.08.31
@@ -231,62 +155,6 @@ def sql_dao(request, sql_name, p_param):
             batch_max_date   = v_batch_max_date[0]
 
             return batch_max_date
-
-        '''
-        #############################################################
-        # 테스트 정보 쿼리 함수
-        # 작성일 : 2024.06.20
-        # 작업 : 특정 일자에 해당하는 저장된 테스트 데이터를 읽어오는 쿼리 수행
-        ############################################################# '''
-        if sql_name == "sqls_test_info_by_date":
-            v_trgt_page_date = request.GET.get("wdate")
-
-            df_page_info = pd.DataFrame()
-
-            select_query  = " SELECT DISTINCT trgt_order_no, trgt_page_date, prve_page_date, next_page_date, last_page_flag  "
-            select_query += "   FROM tb_part5_test_page  "
-            select_query += "  WHERE user_id = %s        "
-            select_query += "    AND trgt_page_date = %s "
-            select_param = (current_username, v_trgt_page_date,)
-
-            try:
-                # 쿼리 실행
-                cursor.execute(select_query, select_param, )
-                existing_pagedates = cursor.fetchall()
-
-                # df_content를 DataFrame으로 변환
-                df_page_info = pd.DataFrame(existing_pagedates,
-                                            columns=['trgt_order_no', 'trgt_page_date', 'prve_page_date', 'next_page_date', 'last_page_flag'])
-
-            except Exception as e:
-                df_page_info = pd.DataFrame()
-
-            return df_page_info
-
-        '''
-        #########################################################
-        # 테스트 질문 정보 쿼리 함수
-        # 작성일 : 2024.06.20
-        # 작업 : 특정 일자에 해당하는 저장된 테스트 질문 데이터를 읽어온다.
-        ######################################################### '''
-        if sql_name == "sqls_test_question_info_by_date":
-
-            v_trgt_page_date = request.GET.get("wdate")
-
-            select_query = "  SELECT DISTINCT question_no, question_content, choice_a, choice_b, choice_c, choice_d  "
-            select_query += "   FROM tb_part5_test_page   "
-            select_query += "  WHERE user_id = %s        "
-            select_query += "    AND trgt_page_date = %s "
-            select_param = (current_username, v_trgt_page_date,)
-
-            # 쿼리 실행
-            cursor.execute(select_query, select_param, )
-            existing_pagedates = cursor.fetchall()
-
-            # df_content를 DataFrame으로 변환
-            df_question = pd.DataFrame(existing_pagedates,
-                                        columns=[ 'question_no', 'question_content', 'choice_a', 'choice_b', 'choice_c', 'choice_d' ])
-            return df_question
 
         '''
         #########################################################
@@ -551,104 +419,6 @@ def sql_dao(request, sql_name, p_param):
 
             cursor.execute(insert_query, insert_params)
 
-        '''
-        ############################################################
-        # CALL ID : sqli_feedback_page_content
-        # 함수명   : 토익 PART 5 피드백 화면 정보 저장
-        # 작성일   : 2024.08.23
-        # 작업     : tb_part5_feedback_page 테이블과 tb_part5_result_hist
-        #            테이블에 데이터 생성한다.         
-        ############################################################  '''
-        if sql_name == "sqli_feedback_page_content":
-            each_feedback_page_content = p_param
-            int_test_no        = each_feedback_page_content['test_no']
-            v_trgt_order_no    = each_feedback_page_content['trgt_order_no']
-            v_trgt_page_date   = each_feedback_page_content['trgt_page_date']
-            v_question_no      = each_feedback_page_content['question_no']
-            v_question_content = each_feedback_page_content['question_content']
-            v_choice_a         = each_feedback_page_content['choice_a']
-            v_choice_b         = each_feedback_page_content['choice_b']
-            v_choice_c         = each_feedback_page_content['choice_c']
-            v_choice_d         = each_feedback_page_content['choice_d']
-            v_your_answer      = each_feedback_page_content['your_answer']
-            v_correct_answer   = each_feedback_page_content['correct_answer']
-            v_result_value     = each_feedback_page_content['result_value']
-            v_test_time        = each_feedback_page_content['test_time']
-            v_feedback         = each_feedback_page_content['feedback']
-
-            insert_query  = " INSERT INTO tb_part5_feedback_page "
-            insert_query += " (user_id, trgt_order_no, trgt_page_date, question_no, question_content, choice_a, choice_b, choice_c, choice_d, "
-            insert_query += "  your_answer, correct_answer, result_value, test_time, feedback ) "
-            insert_query += " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
-            insert_params = ( current_username, v_trgt_order_no, v_trgt_page_date, v_question_no, v_question_content, v_choice_a, v_choice_b,
-                              v_choice_c, v_choice_d, v_your_answer, v_correct_answer, v_result_value, v_test_time, v_feedback)
-
-            cursor.execute(insert_query, insert_params)
-
-            # tb_part5_result_hist 테이블은 여러번의 파트 5 테스트를 히스토리성으로 관리하는 목적이다.
-            insert_query  = " INSERT INTO tb_part5_result_hist "
-            insert_query += " (user_id, test_no, trgt_order_no, trgt_page_date, question_no, your_answer, correct_answer, result_value, test_time ) "
-            insert_query += " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) "
-            insert_params = ( current_username, int_test_no, v_trgt_order_no, v_trgt_page_date, v_question_no, v_your_answer, v_correct_answer, v_result_value, v_test_time)
-
-            cursor.execute(insert_query, insert_params)
-
-            return str(int_test_no)
-
-        '''
-        ############################################################
-        # CALL ID : sqli_part5_batch_hist
-        # 함수명   : 토익 PART 5 문제 자동 생성 스크립트용
-        # 작성일   : 2024.08.31
-        # 작업     : 한시간 단위로 신규 토익 PART 5 문제 자동 생성 한다.           
-        ############################################################  '''
-        if sql_name == "sqli_part5_batch_hist":
-
-            v_trgt_order_no  = p_param['trgt_order_no']
-            v_trgt_page_date = p_param['trgt_page_date']
-            v_prve_page_date = p_param['prve_page_date']
-            v_next_page_date = p_param['next_page_date']
-
-            v_test_batch_hist_cnt = sql_dao(request, "sqls_part5_batch_hist", p_param)
-
-            if v_test_batch_hist_cnt == 1:
-                print("already inserted in tb_part5_batch_hist")
-                sql_dao(request, "sqlu_batch_update_date", p_param)
-            else:
-                batch_query = " INSERT INTO tb_part5_batch_hist "
-                batch_query += " ( trgt_order_no, trgt_page_date, prve_page_date, next_page_date, update_date ) "
-                batch_query += " VALUES ( %s, %s, %s, %s, date_format(now(), '%Y-%m-%d %H:%i:%S') ) "
-                batch_params = ( v_trgt_order_no, v_trgt_page_date, v_prve_page_date, v_next_page_date, )
-
-                cursor.execute(batch_query, batch_params)
-
-            return "OK"
-
-        '''
-        ############################################################
-        # CALL ID : sqli_feedback_page_statistic
-        # 함수명   : 토익 PART 5 피드백 화면 정보 저장
-        # 작성일   : 2024.08.23
-        # 작업     : tb_part5_feedback_page 테이블과 tb_part5_result_hist
-        #            테이블에 데이터 생성한다.         
-        ############################################################  '''
-        if sql_name == "sqli_feedback_page_statistic":
-            each_feedback_page_content = p_param
-            v_trgt_order_no = each_feedback_page_content['trgt_order_no']
-            v_trgt_page_date = each_feedback_page_content['trgt_page_date']
-
-            insert_sttc_query = " INSERT INTO tb_part5_feedback_page_statistic "
-            insert_sttc_query += " (user_id, trgt_order_no, trgt_page_date, sum_test_time, remaining_time, crrct_res_ratio ) "
-            insert_sttc_query += " SELECT user_id, trgt_order_no, trgt_page_date, SUM(test_time), 90-SUM(test_time), ROUND(SUM(test_time) / 90 * 100, 1) "
-            insert_sttc_query += "   FROM  tb_part5_feedback_page  "
-            insert_sttc_query += "  WHERE  user_id        = %s     "
-            insert_sttc_query += "    AND  trgt_order_no  = %s     "
-            insert_sttc_query += "    AND  trgt_page_date = %s     "
-            insert_sttc_query += "  GROUP BY user_id, trgt_order_no, trgt_page_date "
-            insert_sttc_params = ( current_username, v_trgt_order_no, v_trgt_page_date )
-
-            cursor.execute(insert_sttc_query, insert_sttc_params)
-
         '''    
         ############################################################
         # CALL ID : sqli_insert_tb_converted_sentn
@@ -698,116 +468,76 @@ def sql_dao(request, sql_name, p_param):
 
             return int_test_cnt
 
+        '''
+        ############################################################
+        # CALL ID : sqli_batch_living_english_hist
+        # 함수명   : 생활회화 신규 chapter 자동 생성 스크립트용
+        # 작성일   : 2024.09.02
+        # 작업     : 생활회화 신규 chapter 자동 생성 한다.           
+        ############################################################  '''
+        if sql_name == "sqli_batch_living_english_hist":
+
+            chapter_values = p_param
+
+            p_chapter_num = chapter_values["chapter_num"]
+            p_title_text  = chapter_values["title_text"]
+            p_audio_name  = chapter_values["audio_name"]
+
+            try:
+                chapter_query  = " INSERT INTO tb_batch_living_english_hist "
+                chapter_query += " ( src_chapter, src_title, voice_date, update_date ) "
+                chapter_query += " VALUES "
+                chapter_query += " ( %s, %s, %s, date_format(now(), '%Y-%m-%d %H:%i:%S') ) "
+
+                chapter_params = ( p_chapter_num, p_title_text, p_audio_name )
+                cursor.execute(chapter_query, chapter_params)
+
+            except Exception as e:
+                upd_batch_query  = " UPDATE tb_batch_living_english_hist  "
+                upd_batch_query += "    SET update_date = date_format(now(),'%Y-%m-%d %H:%i:%S')   "
+                upd_batch_query += "  WHERE src_chapter  = %s  "
+
+                upd_batch_params = (p_chapter_num,)
+                cursor.execute(upd_batch_query, upd_batch_params)
+
+            finally:
+                del_batch_query  = " DELETE FROM tb_chapter_title     "
+                del_batch_query += "  WHERE src_chapter = 'undefined' "
+                cursor.execute(del_batch_query,)
+
+                del_batch_query  = " DELETE FROM tb_living_english_content "
+                del_batch_query += "  WHERE chapter_num = 'undefined'      "
+                cursor.execute(del_batch_query,)
+
+                del_batch_query  = " DELETE FROM tb_converted_sentn   "
+                del_batch_query += "  WHERE topic_num = 'undefined' "
+                cursor.execute(del_batch_query,)
+
+                del_batch_query  = " DELETE FROM tb_batch_living_english_hist "
+                del_batch_query += "  WHERE src_chapter = 'undefined' "
+                cursor.execute(del_batch_query,)
+
+                print("sqli_batch_living_english_hist finish")
+
+            return "OK"
+
         ''' 
         ##############
          UPDATE BLOCK
         ############## '''
-        '''
-        ############################################################
-        # CALL ID : sqlu_batch_update_date
-        # 함수명   : 배치 히스토리 테이블의 update_date 갱신  
-        # 작성일   : 2024.08.31
-        # 작업     : 배치 히스토리 테이블의 update_date 갱신 작업   
-        ############################################################ '''
-        if sql_name == "sqlu_batch_update_date":
-
-            v_trgt_order_no  = p_param['trgt_order_no']
-            v_trgt_page_date = p_param['trgt_page_date']
-
-            upd_batch_query  = " UPDATE tb_part5_batch_hist  "
-            upd_batch_query += "    SET update_date = date_format(now(),'%Y-%m-%d %H:%i:%S')   "
-            upd_batch_query += " WHERE  trgt_order_no  = %s  "
-            upd_batch_query += "   AND  trgt_page_date = %s  "
-            upd_batch_params = (
-                v_trgt_order_no,
-                v_trgt_page_date,
-            )
-            cursor.execute(upd_batch_query, upd_batch_params)
 
         ''' 
         ##############
          DELETE BLOCK
         ############## '''
-        '''
-        ############################################################
-        # CALL ID : sqld_feedback_page_content
-        # 함수명   : 토익 파트 5 피트백 삭제 
-        # 작성일   : 2024.08.09
-        # 작업     : 토익 파트 5 피트백 삭제한다.
-        ############################################################  '''
-        if sql_name == "sqld_feedback_page_content":
-
-            p_trgt_order_no  = p_param['trgt_order_no']
-            p_trgt_page_date = p_param['trgt_page_date']
-
-            delete_query  = " DELETE FROM tb_part5_feedback_page "
-            delete_query += "  WHERE  user_id        = %s "
-            delete_query += "    AND  trgt_order_no  = %s "
-            delete_query += "    AND  trgt_page_date = %s "
-            delete_param = (current_username, p_trgt_order_no, p_trgt_page_date,)
-            cursor.execute(delete_query, delete_param)
-
-            delete_query  = " DELETE FROM tb_part5_feedback_page_statistic "
-            delete_query += "  WHERE  user_id        = %s "
-            delete_query += "    AND  trgt_order_no  = %s "
-            delete_query += "    AND  trgt_page_date = %s "
-            delete_param = (current_username, p_trgt_order_no, p_trgt_page_date,)
-            cursor.execute(delete_query, delete_param)
-
-            return "OK"
 
     except Exception as e:
         return att.handle_sql_error(e, sql_name)
 
     finally:
         att.close_connection(conn, cursor)
+
 '''         
 ##################   
 # 쿼리 CALL 함수 끝    
-##################        
-'''
-'''
-#######################################################
-# Test 문제별 다음 날짜 업데이트 함수 
-# 작성일 : 2024.06.20
-# 작업 : 마지막 일자가 생기면 엡데이트 해주어야 한다.
-####################################################### '''
-def call_sql_update_next_page_date(request, p_trgt_page_date):
-    conn, cursor, current_username = att.create_connection(request)
-    v_trgt_page_date = p_trgt_page_date
-    v_next_page_date = ""
-
-    url = "https://free.ybmclass.com/free/toeic/toeic_5min_view.asp?wdate={}&page=1".format(v_trgt_page_date)
-    # 공통 함수의 webdriver를 사용해서 파싱한다.
-    html, soup = proj_comn_func.url_parsing_with_webdriver(url, "1")
-    v_ttitle_view = soup.find(class_=["title-view"])
-    if v_ttitle_view:
-        # a 태그 모두 찾기
-        a_tags = v_ttitle_view.find_all("a")
-        # a 태그의 갯수 출력
-        for v_prve_next_page_info_tag in v_ttitle_view.find_all("a"):
-            a_href = v_prve_next_page_info_tag.get('href')
-            date_pattern = r'\d{4}-\d{2}-\d{2}'
-            try:
-                page_date = re.search(date_pattern, a_href).group()
-                list_class = v_prve_next_page_info_tag.get('class')
-                if list_class[1] == "btn-next":
-                    v_next_page_date = page_date
-            except Exception as e:
-                v_next_page_date = ""
-
-    update_query =  " UPDATE tb_part5_test_page   "
-    update_query += "    SET next_page_date = %s "
-    if v_next_page_date != "":
-        update_query += "  , last_page_flag = 'N'"
-    else:
-        update_query += "  , last_page_flag = 'Y'"
-    update_query += "  WHERE user_id        = %s "
-    update_query += "    AND trgt_page_date = %s "
-    update_param = (v_next_page_date, current_username, v_trgt_page_date, )
-
-    # 쿼리 실행
-    cursor.execute(update_query, update_param, )
-    conn.commit()
-
-    return v_next_page_date
+################## '''

@@ -1,11 +1,8 @@
-import re
+# 2024.04.28 : spacy 포함
 
-import pandas as pd
 from django.http import HttpResponse
 
-import app_test_timer.pkg_sql_statement as app_con
-import app_test_timer.pkg_sql_statement.sql_statement as sql_statement
-from proj_common import mdl_common_proj as proj_comn_func
+from app_living_english.pkg_mdl_common import mdl_common_lven as app_com_func
 
 '''
 #######################################################
@@ -17,7 +14,6 @@ def living_english_batch(request):
 
     # 변수 초기화
     new_count = 0
-    group_codes = proj_comn_func.get_group_codes(request)
     selectd_version = request.GET.get("check")
     selectd_chapter = request.GET.get("chapter")
     selectd_status = request.GET.get("status")
@@ -25,5 +21,11 @@ def living_english_batch(request):
     # 신규 chapter 정보 생성
     if selectd_version == "new":
         new_count = app_com_func.make_page_info(request)
+
+        living_values = {
+          "check"  : selectd_version,
+          "chapter": selectd_chapter,
+          "status" : selectd_status,
+        }
 
     return HttpResponse(new_count)
