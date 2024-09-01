@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 # 2024.04.28 : spacy 포함
 from django.shortcuts import render
 
-from app_living_english.app_mdl_common import app_common_mdl as app_com_func
+from app_living_english.pkg_mdl_common import app_common_mdl as app_com_func
 from proj_common import proj_common_mdl as proj_comn_func
 
 @login_required(login_url='/login/')  # 로그인 페이지로 리다이렉션
