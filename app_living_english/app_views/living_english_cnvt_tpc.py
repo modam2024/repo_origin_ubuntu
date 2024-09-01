@@ -1,6 +1,8 @@
-from django.shortcuts import render
-from mdl_sql_mapping import sql_mapping as sql_statement
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+
+import app_living_english.app_sql_statement.sql_statement as sql_statement
+
 
 @login_required(login_url='/login/')
 def main_cnvrt_tpc_exec(request):
@@ -25,5 +27,5 @@ def main_cnvrt_tpc_exec(request):
         "sent_rows":  rows,
     }
 
-    return render(request, "cnvt_tpc_exec.html", value)
+    return render(request, "living_english_cnvt_tpc.html", value)
 

@@ -16,9 +16,9 @@ from proj_common import proj_common_mdl as proj_comn_func
 from proj_common import proj_morph_new_words as morph_new_words
 
 # nltk 리소스 다운로드 (서버 시작 시 한 번만 수행하면 됩니다)
-nltk.download("punkt")
-nltk.download("averaged_perceptron_tagger")
-nltk.download("wordnet")
+# nltk.download("punkt")
+# nltk.download("averaged_perceptron_tagger")
+# nltk.download("wordnet")
 
 def fn_word_syns_kr(p_word):
     translator = Translator()
@@ -37,43 +37,6 @@ def fn_word_syns_kr(p_word):
             def_list_kr = korean_definition.text
     return def_list_kr
 
-
-# GROUP CODE 생성함수, 2024-02-13
-def get_group_codes(request):
-    conn, cursor, current_username = create_connection(request)
-
-    try:
-        cursor.execute(
-            "SELECT  group_code FROM tb_group_code WHERE user_id = %s ORDER BY group_order ASC",
-            (current_username,),
-        )
-        existing_group_code = cursor.fetchall()
-        group_codes = [group_code[0] for group_code in existing_group_code]
-        return group_codes
-    except Exception as e:
-        print("group_code query failed: ", e)
-        return []
-    finally:
-        close_connection(conn, cursor)
-
-# MAX CHAPTER NUM 조회함수, 2024-02-21
-def retrieve_max_chapter_num(request):
-    conn, cursor, current_username = create_connection(request)
-
-    try:
-        # 이미 데이터베이스에 해당 단어가 있는지 확인
-        cursor.execute(
-            "SELECT ifnull(max(src_chapter) ,'4450') as max_chapter_num FROM tb_chapter_title WHERE user_id = %s ",
-            (current_username,),
-        )
-        existing_max_chapter_num = cursor.fetchone()
-        return existing_max_chapter_num[0]
-    except Exception as e:
-        print("retrieve max num query failed: ", e)
-        return "4450"
-    finally:
-        close_connection(conn, cursor)
-
 def retrieve_ing_chapter_num(request):
     conn, cursor, current_username = create_connection(request)
 
@@ -91,174 +54,10 @@ def retrieve_ing_chapter_num(request):
     finally:
         close_connection(conn, cursor)
 
-# PAGE INFO 생성함수, 2024-02-21
-def make_page_info(request):
-    # 변수 초기화
-    err_cnt = 0
-    new_chapter_cnt = 0
-    number = 1
-    max_chapter_num = int(retrieve_max_chapter_num(request))
-
-    while True:  # 무한 루프
-        if number > 1:
-            max_chapter_num += 1
-
-        if number > 4000:
-            break
-        else:
-            number += 1
-
-        try:
-            url = "https://free.ybmclass.com/free/eng/eng_ybm_view.asp?idx={}".format(
-                max_chapter_num
-            )
-
-            # 공통 함수의 webdriver를 사용해서 파싱한다.
-            html, soup = proj_comn_func.url_parsing_with_webdriver(url, "1")
-
-            # <audio> 태그 찾기
-            audio_tag = soup.find("audio")
-
-            # 존재하지 않는 페이지 처리
-            if not audio_tag:
-                print(
-                    f"Page for chapter {max_chapter_num} does not exist or has no audio."
-                )
-                break
-
-            # 'src' 속성 추출
-            src_value = audio_tag["src"]
-
-            # 파일명 추출 (마지막 '/' 이후의 내용)
-            file_name = src_value.split("/")[-1]
-
-            # 확장자 제거 및 출력
-            audio_name = file_name.split(".")[0]
-
-            # YBM 생활영어 제목 찾기
-            title_view = soup.find(class_=["title-view"])
-            if title_view:
-                for title in title_view.find_all("strong"):
-                    title_text = title.get_text(strip=True)
-
-            # CHAPTER 3가지 정보 테이블 저장
-            incr_cnt = do_insert_page_info(
-                request, max_chapter_num, title_text, audio_name
-            )
-            new_chapter_cnt += int(incr_cnt)
-
-            # 신규 회차의 CONTENT 생성
-            # <dl> 태그의 내용을 추출합니다.
-            text = ""
-            dl_tags = soup.find_all("dl")
-
-            for dl in dl_tags:
-                text += dl.get_text(separator="\n", strip=True) + "\n"
-
-            # A와 B 기준으로 텍스트를 그룹화
-            txt_eng_map = []
-            txt_kor_map = []
-            txt_additional_map = []
-            prv_ab_text = "A"
-            tmp_ab_text = ""
-            tmp_ab_text2 = ""
-            grouped_text = "A"
-            lines = text.split("\n")
-            loop = 0
-            for line in lines:
-                line = line.replace("A ", " A ")
-                line = line.replace("B ", " B ")
-
-                if line.startswith("A"):
-                    tmp_ab_text = "A"
-                elif line.startswith("B"):
-                    tmp_ab_text = "B"
-                elif line.startswith("2"):
-                    tmp_ab_text2 = "B2"
-                elif line.startswith("[A"):
-                    tmp_ab_text = "C"
-                elif line.startswith("해설"):
-                    tmp_ab_text = "D"
-                else:
-                    if tmp_ab_text == "A" or tmp_ab_text == "B" or tmp_ab_text == "C":
-                        if prv_ab_text != tmp_ab_text:
-                            prv_ab_text = tmp_ab_text
-                            if tmp_ab_text == "C":
-                                if loop == 1:
-                                    txt_kor_map.append(grouped_text)
-                                grouped_text = line
-                                txt_additional_map.append(grouped_text)
-                            elif tmp_ab_text2 == "B2":
-                                if loop == 0:
-                                    txt_eng_map.append(grouped_text)
-                                    grouped_text = tmp_ab_text + " " + line
-                                    loop = loop + 1
-                                else:
-                                    txt_kor_map.append(grouped_text)
-                                    grouped_text = tmp_ab_text + " " + line
-                            elif tmp_ab_text2 != "B2":
-                                txt_eng_map.append(grouped_text)
-                                grouped_text = tmp_ab_text + " " + line
-                            else:
-                                txt_eng_map.append(grouped_text)
-                                grouped_text = tmp_ab_text + " " + line
-                        elif tmp_ab_text == "C":
-                            grouped_text = ""
-                            grouped_text += line
-                            txt_additional_map.append(grouped_text)
-                        else:
-                            if (
-                                line.startswith("2")
-                                or line.startswith("3")
-                                or line.startswith("오디오")
-                                or line.startswith("해석")
-                            ):
-                                grouped_text = grouped_text + ""
-                            else:
-                                grouped_text += " " + line
-                    elif tmp_ab_text == "D":
-                        txt_engs = ""
-            if new_chapter_cnt > 0:
-                txt_engs = "\n\n"
-                eng_num = 1
-                for each_eng in txt_eng_map:
-                    txt_engs += each_eng + "\n\n"
-                    do_saving_each_content(
-                        request, "eng", eng_num, max_chapter_num, each_eng
-                    )
-                    eng_num += 1
-
-                txt_kors = "\n\n"
-                kor_num = 1
-                for each_kor in txt_kor_map:
-                    txt_kors += each_kor + "\n\n"
-                    do_saving_each_content(
-                        request, "kor", kor_num, max_chapter_num, each_kor
-                    )
-                    kor_num += 1
-
-                txt_additionals = "\n\n"
-                additional_num = 1
-                for each_additional in txt_additional_map:
-                    txt_additionals += each_additional + "\n\n"
-                    do_saving_each_content(
-                        request, "add", additional_num, max_chapter_num, each_additional
-                    )
-                    additional_num += 1
-
-        except Exception as e:
-            print("Finding web-page failed: ", e)
-            if int(err_cnt > 0) and int(max_chapter_num) > 4730:
-                break
-            else:
-                err_cnt += 1
-    return new_chapter_cnt  # while 수행 완료 후 return 함
-
-
 # 단어 추출 첫화면 조회, group_code 셋팅
 @login_required(login_url='/login/')
 def main_view(request):
-    group_codes = get_group_codes(request)
+    group_codes = proj_comn_func.get_group_codes(request)
 
     values = {
         "group_codes": group_codes,
@@ -356,174 +155,6 @@ def fetch_titles(request, selectd_chapter, selectd_status):
         rtn_selectd_voice_date,
     )
 
-def show_current_living_english(request, selectd_chapter, selectd_status):
-
-    # 데이터베이스 연결 초기화
-    conn, cursor, current_username = create_connection(request)
-
-    v_topic_dur_start = 0
-    v_topic_dur_end   = 0
-
-    # 전체 titles 정보와 선택된 chapter 정보를 조회한다.
-    titles, comp_titles, selectd_chapter, title_text, audio_name = fetch_titles(
-        request, selectd_chapter, selectd_status
-    )
-
-    try:
-        # 쿼리 정의
-        topic_query = " SELECT  topic_dur_start, topic_dur_end "
-        topic_query += "   FROM tb_living_english_topic  "
-        topic_query += "  WHERE user_id   = %s           "
-        topic_query += "    AND topic_num = %s           "
-        topic_param = (current_username, selectd_chapter,)
-
-        # 쿼리 실행
-        cursor.execute(topic_query, topic_param)
-        topic_dur_time = cursor.fetchone()
-
-        if topic_dur_time is not None:
-            v_topic_dur_start = topic_dur_time[0]
-            v_topic_dur_end = topic_dur_time[1]
-        else:
-            v_topic_dur_start, v_topic_dur_end = 0, 0
-
-    except Exception as e:
-        print("topic_dur_time Error occurred:", e)
-        v_topic_dur_start = 0
-        v_topic_dur_end   = 0
-
-    try:
-        txt_eng_data, txt_kor_data, txt_additional_data, content_cnt = (
-            retrieve_content_info(request, selectd_chapter)
-        )
-        if int(content_cnt) > 0:
-            txt_engs = "\n\n"
-            eng_num = 1
-            for each_eng in txt_eng_data:
-                each_eng = each_eng[0]
-                txt_engs += each_eng + "\n\n"
-                eng_num += 1
-
-            txt_kors = "\n\n"
-            kor_num = 1
-            for each_kor in txt_kor_data:
-                each_kor = each_kor[0]
-                txt_kors += each_kor + "\n\n"
-                kor_num += 1
-
-            txt_additionals = "\n\n"
-            additional_num = 1
-            for each_additional in txt_additional_data:
-                each_additional = each_additional[0]
-                txt_additionals += each_additional + "\n\n"
-                additional_num += 1
-
-            return (
-                titles,
-                comp_titles,
-                title_text,
-                audio_name,
-                txt_engs,
-                txt_kors,
-                txt_additionals,
-                v_topic_dur_start,
-                v_topic_dur_end,
-            )
-
-    except Exception as e:
-        print("Error occurred:", e)
-        return ""
-
-    finally:
-        close_connection(conn, cursor)
-
-@csrf_exempt
-def do_saving_each_content(request, p_type, p_seq_num, p_chapter_num, p_each_stmt):
-    conn, cursor, current_username = create_connection(request)
-
-    try:
-
-        # 2024.01.23 추가- process_info 데이터 생성
-        insert_query = " INSERT INTO tb_living_english_content "
-        insert_query += " (user_id, type, seq_num, chapter_num, each_stmt) "
-        insert_query += " VALUES (%s, %s, %s, %s, %s) "
-        insert_params = (
-            current_username,
-            p_type,
-            p_seq_num,
-            p_chapter_num,
-            p_each_stmt,
-        )
-
-        cursor.execute(insert_query, insert_params)
-
-        conn.commit()
-    except Exception as e:
-        print("do_saving_each_content failed:", e)
-    finally:
-        close_connection(conn, cursor)
-
-def retrieve_content_info(request, p_selectd_chapter):
-    conn, cursor, current_username = create_connection(request)
-
-    try:
-        # first part - english
-        query = " SELECT each_stmt       "
-        query += "   FROM tb_living_english_content "
-        query += "  WHERE user_id = %s   "
-        query += "    AND type = 'eng' AND chapter_num = %s  "
-        query += "  ORDER BY CAST(seq_num AS UNSIGNED) ASC   "
-        query_param = (current_username, p_selectd_chapter,)
-        cursor.execute(query, query_param)
-        existing_eng_content = cursor.fetchall()
-        selectd_eng_content = [(each_stmt) for each_stmt in existing_eng_content]
-
-        # second part - korean
-        query = " SELECT each_stmt       "
-        query += "   FROM tb_living_english_content "
-        query += "  WHERE user_id = %s   "
-        query += "    AND type = 'kor' AND chapter_num = %s  "
-        query += "  ORDER BY CAST(seq_num AS UNSIGNED) ASC  "
-        query_param = (current_username, p_selectd_chapter,)
-        cursor.execute(query, query_param)
-        existing_kor_content = cursor.fetchall()
-        selectd_kor_content = [(each_stmt) for each_stmt in existing_kor_content]
-
-        # third part - additional
-        query = " SELECT each_stmt       "
-        query += "   FROM tb_living_english_content "
-        query += "  WHERE user_id = %s   "
-        query += "    AND type = 'add' AND chapter_num = %s  "
-        query += "  ORDER BY CAST(seq_num AS UNSIGNED) ASC  "
-        query_param = (current_username, p_selectd_chapter,)
-        cursor.execute(query, query_param)
-        existing_add_content = cursor.fetchall()
-        selectd_add_content = [(each_stmt) for each_stmt in existing_add_content]
-
-        # total count
-        cursor.execute(
-            "SELECT  count(*) as cnt FROM tb_living_english_content WHERE user_id = %s AND chapter_num = %s",
-            (current_username, p_selectd_chapter,),
-        )
-        result_cnt = cursor.fetchone()
-        return_cnt = result_cnt[0]
-
-        if int(return_cnt) > 0:
-            query  = " UPDATE tb_chapter_title "
-            query += "    SET start_date  = date_format(now(),'%Y-%m-%d %H:%i:%S') "
-            query += "  WHERE user_id     = %s "
-            query += "    AND src_chapter = %s "
-            query_param = (current_username, p_selectd_chapter,)
-            cursor.execute(query, query_param)
-            conn.commit()
-
-        return selectd_eng_content, selectd_kor_content, selectd_add_content, return_cnt
-
-    except Exception as e:
-        print("retrieve_content_info failed: ", e)
-        return [], [], [], 0
-    finally:
-        close_connection(conn, cursor)
 @login_required(login_url='/login/')
 def main_word_check(request):
     source_url = request.GET.get("source_url")
@@ -544,7 +175,7 @@ def main_word_check(request):
     existing_titles = sql_statement_article.sql_dao(request, "sqls_main_word_check2", "")
 
     titles = [(url, title) for url, title in existing_titles]
-    group_codes = get_group_codes(request)
+    group_codes = proj_comn_func.get_group_codes(request)
 
     values = {
         "rows": rows,
@@ -854,48 +485,6 @@ def word_detail(request):
 
     return render(request, "word_detail.html", value)
 
-@login_required(login_url='/login/')  # 로그인 페이지로 리다이렉션
-def living_english(request):
-    # 변수 초기화
-    new_count = 0
-    group_codes = get_group_codes(request)
-    selectd_version = request.GET.get("check")
-    selectd_chapter = request.GET.get("chapter")
-    selectd_status = request.GET.get("status")
-
-    # 신규 chapter 정보 생성
-    if selectd_version == "new":
-        new_count = make_page_info(request)
-
-    # 조건 chapter 정보 조회, chapter가 빈 값이면 최대 chapter 로 조회
-    (
-        living_english_titles,
-        living_english_comp_titles,
-        living_english_title_text,
-        audio_name_text,
-        living_english_eng_text,
-        living_english_kor_text,
-        living_english_additional_text,
-        living_english_topic_dur_start,
-        living_english_topic_dur_end,
-    ) = show_current_living_english(request, selectd_chapter, selectd_status)
-
-    values = {
-        "group_codes": group_codes,
-        "living_english_titles": living_english_titles,
-        "living_english_comp_titles" : living_english_comp_titles,
-        "living_selectd_chapter"     : selectd_chapter,
-        "living_english_title_text"  : living_english_title_text,
-        "audio_name_text"            : audio_name_text,
-        "living_english_eng_text"    : living_english_eng_text,
-        "living_english_kor_text"    : living_english_kor_text,
-        "living_english_additional_text": living_english_additional_text,
-        "living_english_topic_dur_start": living_english_topic_dur_start,
-        "living_english_topic_dur_end"  : living_english_topic_dur_end,
-        "living_english_new_count"      : new_count,
-    }
-    return render(request, "living_english.html", values)
-
 @login_required(login_url='/login/')
 def save_wordinfo(request):
 
@@ -1032,25 +621,6 @@ def goto_mobile(request):
         close_connection(conn, cursor)
 
     return JsonResponse({"result": "Go to Mobile"})
-
-def do_insert_page_info(request, p_chapter_num, p_title_text, p_audio_name):
-
-    conn, cursor, current_username = create_connection(request)
-
-    try:
-        chapter_query = " INSERT INTO tb_chapter_title "
-        chapter_query += " ( user_id, src_chapter, src_title, voice_date ) "
-        chapter_query += " VALUES "
-        chapter_query += " ( %s, %s, %s, %s ) "
-        chapter_params = (current_username, p_chapter_num, p_title_text, p_audio_name)
-        cursor.execute(chapter_query, chapter_params)
-
-        return 1
-    except Exception as e:
-        print("do_insert_page_info insert failed:", e)
-        return 0
-    finally:
-        close_connection(conn, cursor)
 
 @login_required(login_url='/login/')
 def complete_chapter(request):

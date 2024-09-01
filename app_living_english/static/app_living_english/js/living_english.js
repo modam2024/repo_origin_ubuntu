@@ -290,14 +290,14 @@
             e.preventDefault();
             let sourceTitle = $("#selChapter").val();
             let sourceType  = $("#searchGrpCd").val();
-            let url = '/article/cnvrt_tpc_exec/?topic_num=' + encodeURIComponent(sourceTitle);
+            let url = '/app_living_english/cnvrt_tpc_exec/?topic_num=' + encodeURIComponent(sourceTitle);
             window.open(url, '_blank');
         });
         
         $("#searchButton").click(function() {
             $("#resMessage").val("조회 중입니다.");
             let selectdChapter = $('#titleList option:selected').val();
-            let url = BASE_URL + "article/living-english/?chapter="+selectdChapter+"&status=C";
+            let url = BASE_URL + "app_living_english/living-english/?chapter="+selectdChapter+"&status=C";
             window.open(url, '_self');
         });
         

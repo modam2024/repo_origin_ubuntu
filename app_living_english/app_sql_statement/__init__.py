@@ -1,28 +1,16 @@
 # mdl_sql_mapping/__init__.py
 
-import mysql.connector
-
-'''
-#######################################################
-# CONNECTION 정보 함수
-# 작성일 : 2024.06.20
-####################################################### '''
-def fn_connector(request):
-    sub_conn = mysql.connector.connect(
-        host="modamtech.com",
-        port=3306,
-        user="aeit",
-        password="susx2020",
-        database="aeit",
-    )
-    return sub_conn
+from proj_common import proj_common_mdl as proj_comn_func
 
 def create_connection(request):
     """데이터베이스 연결 생성 및 반환."""
     try:
-        conn = fn_connector(request)
+        conn = proj_comn_func.fn_connector(request)
         cursor = conn.cursor()
         current_username = request.user.username
+        if current_username == "":
+            current_username = "polomono"
+
         return conn, cursor, current_username
     except Exception as e:
         print(f"데이터베이스 연결 오류: {e}")

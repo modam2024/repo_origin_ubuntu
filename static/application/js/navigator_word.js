@@ -40,10 +40,10 @@
         var userConfirmed = confirm('최종 회차 생성을 하시겠습니까?');
         var url = BASE_URL;
         if (userConfirmed) {
-           url = url + "article/living-english/?check=new&chapter=&status=C";
+           url = url + "app_living_english/living-english/?check=new&chapter=&status=C";
            $("#resMessage").val("신규 회차 생성 중입니다.");
         } else {
-           url = url + "article/living-english/?check=max&chapter=&status=C";
+           url = url + "app_living_english/living-english/?check=max&chapter=&status=C";
            $("#resMessage").val("최신 회차 조회 중입니다.");           
         }
         window.open(url, '_self');

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     "app_news_study",
     "app_test_timer",
+    "app_living_english",
 ]
 
 MIDDLEWARE = [

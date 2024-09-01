@@ -22,7 +22,6 @@ from django.urls import include, path
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 
-from article import cnvrt_tpc_exec as cnvrt_tpc_exec
 from article import morph_analysis as morph_analysis
 from article import views as article_views
 from balance import views as balance_views
@@ -31,8 +30,9 @@ from proj_batch import views_five_test_batch
 
 urlpatterns = [
     # 어플리케이션 url 참조
-    path('app_news_study/', include('app_news_study.urls')),
-    path('app_test_timer/', include('app_test_timer.urls')),
+    path('app_news_study/',     include('app_news_study.urls')),
+    path('app_test_timer/',     include('app_test_timer.urls')),
+    path('app_living_english/', include('app_living_english.urls')),
 
     # 기타 url 패턴들
     path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('favicon.ico'))),
@@ -55,13 +55,11 @@ urlpatterns = [
     path('article/word_detail/'        , article_views.word_detail       ,  name='word_detail'),
     path('article/save-wordinfo/'      , article_views.save_wordinfo     ,  name='save_wordinfo'),
     path('article/complete-word/'      , article_views.complete_word     ,  name='complete_word'),
-    path('article/living-english/'     , article_views.living_english    ,  name='living_english'),
     path('article/complete-chapter/'   , article_views.complete_chapter  ,  name='complete_chapter'),
     path('article/uncomplete-chapter/' , article_views.uncomplete_chapter,  name='uncomplete_chapter'),
     path('article/save-topic/'         , article_views.save_topic,          name='save-topic'),
     path('article/create-word/'        , article_views.create_word,         name='create-word'),
 
-    path('article/cnvrt_tpc_exec/'     , cnvrt_tpc_exec.main_cnvrt_tpc_exec, name='cnvrt_tpc_exec'),
     path('article/morph_analysis/'     , morph_analysis.submit_topic,        name='submit_topic'),
 
     path('test-batch/'                 , views_five_test_batch.test_batch,   name='test_batch'),
