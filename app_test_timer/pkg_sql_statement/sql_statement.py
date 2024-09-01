@@ -545,12 +545,12 @@ def sql_dao(request, sql_name, p_param):
 
         '''    
         ############################################################
-        # CALL ID : sqli_insert_tb_converted_sentn
-        # 함수명   : 변환된 문장을 저장한다.   
+        # CALL ID : sqli_living_eng_converted_sentn
+        # 함수명   : Part5 테스트 문장을 변환된 문장을 저장한다.   
         # 작성일   : 2024.07.02
-        # 작업     : 변환된 문장을 저장한다.   
+        # 작업     : Part5 테스트 문장을 변환된 문장을 저장한다.  
         ############################################################  '''
-        if sql_name == "sqli_insert_tb_converted_sentn":
+        if sql_name == "sqli_living_eng_converted_sentn":
             question_no      = p_param["question_no"]
             source_url       = p_param["source_url"]
             source_title     = p_param["source_title"]
@@ -570,7 +570,7 @@ def sql_dao(request, sql_name, p_param):
 
                 int_test_cnt += 1
 
-                ins_query = " INSERT INTO tb_converted_sentn "
+                ins_query = " INSERT INTO tb_living_eng_converted_sentn "
                 ins_query += " (no, user_id, topic_num, whitespace_converted, converted_sentn, original_sentn, translated_sentn, src_url, group_code, src_title) "
                 ins_query += (
                     " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "

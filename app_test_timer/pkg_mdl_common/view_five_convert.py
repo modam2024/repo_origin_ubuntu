@@ -156,7 +156,7 @@ def convert_sentence(request):
                     "list_rslt_sentns": list_rslt_sentns,
                 }
 
-            v_test_no = sql_statement.sql_dao(request, "sqli_insert_tb_converted_sentn", convert_values)
+            v_test_no = sql_statement.sql_dao(request, "sqli_living_eng_converted_sentn", convert_values)
 
             # 처리 성공 응답
             return JsonResponse(

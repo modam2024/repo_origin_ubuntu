@@ -9,7 +9,7 @@ from googletrans import Translator
 
 from app_common import mdl_common_app as comn_func
 from proj_sql_mapping import fn_connector as proj_connector
-from proj_sql_mapping import mdl_sql_mapping as sql_statement
+import app_living_english.pkg_sql_statement.sql_statement as sql_statement
 
 
 # 축약형을 변환하는 함수 정의

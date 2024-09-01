@@ -83,55 +83,6 @@ def sql_dao(request, sql_name, p_param):
         ##############
          INSERT BLOCK
         ############## '''
-        '''
-        ############################################################
-        # CALL ID : sqli_insert_tb_converted_sentn
-        # 함수명   : 변환된 문장을 저장한다.   
-        # 작성일   : 2024.07.02
-        # 작업     : 변환된 문장을 저장한다.   
-        ############################################################  '''
-        if sql_name == "sqli_insert_tb_converted_sentn":
-            data = json.loads(request.body)
-            source_url = data.get("sourceUrl")  # 소스 Url 추가
-            source_title = data.get("sourceTitle")  # 소스 Title 추가
-            source_type = data.get("sourceType")  # 소스 Type 추가
-            list_rslt_sentns = p_param
-
-            int_test_cnt = 0
-
-            # base_url 부분을 제거
-            base_url = "https://free.ybmclass.com/free/eng/eng_ybm_view.asp?idx="
-            topic_num = source_url.replace(base_url, "")
-
-            for whitespace_converted, converted_sentn, original_sentn, translated_sentn in list_rslt_sentns:
-                str_whitespace_converted = whitespace_converted
-                str_converted_sentn      = converted_sentn
-                str_original_sentn       = original_sentn
-                str_translated_sentn     = translated_sentn
-
-                int_test_cnt += 1
-
-                ins_query = " INSERT INTO tb_converted_sentn "
-                ins_query += " (no, user_id, topic_num, whitespace_converted, converted_sentn, original_sentn, translated_sentn, src_url, group_code, src_title) "
-                ins_query += (
-                    " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
-                )
-                ins_params = (
-                    int_test_cnt,
-                    current_username,
-                    topic_num,
-                    str_whitespace_converted,
-                    str_converted_sentn,
-                    str_original_sentn,
-                    str_translated_sentn,
-                    source_url,
-                    source_type,
-                    source_title,
-                )
-
-                cursor.execute(ins_query, ins_params)
-
-            return int_test_cnt
         ''' 
         ##############
          UPDATE BLOCK
