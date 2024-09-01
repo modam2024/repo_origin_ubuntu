@@ -1,7 +1,7 @@
 import json
 
-from app_news_study.app_mdl_common    import common as app_comn_func
-from app_news_study.app_sql_statement import create_connection, close_connection, handle_sql_error
+from app_news_study.pkg_mdl_common    import common as app_comn_func
+from app_news_study.pkg_sql_statement import create_connection, close_connection, handle_sql_error
 
 '''
 #######################################################

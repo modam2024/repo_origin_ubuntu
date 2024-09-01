@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-import app_test_timer.app_sql_statement.sql_statement as sql_statement
+import app_test_timer.pkg_sql_statement.sql_statement as sql_statement
 
 '''
 #######################################################

@@ -3,7 +3,7 @@ import re
 
 import pandas as pd
 
-import app_test_timer.app_sql_statement as att
+import app_test_timer.pkg_sql_statement as att
 from proj_common import proj_common_mdl as proj_comn_func
 
 '''

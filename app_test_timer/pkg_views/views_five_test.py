@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
 
-import app_test_timer.app_sql_statement as app_con
-import app_test_timer.app_sql_statement.sql_statement as sql_statement
+import app_test_timer.pkg_sql_statement as app_con
+import app_test_timer.pkg_sql_statement.sql_statement as sql_statement
 from proj_common import proj_common_mdl as proj_comn_func
 
 '''

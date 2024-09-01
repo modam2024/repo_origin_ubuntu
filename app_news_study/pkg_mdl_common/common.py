@@ -5,7 +5,7 @@ from typing import List, Dict
 import pandas as pd
 import pytz
 
-from app_news_study.app_sql_statement import sql_statement as sql_statement
+from app_news_study.pkg_sql_statement import sql_statement as sql_statement
 from proj_common import proj_common_mdl as proj_comn_func
 
 '''

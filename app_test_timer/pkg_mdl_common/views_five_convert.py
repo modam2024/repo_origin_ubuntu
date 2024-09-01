@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from googletrans import Translator
 
 from app_common import app_common_mdl as comn_func
-import app_test_timer.app_sql_statement.sql_statement as sql_statement
+import app_test_timer.pkg_sql_statement.sql_statement as sql_statement
 from proj_common import proj_common_mdl as proj_comn_func
 
 
