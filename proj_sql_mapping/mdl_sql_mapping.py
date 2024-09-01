@@ -1,10 +1,8 @@
 import json
-import re
 
 import pandas as pd
 
-from app_common import app_common_mdl as comn_func
-from mdl_sql_mapping import create_connection, close_connection, handle_sql_error
+from . import create_connection, close_connection, handle_sql_error
 
 '''
 #######################################################

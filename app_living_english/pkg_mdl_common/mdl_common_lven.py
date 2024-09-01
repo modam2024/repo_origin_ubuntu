@@ -5,8 +5,8 @@ import nltk
 from django.views.decorators.csrf import csrf_exempt
 
 import app_living_english.pkg_sql_statement.sql_statement as sql_statement
-from mdl_sql_mapping import create_connection, close_connection
-from proj_common import proj_common_mdl as proj_comn_func
+from proj_sql_mapping import create_connection, close_connection
+from proj_common import mdl_common_prj as proj_comn_func
 
 # PAGE INFO 생성함수, 2024-02-21
 def make_page_info(request):

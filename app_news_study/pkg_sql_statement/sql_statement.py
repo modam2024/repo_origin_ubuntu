@@ -1,6 +1,6 @@
 import json
 
-from app_news_study.pkg_mdl_common    import common as app_comn_func
+from app_news_study.pkg_mdl_common    import mdl_common_nwst as app_comn_func
 from app_news_study.pkg_sql_statement import create_connection, close_connection, handle_sql_error
 
 '''

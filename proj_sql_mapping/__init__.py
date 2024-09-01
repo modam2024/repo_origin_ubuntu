@@ -1,4 +1,4 @@
-# mdl_sql_mapping/__init__.py
+# proj_sql_mapping/__init__.py
 
 import mysql.connector
 
@@ -42,4 +42,4 @@ def handle_sql_error(e, sql_name):
 
 # 이제 sql_mapping.py 및 sql_mapping_article.py에서 데이터베이스 연결 설정과
 # 해제 코드를 반복하지 않고 이 함수들을 가져와 사용할 수 있습니다:
-# from mdl_sql_mapping import create_connection, close_connection, handle_sql_error
+# from proj_sql_mapping import create_connection, close_connection, handle_sql_error

@@ -8,8 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 from nltk import pos_tag, word_tokenize
 from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
-from app_common import app_common_mdl as comn_func
-from mdl_sql_mapping import create_connection, close_connection
+from app_common import mdl_common as comn_func
+from proj_sql_mapping import create_connection, close_connection
 
 
 def fn_spacy_ner(p_nlp, p_word, p_stop_words):

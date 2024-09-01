@@ -7,9 +7,9 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from googletrans import Translator
 
-from app_common import app_common_mdl as comn_func
-import app_test_timer.pkg_sql_statement.sql_statement as sql_statement
-from proj_common import proj_common_mdl as proj_comn_func
+from app_common import mdl_common as comn_func
+from proj_sql_mapping import fn_connector as proj_connector
+from proj_sql_mapping import mdl_sql_mapping as sql_statement
 
 
 # 축약형을 변환하는 함수 정의
@@ -19,7 +19,7 @@ def handle_contractions(tokens, index):
     return tokens[index].text.strip(), False
 
 @csrf_exempt
-def convert_sentence(request):
+def submit_sentence(request):
     # 변환된 텍스트 저장용 리스트
     converted_sentences = []
     list_rslt_sentns = []
@@ -32,7 +32,7 @@ def convert_sentence(request):
 
         try:
             # 데이터베이스 설정
-            conn = proj_comn_func.fn_connector(request)
+            conn = proj_connector(request)
             cursor = conn.cursor()
         except mysql.connector.Error as e:
             # MySQL 연결 또는 쿼리 실행 오류 처리
@@ -41,19 +41,18 @@ def convert_sentence(request):
         try:
             # 요청의 본문을 JSON으로 파싱
             data = json.loads(request.body)
-            # eng_content = data.get("artclContent1")
-            # kor_content = data.get("artclContent2")
-            # article_content = comn_func.filter_text(eng_content)
-            # filted_eng_content = comn_func.filter_eng_text(kor_content)
+            eng_content = data.get("artclContent1")
+            kor_content = data.get("artclContent2")
+            article_content = comn_func.filter_text(eng_content)
+            filted_eng_content = comn_func.filter_eng_text(kor_content)
 
-            question_no     = data.get("question_no")
-            article_content = data.get("article")
-            source_url      = data.get("sourceUrl")
-            source_title    = data.get("sourceTitle")
-            source_type     = "YBM(TEST)"
-            topic_num       = data.get("topic_num")
+            source_url = data.get("sourceUrl")  # 소스 Url 추가
+            source_title = data.get("sourceTitle")  # 소스 Title 추가
+            source_type = data.get("sourceType")  # 소스 Type 추가
+
             # SpaCy 영어 모델 로드 (사전 학습된 모델)
             nlp = spacy.load('en_core_web_sm')
+            translator = Translator()
 
             # 뉴스 기사 텍스트를 SpaCy의 nlp 객체로 분석
             doc = nlp(article_content)
@@ -61,37 +60,37 @@ def convert_sentence(request):
             # 문장 단위로 분리된 리스트 생성
             sentences = list(doc.sents)
 
-            # tmp_sentence = ""
-            # tmp_sentences = []
-            # # 문장에서 각 품사를 변환
-            # for sent0 in sentences:
-            #     tmp_sent0 = sent0.text
-            #     if tmp_sentence:
-            #        tmp_sent0 = tmp_sentence + tmp_sent0
-            #        new_doc0 = nlp(tmp_sent0)
-            #        sent0 = new_doc0[:]
-            #        tmp_sentence = ""
-            #     if len(sent0.text) < 4:
-            #        tmp_sentence = sent0.text
-            #     else:
-            #        tmp_sentences.append(sent0)
+            tmp_sentence = ""
+            tmp_sentences = []
+            # 문장에서 각 품사를 변환
+            for sent0 in sentences:
+                tmp_sent0 = sent0.text
+                if tmp_sentence:
+                   tmp_sent0 = tmp_sentence + tmp_sent0
+                   new_doc0 = nlp(tmp_sent0)
+                   sent0 = new_doc0[:]
+                   tmp_sentence = ""
+                if len(sent0.text) < 4:
+                   tmp_sentence = sent0.text
+                else:
+                   tmp_sentences.append(sent0)
 
             # 문장에서 각 품사를 변환
-            for sent in sentences:
-                # # sent.text 변수에서 한글을 영어로 치환한다.
-                # pattern = re.compile(r'[가-힣\s]')
-                # tmp_sent = sent.text
-                #
-                # tmp_kor_content = pattern.findall(tmp_sent)
-                # tmp_kor_content = ''.join(tmp_kor_content)
-                # tmp_kor_content = tmp_kor_content.strip()
-                #
-                # if tmp_kor_content:
-                #     tmp_sent = tmp_sent.replace(tmp_kor_content.strip(), filted_eng_content.strip())
-                #     new_doc = nlp(tmp_sent) # 전체 문장을 재구성하여 새로운 Doc 객체 생성
-                #     sent = new_doc[:] # 원래 Span 객체의 정보를 이용하여 새 Span 객체 생성
+            for sent in tmp_sentences:
+                # sent.text 변수에서 한글을 영어로 치환한다.
+                pattern = re.compile(r'[가-힣\s]')
+                tmp_sent = sent.text
 
-                original_sentence = sent.text
+                tmp_kor_content = pattern.findall(tmp_sent)
+                tmp_kor_content = ''.join(tmp_kor_content)
+                tmp_kor_content = tmp_kor_content.strip()
+
+                if tmp_kor_content:
+                    tmp_sent = tmp_sent.replace(tmp_kor_content.strip(), filted_eng_content.strip())
+                    new_doc = nlp(tmp_sent) # 전체 문장을 재구성하여 새로운 Doc 객체 생성
+                    sent = new_doc[:] # 원래 Span 객체의 정보를 이용하여 새 Span 객체 생성
+
+                original_sentence = tmp_sent
                 converted_tokens = []
                 skip_token = False
                 for i, token in enumerate(sent):
@@ -137,27 +136,31 @@ def convert_sentence(request):
 
             # 결과 출력
             for original_sentence, converted_sentence in converted_sentences:
-                result_original_sentn   = original_sentence.strip()
+                whitespace_converted = ' '.join(converted_sentence.replace(',', '').split())
+                translated_sentence = ""
+                # translated_sentence = translator.translate(original_sentence.strip(), src='en', dest='ko').text
+                result_whitespace_converted = whitespace_converted.strip()
                 result_converted_sentn  = converted_sentence.strip()
+                result_original_sentn   = original_sentence.strip()
+                result_translated_sentn = translated_sentence
 
+                result_whitespace_converted = result_whitespace_converted.replace(" !", "!")
                 result_converted_sentn      = result_converted_sentn.replace(" !", "!")
+                result_whitespace_converted = result_whitespace_converted.replace(" ?", "?")
                 result_converted_sentn      = result_converted_sentn.replace(" ?", "?")
+                result_whitespace_converted = result_whitespace_converted.replace(" ’", "’")
                 result_converted_sentn      = result_converted_sentn.replace(" ’", "’")
+                result_whitespace_converted = result_whitespace_converted.replace(" ,", ",")
                 result_converted_sentn      = result_converted_sentn.replace(" ,", ",")
+                result_whitespace_converted = result_whitespace_converted.replace(" .", ".")
                 result_converted_sentn      = result_converted_sentn.replace(" .", ".")
+                result_whitespace_converted = result_whitespace_converted.replace(" n’", "n’")
                 result_converted_sentn      = result_converted_sentn.replace(" n’", "n’")
-                list_rslt_sentns.append((result_converted_sentn, result_original_sentn))
 
-                convert_values = {
-                    "question_no" : question_no,
-                    "source_url"  : source_url,
-                    "source_title": source_title,
-                    "source_type" : source_type,
-                    "topic_num"   : topic_num,
-                    "list_rslt_sentns": list_rslt_sentns,
-                }
+                list_rslt_sentns.append((result_whitespace_converted, result_converted_sentn, result_original_sentn, result_translated_sentn))
 
-            v_test_no = sql_statement.sql_dao(request, "sqli_insert_tb_converted_sentn", convert_values)
+            v_test_no = sql_statement.sql_dao(request, "sqli_insert_tb_converted_sentn", list_rslt_sentns)
+
 
             # 처리 성공 응답
             return JsonResponse(

@@ -1,11 +1,11 @@
-# mdl_sql_mapping/__init__.py
+# proj_sql_mapping/__init__.py
 
-from proj_common import proj_common_mdl as proj_comn_func
+from proj_sql_mapping import  fn_connector as proj_connector
 
 def create_connection(request):
     """데이터베이스 연결 생성 및 반환."""
     try:
-        conn = proj_comn_func.fn_connector(request)
+        conn = proj_connector(request)
         cursor = conn.cursor()
         current_username = request.user.username
         if current_username == "":
@@ -30,4 +30,4 @@ def handle_sql_error(e, sql_name):
 
 # 이제 sql_mapping.py 및 sql_mapping_article.py에서 데이터베이스 연결 설정과
 # 해제 코드를 반복하지 않고 이 함수들을 가져와 사용할 수 있습니다:
-# from mdl_sql_mapping import create_connection, close_connection, handle_sql_error
+# from proj_sql_mapping import create_connection, close_connection, handle_sql_error

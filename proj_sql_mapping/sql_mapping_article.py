@@ -2,8 +2,8 @@ import json
 
 import pandas as pd
 
-from mdl_sql_mapping import create_connection, close_connection, handle_sql_error
-from proj_common import proj_common_mdl as proj_comn_func
+from proj_sql_mapping import create_connection, close_connection, handle_sql_error
+from proj_sql_mapping import fn_connector as proj_connector
 
 '''
 #######################################################
@@ -285,7 +285,7 @@ def sql_dao(request, sql_name, p_param):
                 topic_dur_end = data.get("topic_dur_end")  # 소스 Type 추가
 
                 # 접속 객체 생성
-                conn = proj_comn_func.fn_connector(request)
+                conn = proj_connector(request)
                 cursor = conn.cursor()
 
                 ins_topic_query = "  INSERT INTO tb_living_english_topic "

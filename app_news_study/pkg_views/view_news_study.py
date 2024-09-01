@@ -1,9 +1,9 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from app_news_study.pkg_mdl_common    import common as app_comn_func
+from app_news_study.pkg_mdl_common    import mdl_common_nwst as app_comn_func
 from app_news_study.pkg_sql_statement import sql_statement
-from proj_common import proj_common_mdl as proj_comn_func
+from proj_common import mdl_common_prj as proj_comn_func
 
 def news_study(request):
     selected_date = request.GET.get("selected_date")

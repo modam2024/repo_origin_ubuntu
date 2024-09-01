@@ -26,7 +26,7 @@ from article import morph_analysis as morph_analysis
 from article import views as article_views
 from balance import views as balance_views
 from mdl_login_info import views as login_views
-from proj_batch import views_five_test_batch
+from proj_batch import btch_five_test
 
 urlpatterns = [
     # 어플리케이션 url 참조

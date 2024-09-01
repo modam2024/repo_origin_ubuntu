@@ -1,6 +1,6 @@
 from django.urls import path
 
-from app_news_study.pkg_views import views_news_study
+from app_news_study.pkg_views import view_news_study
 
 urlpatterns = [
     path('news_study/',    views_news_study.news_study,    name='news_study'),
