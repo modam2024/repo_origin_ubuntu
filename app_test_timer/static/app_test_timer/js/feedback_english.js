@@ -1,90 +1,106 @@
+    function  artcl_contents_display() {
+        $('#artcl_content1').css("display", "block");
+        $('#artcl_wspace_content1').css("display", "none");
+        $('#artcl_org_content1').css("display", "none");
+        $('#artcl_content2').css("display", "block");
+        $('#artcl_wspace_content2').css("display", "none");
+        $('#artcl_org_content2').css("display", "none");
+        $('#artcl_content3').css("display", "block");
+        $('#artcl_wspace_content3').css("display", "none");
+        $('#artcl_org_content3').css("display", "none");
+    }
+
+    // 변환된 문장의 스피킹 실행
+    function setupSpeakConvEngHandler(index) {
+        $("#speakConvEng" + index).click(function() {
+            // 1초 동안 마우스 변경;
+            setCursorShap(1000);
+            artcl_contents_display();
+
+            if (index == 1) {
+                $('#artcl_content1').css(       "display", "none");
+                $('#artcl_wspace_content1').css("display", "block");
+            } else if (index == 2) {
+                $('#artcl_content2').css(       "display", "none");
+                $('#artcl_wspace_content2').css("display", "block");
+            } else if (index == 3) {
+                $('#artcl_content3').css(       "display", "none");
+                $('#artcl_wspace_content3').css("display", "block");
+            }
+
+            var text = $('#artcl_wspace_content' + index).val().trim();
+            splitTextAndSpeakBySentence(text);
+        });
+    }
+
+    // 함수를 정의합니다. 이 부분은 페이지의 스크립트 섹션 어디에서나 위치할 수 있으나,
+    // 일반적으로는 스크립트 섹션의 시작 부분에 위치합니다.
+    function setupSpeakOrgEngHandler(index) {
+        $("#speakExampleEng" + index).click(function() {
+            // 1초 동안 마우스 변경;
+            setCursorShap(1000);
+            artcl_contents_display();
+
+            if (index == 1) {
+                $('#artcl_content1').css(    "display", "none");
+                $('#artcl_org_content1').css("display", "block");
+            } else if (index == 2) {
+                $('#artcl_content2').css(    "display", "none");
+                $('#artcl_org_content2').css("display", "block");
+            } else if (index == 3) {
+                $('#artcl_content3').css(    "display", "none");
+                $('#artcl_org_content3').css("display", "block");
+            }
+
+            var text = $('#artcl_org_content' + index).val().trim();
+            splitTextAndSpeakBySentence(text);
+        });
+    }
+
     $(document).ready(function() { // applied
         // 1초 동안 마우스 변경;
         setCursorShap(1000);
 
-        let init_fix_currentTime = $("#topicDurStart").val();
-        let end_fix_currentTime  = $("#topicDurEnd").val();
-
         let pause_currentTime = 0;
         replaceText();
 
-        // play 버튼 클릭시
-        $("#start").click(function(){
-            let audioElement = $('#myAudio');
-
-            audioElement[0].currentTime=15;
-            $("#topic_dur_start").val(audioElement[0].currentTime);
-            $("#topic_dur_end").val(audioElement[0].duration-15);
-
-            saveTopicInfo();
-
-            audioElement[0].play();
-        });
-
-        // front 버튼 클릭시
-        $("#front").click(function(){
-            let audioElement = $('#myAudio');
-            audioElement[0].pause();
-
-            $("#topic_dur_start").val(15);
-
-            if ( Number(init_fix_currentTime) <= 15 ) {
-                $("#topic_dur_end").val(15);
-            } else {
-                $("#topic_dur_end").val(Number(init_fix_currentTime) - 2);
-            }
-
-            if ( Number(init_fix_currentTime) > 15 ) {
-                if (pause_currentTime > 15)
-                   audioElement[0].currentTime = pause_currentTime;
-                else
-                    audioElement[0].currentTime = 15;
-                document.getElementsByClassName("audio-btn")[0].style.backgroundColor = "gray";
-                audioElement[0].play();
-            } else {
-                alert("기간이 셋팅되지 않았습니다.");
-            }
-
-            audioElement = null;
-        });
-
-        $("#submitForm").submit(function(e) {
-            e.preventDefault();
-            $("#resMessage").val('Status: Starting');
-            let hddnUrl = $('#hddn_url');
-            
-            let articleContent = $("#artcl_content1").val()+ $("#artcl_content3").val();
-            let selChapter = $("#selChapter").val();
-            let sourceUrl  = hddnUrl.val();
-            if (sourceUrl === "https://free.ybmclass.com/free/eng/eng_ybm_view.asp?idx=")
-               sourceUrl   = sourceUrl + selChapter;
-            
-            hddnUrl.val(sourceUrl)
-               
-            let sourceTitle = $("#selTitle").val();
-            let sourceType  = $("#searchGrpCd").val();
-
-            $.ajax({
-                url: "/article/submit-article/",
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify({ 
-                    "article": articleContent,
-                    "sourceUrl": sourceUrl,
-                    "sourceTitle": sourceTitle,
-                    "sourceType": sourceType
-                }),
-                success: function(response) {
-                    $("#resMessage").val("Count: " +  response.word_insert_count + " / " + response.word_count + ", Message: " + response.message);
-                },
-                error: function(xhr) {
-                    // Handle the error response
-                    // `xhr` is the XMLHttpRequest object
-                    let errorMessage = xhr.status + ': ' + xhr.statusText;
-                    $("#result").html("Error - " + errorMessage);
-                }
-            });
-        });
+        // $("#submitForm").submit(function(e) {
+        //     e.preventDefault();
+        //     $("#resMessage").val('Status: Starting');
+        //     let hddnUrl = $('#hddn_url');
+        //
+        //     let articleContent = $("#artcl_content1").val()+ $("#artcl_content3").val();
+        //     let selChapter = $("#selChapter").val();
+        //     let sourceUrl  = hddnUrl.val();
+        //     if (sourceUrl === "https://free.ybmclass.com/free/eng/eng_ybm_view.asp?idx=")
+        //        sourceUrl   = sourceUrl + selChapter;
+        //
+        //     hddnUrl.val(sourceUrl)
+        //
+        //     let sourceTitle = $("#selTitle").val();
+        //     let sourceType  = $("#searchGrpCd").val();
+        //
+        //     $.ajax({
+        //         url: "/article/submit-article/",
+        //         type: "POST",
+        //         contentType: "application/json",
+        //         data: JSON.stringify({
+        //             "article": articleContent,
+        //             "sourceUrl": sourceUrl,
+        //             "sourceTitle": sourceTitle,
+        //             "sourceType": sourceType
+        //         }),
+        //         success: function(response) {
+        //             $("#resMessage").val("Count: " +  response.word_insert_count + " / " + response.word_count + ", Message: " + response.message);
+        //         },
+        //         error: function(xhr) {
+        //             // Handle the error response
+        //             // `xhr` is the XMLHttpRequest object
+        //             let errorMessage = xhr.status + ': ' + xhr.statusText;
+        //             $("#result").html("Error - " + errorMessage);
+        //         }
+        //     });
+        // });
         
         $('#clearButton').click(function() {
             $('#artcl_content').val("");
@@ -103,27 +119,6 @@
             let url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&source_status=C';
             //window.location.href = url;
             window.open(url, '_blank');
-        });
-
-        $("#searchButton").click(function() {
-            $("#resMessage").val("조회 중입니다.");
-            let selectdChapter = $('#titleList option:selected').val();
-            let url = BASE_URL + "article/living-english/?chapter="+selectdChapter+"&status=C";
-            window.open(url, '_self');
-        });
-        
-        $("#completeButton").click(function() {
-            // 선택된 라디오 버튼의 value와 기타 필요한 데이터를 객체로 구성합니다.
-            let checked_data = {
-                test_answer1: $('input[name="question1"]:checked').val(),
-                test_answer2: $('input[name="question2"]:checked').val(),
-                test_answer3: $('input[name="question3"]:checked').val(),
-                test_order_no: $("#test_order_no").val(),
-                test_page_date: $("#test_page_date").val(),
-            };
-
-            var url = BASE_URL + "app_test_timer/feedback-english/?" + $.param(checked_data);
-            window.location.href = url;
         });
 
         // TEST ENGLISH 클릭 이벤트
@@ -148,36 +143,15 @@
             $('#searchButton').click();
         });
 
-        // 모든 '.chapter-link' 클래스를 가진 <a> 태그에 대해 클릭 이벤트 리스너를 추가
-        // 동적으로 클래스명이 구성되기 때문에 상위의 document 에 이벤트를 전달한다.
-        $(document).on('click', '.chapter-link', function(e) {
-            e.preventDefault();
-            let selectd_chapter = $(this).attr('href'); // 목표 URL 추출
-            let data = {
-                selectd_chapter: selectd_chapter,
-            };
-            $.ajax({
-                url: '/article/uncomplete-chapter/',
-                type: 'GET',
-                data: data,
-                success: function() {
-                  $("#resMessage").val("미완료 처리 했습니다.");
-                  $("#searchButton").click();
-                },
-                error: function(xhr, status, error) {
-                  $("#resMessage").val("미완료처리 오류 발생 : " + error);
-                }
-            });
-        });
-
-        $("#convertExampleEng1").click(function() {
-            var question_no    = 1
+        function convertExampleEng(question_no) {
+            // 1초 동안 마우스 변경;
+            setCursorShap(1000);
             var test_order_no  = $("#test_order_no").val();
             var test_page_date = $("#test_page_date").val();
 
             let sourceTitle = `Part 5 : ${test_order_no} : ${test_page_date}`;
 
-            var articleContent = $("#artcl_content1").val();
+            var articleContent = $("#artcl_content" + question_no).val();
             let sourceUrl  = BASE_URL + "app_test_timer/feedback-english/?&test_order_no=" + test_order_no + "&test_page_date=" + test_page_date;
             let sourceType = "YBM(TEST)";
 
@@ -195,30 +169,29 @@
                 }),
                 success: function (response) {
                     $("#resMessage").val("OK");
+                    var res_question_no = response.question_no;
+                    var res_rslt_sentns = response.list_rslt_sentns;
+
+                    if (res_rslt_sentns.length > 0) {
+                        var v_artcl_wspace_content = "#artcl_wspace_content" + res_question_no;
+                        var v_artcl_org_content    = "#artcl_org_content" + res_question_no;
+                        // 첫 번째 결과만 사용
+                        $(v_artcl_wspace_content).val(res_rslt_sentns[0][0]);
+                        $(v_artcl_org_content).val(res_rslt_sentns[0][2]);
+                    }
                 },
                 error: function (xhr, status, error) {
                     var errorMessage = xhr.status + ': ' + xhr.statusText;
                     $("#result").html("Error - " + errorMessage);
                 }
             });
-        });
-
-        // txt_word 값과 일치하는 word 링크에 스타일 적용하는 함수
-        function applyActiveWordStyle() {
-            // 현재 txt_word 값 가져오기
-            let currentWord = $('#txt_word').val();
-            let chapterLink = $('.chapter-link');
-    
-            // 모든 word 링크의 스타일 초기화
-            chapterLink.removeClass('active-chapter');
-    
-            // txt_word 값과 일치하는 링크에 스타일 적용
-            chapterLink.each(function() {
-                if ($(this).text().trim() === currentWord) {
-                    $(this).addClass('active-chapter');
-                }
-            });
         }
+
+        $("#convertExampleEng1").click(function() {
+            convertExampleEng(1);
+        });
+        $("#convertExampleEng2").click(function() { convertExampleEng(2); });
+        $("#convertExampleEng3").click(function() { convertExampleEng(3); });
 
         let selChapter = $("#selChapter").val();
         let newCount   = $('#newCount').val();
@@ -252,18 +225,18 @@
             $(this).val(currentText.replace(/  /g, " "));
         });
 
-        // 영문 예문 클릭 이벤트 핸들러 추가
-        $("#speakExampleEng1").click(function() {
-           var txtAreaExampleEng1 = $('#artcl_content1').text().trim();
-           splitTextAndSpeakBySentence(txtAreaExampleEng1);
-        });
-        $("#speakExampleEng2").click(function() {
-           var txtAreaExampleEng2 = $('#artcl_content2').text().trim();
-           splitTextAndSpeakBySentence(txtAreaExampleEng2);
-        });
-        $("#speakExampleEng3").click(function() {
-           var txtAreaExampleEng3 = $('#artcl_content3').text().trim();
-           splitTextAndSpeakBySentence(txtAreaExampleEng3);
-        });
+        // 원문 예문 클릭 이벤트 핸들러 추가
+        setupSpeakOrgEngHandler(1);
+        setupSpeakOrgEngHandler(2);
+        setupSpeakOrgEngHandler(3);
+
+        // 변환 예문 클릭 이벤트 핸들러 추가
+        setupSpeakConvEngHandler(1);
+        setupSpeakConvEngHandler(2);
+        setupSpeakConvEngHandler(3);
+
+        $('#convertExampleEng1').click();
+        $('#convertExampleEng2').click();
+        $('#convertExampleEng3').click();
     });
     

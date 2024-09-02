@@ -57,7 +57,9 @@ select {
     display: none;
 }
 
-textarea#artcl_content1, textarea#artcl_content2, textarea#artcl_content3 {
+textarea#artcl_content1, textarea#artcl_wspace_content1, textarea#artcl_org_content1,
+textarea#artcl_content2, textarea#artcl_wspace_content2, textarea#artcl_org_content2,
+textarea#artcl_content3, textarea#artcl_wspace_content3, textarea#artcl_org_content3 {
     font-family: 'Malgun Gothic', sans-serif;
     font-weight: normal; /* 더 가늘게 하려면 'lighter', '300' 등으로 설정 */
     font-size: 18px; /* 텍스트 크기 조정 */

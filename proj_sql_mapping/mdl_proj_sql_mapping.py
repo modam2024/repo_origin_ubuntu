@@ -36,7 +36,7 @@ def sql_dao(request, sql_name, p_param):
                topic_param = request.GET.get("topic_num")
 
             query = "  SELECT no, ifnull(topic_num,''), ifnull(src_title,''), ifnull(whitespace_converted,''), ifnull(converted_sentn,''), ifnull(original_sentn,'') "
-            query += "   FROM tb_converted_sentn "
+            query += "   FROM tb_convert_living_english "
             if p_param == "submit_topic":
                 query += "  WHERE user_id   = %s "
                 query += "    AND src_url   = %s "

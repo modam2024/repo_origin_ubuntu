@@ -390,12 +390,12 @@ def sql_dao(request, sql_name, p_param):
 
         '''
         ############################################################
-        # CALL ID : sqli_insert_tb_converted_sentn
+        # CALL ID : sqli_convert_living_english
         # 함수명   : 변환된 문장을 저장한다.   
         # 작성일   : 2024.07.02
         # 작업     : 변환된 문장을 저장한다.   
         ############################################################  '''
-        if sql_name == "sqli_insert_tb_converted_sentn":
+        if sql_name == "sqli_convert_living_english":
             data = json.loads(request.body)
             source_url = data.get("sourceUrl")  # 소스 Url 추가
             source_title = data.get("sourceTitle")  # 소스 Title 추가
@@ -416,7 +416,7 @@ def sql_dao(request, sql_name, p_param):
 
                 int_test_cnt += 1
 
-                ins_query = " INSERT INTO tb_converted_sentn "
+                ins_query = " INSERT INTO tb_convert_living_english "
                 ins_query += " (no, user_id, topic_num, whitespace_converted, converted_sentn, original_sentn, translated_sentn, src_url, group_code, src_title) "
                 ins_query += (
                     " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
@@ -476,7 +476,7 @@ def sql_dao(request, sql_name, p_param):
                 del_batch_query += "  WHERE chapter_num = 'undefined'      "
                 cursor.execute(del_batch_query,)
 
-                del_batch_query  = " DELETE FROM tb_converted_sentn   "
+                del_batch_query  = " DELETE FROM tb_convert_living_english   "
                 del_batch_query += "  WHERE topic_num = 'undefined' "
                 cursor.execute(del_batch_query,)
 

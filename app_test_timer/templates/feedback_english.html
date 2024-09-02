@@ -41,10 +41,13 @@
                       </strong>
                       <strong>, Your Answer : {{ question1.your_answer | upper }}</strong>
                     ] &nbsp;
-                  <button type="button" id="speakExampleEng1">Speaking</button>&nbsp;
-                  <button type="button" id="convertExampleEng1">converting</button>&nbsp;
+                  <button type="button" id="speakConvEng1">Conv.Speak</button>&nbsp;
+                  <button type="button" id="speakExampleEng1">Org.Speak</button>&nbsp;
+                  <button type="button" id="convertExampleEng1" style="display: none">converting</button>&nbsp;
                   </label>
-                  <textarea id="artcl_content1" rows="3" placeholder="Enter article here..." readonly>{{  question1.question_content }}</textarea><br>
+                  <textarea id="artcl_content1" rows="3" >{{  question1.question_content }}</textarea>
+                  <textarea id="artcl_wspace_content1" rows="3" style="display: none"> </textarea>
+                  <textarea id="artcl_org_content1"    rows="3" style="display: none" > </textarea><br>
                   <div class="toeic-test1">
                     <dl>
                         <dd>
@@ -68,9 +71,13 @@
                       </strong>
                       <strong>, Your Answer : {{ question2.your_answer | upper }}</strong>
                     ] &nbsp;
-                  <button type="button" id="speakExampleEng2">Speaking</button>&nbsp;
+                  <button type="button" id="speakConvEng2">Conv.Speak</button>&nbsp;
+                  <button type="button" id="speakExampleEng2">Org.Speak</button>&nbsp;
+                  <button type="button" id="convertExampleEng2" style="display: none">converting</button>&nbsp;
                   </label>
-                  <textarea id="artcl_content2" rows="3" placeholder="Enter article here..." readonly>{{  question2.question_content }}</textarea><br>
+                  <textarea id="artcl_content2" rows="3" >{{ question2.question_content }}</textarea>
+                  <textarea id="artcl_wspace_content2" rows="3" style="display: none"> </textarea>
+                  <textarea id="artcl_org_content2"    rows="3" style="display: none"> </textarea><br>
                   <div class="toeic-test2">
                     <dl>
                         <dd>
@@ -94,9 +101,13 @@
                       </strong>
                       <strong>, Your Answer : {{ question3.your_answer | upper }}</strong>
                     ]&nbsp;
-                  <button type="button" id="speakExampleEng3">Speaking</button>&nbsp;
+                  <button type="button" id="speakConvEng3">Conv.Speak</button>&nbsp;
+                  <button type="button" id="speakExampleEng3">Org.Speak</button>&nbsp;
+                  <button type="button" id="convertExampleEng3" style="display: none">converting</button>&nbsp;
                   </label>
-                  <textarea id="artcl_content3" rows="3" placeholder="Enter article here..." readonly>{{  question3.question_content }}</textarea><br>
+                  <textarea id="artcl_content3" rows="3" >{{  question3.question_content }}</textarea>
+                  <textarea id="artcl_wspace_content3" rows="3" style="display: none" > </textarea>
+                  <textarea id="artcl_org_content3"    rows="3" style="display: none" > </textarea><br>
                   <div class="toeic-test3">
                     <dl>
                         <dd>

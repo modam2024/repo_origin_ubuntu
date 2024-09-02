@@ -349,6 +349,43 @@ def sql_dao(request, sql_name, p_param):
 
            return rtn_value
 
+        '''
+        ###################################################################
+        # CALL ID : sqls_fdbck_question_content
+        # 함수   : 피드백 질문별 조회
+        # 작성일  : 2024.06.20
+        # 작업    : 질문별 지문의 공백에 해당하는 정답을 치환한 완전한 문자을 조회한다.   
+        ################################################################### '''
+        if sql_name == "sqls_fdbck_question_content":
+            topic_num   = p_param["topic_num"]
+            question_no = p_param["question_no"]
+
+            answer_query  = " SELECT REGEXP_REPLACE(question_content, '\\\\s{3,}', "
+            answer_query += "        CONCAT(' ', CASE correct_answer             "
+            answer_query += "          WHEN 'a' THEN TRIM(SUBSTRING_INDEX(choice_a, ')', -1)) "
+            answer_query += "          WHEN 'b' THEN TRIM(SUBSTRING_INDEX(choice_b, ')', -1)) "
+            answer_query += "          WHEN 'c' THEN TRIM(SUBSTRING_INDEX(choice_c, ')', -1)) "
+            answer_query += "          WHEN 'd' THEN TRIM(SUBSTRING_INDEX(choice_d, ')', -1)) "
+            answer_query += "          END, ' ')) AS modified_content            "
+            answer_query += "   FROM tb_part5_feedback_page    "
+            answer_query += "  WHERE user_id       = %s        "
+            answer_query += "    AND trgt_order_no = %s        "
+            answer_query += "    AND question_no = CONCAT('question', %s)        "
+            answer_param  = (current_username, topic_num, question_no)
+
+            # 쿼리 실행
+            cursor.execute( answer_query, answer_param, )
+            question_content = cursor.fetchone()
+
+            if question_content:
+                res_question_content = question_content[0]
+            else:
+                res_question_content = ""
+
+            res_question_content = res_question_content.strip()
+
+            return res_question_content
+
         ''' 
         ##############
          INSERT BLOCK
@@ -495,12 +532,12 @@ def sql_dao(request, sql_name, p_param):
 
         '''    
         ############################################################
-        # CALL ID : sqli_test_timer_converted_sentn
+        # CALL ID : sqli_convert_test_timer
         # 함수명   : Part5 테스트 문장을 변환된 문장을 저장한다.   
         # 작성일   : 2024.07.02
         # 작업     : Part5 테스트 문장을 변환된 문장을 저장한다.  
         ############################################################  '''
-        if sql_name == "sqli_test_timer_converted_sentn":
+        if sql_name == "sqli_convert_test_timer":
             question_no      = p_param["question_no"]
             source_url       = p_param["source_url"]
             source_title     = p_param["source_title"]
@@ -510,34 +547,37 @@ def sql_dao(request, sql_name, p_param):
 
             int_test_cnt = 0
 
-            for converted_sentn, original_sentn in list_rslt_sentns:
+            for whitespace_converted, converted_sentn, original_sentn, translated_sentn in list_rslt_sentns:
+                str_whitespace_converted = whitespace_converted
                 str_converted_sentn      = converted_sentn
                 str_original_sentn       = original_sentn
-                str_whitespace_converted = ""
-                str_translated_sentn     = ""
+                str_translated_sentn     = translated_sentn
 
                 int_test_cnt += 1
 
-                ins_query = " INSERT INTO tb_test_timer_converted_sentn "
-                ins_query += " (no, user_id, topic_num, question_no, whitespace_converted, converted_sentn, original_sentn, translated_sentn, src_url, group_code, src_title) "
-                ins_query += (
-                    " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
-                )
-                ins_params = (
-                    question_no,
-                    current_username,
-                    topic_num,
-                    question_no,
-                    str_whitespace_converted,
-                    str_converted_sentn,
-                    str_original_sentn,
-                    str_translated_sentn,
-                    source_url,
-                    source_type,
-                    source_title,
-                )
+                try:
+                    ins_query = " INSERT INTO tb_convert_test_timer "
+                    ins_query += " (no, user_id, topic_num, question_no, whitespace_converted, converted_sentn, original_sentn, translated_sentn, src_url, group_code, src_title) "
+                    ins_query += (
+                        " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
+                    )
+                    ins_params = (
+                        question_no,
+                        current_username,
+                        topic_num,
+                        question_no,
+                        str_whitespace_converted,
+                        str_converted_sentn,
+                        str_original_sentn,
+                        str_translated_sentn,
+                        source_url,
+                        source_type,
+                        source_title,
+                    )
 
-                cursor.execute(ins_query, ins_params)
+                    cursor.execute(ins_query, ins_params)
+                except Exception as e:
+                    int_test_cnt -= 1
 
             return int_test_cnt
 

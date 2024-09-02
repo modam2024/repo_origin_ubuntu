@@ -155,7 +155,7 @@ def submit_sentence(request):
 
                 list_rslt_sentns.append((result_whitespace_converted, result_converted_sentn, result_original_sentn, result_translated_sentn))
 
-            v_test_no = sql_statement.sql_dao(request, "sqli_insert_tb_converted_sentn", list_rslt_sentns)
+            v_test_no = sql_statement.sql_dao(request, "sqli_convert_living_english", list_rslt_sentns)
 
 
             # 처리 성공 응답

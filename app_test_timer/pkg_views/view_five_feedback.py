@@ -11,7 +11,8 @@ import app_test_timer.pkg_sql_statement.sql_statement as sql_statement
 #######################################################  '''
 @login_required(login_url='/login/')
 def feedback_english(request):
-    selectd_wdate = request.GET.get('test_page_date')
+    # selectd_order_no = request.GET.get('test_order_no')
+    selectd_wdate    = request.GET.get('test_page_date')
 
     df_page_info, df_feedback_page_content = feedback_page_info(request)
 

@@ -46,11 +46,18 @@ def convert_sentence(request):
             # filted_eng_content = comn_func.filter_eng_text(kor_content)
 
             question_no     = data.get("question_no")
-            article_content = data.get("article")
             source_url      = data.get("sourceUrl")
             source_title    = data.get("sourceTitle")
             source_type     = "YBM(TEST)"
             topic_num       = data.get("topic_num")
+
+            tmp_values = {
+                "topic_num"   : topic_num,
+                "question_no" : question_no,
+            }
+            # 연속 공백을 정답으로 치환한 문장을 받아온다.
+            article_content = sql_statement.sql_dao(request, "sqls_fdbck_question_content", tmp_values)
+
             # SpaCy 영어 모델 로드 (사전 학습된 모델)
             nlp = spacy.load('en_core_web_sm')
 
@@ -136,16 +143,28 @@ def convert_sentence(request):
 
             # 결과 출력
             for original_sentence, converted_sentence in converted_sentences:
-                result_original_sentn   = original_sentence.strip()
+                whitespace_converted = ' '.join(converted_sentence.replace(',', '').split())
+                translated_sentence = ""
+                # translated_sentence = translator.translate(original_sentence.strip(), src='en', dest='ko').text
+                result_whitespace_converted = whitespace_converted.strip()
                 result_converted_sentn  = converted_sentence.strip()
+                result_original_sentn   = original_sentence.strip()
+                result_translated_sentn = translated_sentence
 
+                result_whitespace_converted = result_whitespace_converted.replace(" !", "!")
                 result_converted_sentn      = result_converted_sentn.replace(" !", "!")
+                result_whitespace_converted = result_whitespace_converted.replace(" ?", "?")
                 result_converted_sentn      = result_converted_sentn.replace(" ?", "?")
+                result_whitespace_converted = result_whitespace_converted.replace(" ’", "’")
                 result_converted_sentn      = result_converted_sentn.replace(" ’", "’")
+                result_whitespace_converted = result_whitespace_converted.replace(" ,", ",")
                 result_converted_sentn      = result_converted_sentn.replace(" ,", ",")
+                result_whitespace_converted = result_whitespace_converted.replace(" .", ".")
                 result_converted_sentn      = result_converted_sentn.replace(" .", ".")
+                result_whitespace_converted = result_whitespace_converted.replace(" n’", "n’")
                 result_converted_sentn      = result_converted_sentn.replace(" n’", "n’")
-                list_rslt_sentns.append((result_converted_sentn, result_original_sentn))
+
+                list_rslt_sentns.append((result_whitespace_converted, result_converted_sentn, result_original_sentn, result_translated_sentn))
 
                 convert_values = {
                     "question_no" : question_no,
@@ -156,15 +175,15 @@ def convert_sentence(request):
                     "list_rslt_sentns": list_rslt_sentns,
                 }
 
-            v_test_no = sql_statement.sql_dao(request, "sqli_test_timer_converted_sentn", convert_values)
+            v_test_no = sql_statement.sql_dao(request, "sqli_convert_test_timer", convert_values)
 
             # 처리 성공 응답
             return JsonResponse(
                 {
-                    "whitespace_converted": "success",
-                    "converted_sentn": "Article processed successfully",
-                    "original_sentn": word_count,
-                    "translated_sentn": word_insert_count,
+                    "message": "success",
+                    "topic_num": topic_num,
+                    "question_no": question_no,
+                    "list_rslt_sentns": list_rslt_sentns
                 }
             )
 
