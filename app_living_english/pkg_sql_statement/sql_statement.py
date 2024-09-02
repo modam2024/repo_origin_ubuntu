@@ -147,7 +147,7 @@ def sql_dao(request, sql_name, p_param):
         if sql_name == "sqls_batch_max_date":
 
             select_batch_query  = " SELECT  ifnull(max(trgt_page_date) ,'00000000') as trgt_page_date  "
-            select_batch_query += "   FROM  tb_part5_batch_hist "
+            select_batch_query += "   FROM  tb_batch_part5_test_hist "
 
             # 쿼리 실행
             cursor.execute(select_batch_query,)
@@ -463,12 +463,9 @@ def sql_dao(request, sql_name, p_param):
                 cursor.execute(chapter_query, chapter_params)
 
             except Exception as e:
-                upd_batch_query  = " UPDATE tb_batch_living_english_hist  "
-                upd_batch_query += "    SET update_date = date_format(now(),'%Y-%m-%d %H:%i:%S')   "
-                upd_batch_query += "  WHERE src_chapter  = %s  "
-
-                upd_batch_params = (p_chapter_num,)
-                cursor.execute(upd_batch_query, upd_batch_params)
+                del_batch_query  = " DELETE FROM tb_batch_living_english_hist "
+                del_batch_query += "  WHERE create_date <= DATE_SUB(now(), INTERVAL 7 DAY) "
+                cursor.execute(del_batch_query, )
 
             finally:
                 del_batch_query  = " DELETE FROM tb_chapter_title     "

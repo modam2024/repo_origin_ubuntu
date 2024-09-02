@@ -29,7 +29,7 @@ def test_english(request):
        request.GET = request.GET.copy()
 
        if selectd_status == "C":
-           # 배치 작업을 경우는 배치 테이블의 최대 일자를 읽어 온다. 형태소 분석 안한다.
+           # 배치 작업에 값이 있는 경우는 배치 테이블의 최대 일자를 읽어 온다. 형태소 분석 안한다.
            tmp_selectd_wdate = sql_statement.sql_dao(request, "sqls_batch_max_date", "")
 
            if tmp_selectd_wdate == "00000000":

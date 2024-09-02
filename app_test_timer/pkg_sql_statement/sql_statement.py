@@ -240,31 +240,6 @@ def sql_dao(request, sql_name, p_param):
 
         '''
         ############################################################
-        # CALL ID : sqls_part5_batch_hist
-        # 함수명   : 배치 히스토리 입력 여부 판단 함수  
-        # 작성일   : 2024.08.31
-        # 작업     : 배치 히스토리에 입력된 데이터가 있는지 확인   
-        ############################################################ '''
-        if sql_name == "sqls_part5_batch_hist":
-            v_trgt_order_no  = p_param['trgt_order_no']
-            v_trgt_page_date = p_param['trgt_page_date']
-
-            select_batch_query  = " SELECT  count(*) as cnt     "
-            select_batch_query += "   FROM  tb_part5_batch_hist "
-            select_batch_query += "  WHERE  trgt_order_no  = %s "
-            select_batch_query += "    AND  trgt_page_date = %s "
-
-            select_batch_param = ( v_trgt_order_no, v_trgt_page_date )
-
-            # 쿼리 실행
-            cursor.execute(select_batch_query, select_batch_param)
-            v_batch_cnt   = cursor.fetchone()
-            int_batch_cnt = int(v_batch_cnt[0])
-
-            return int_batch_cnt
-
-        '''
-        ############################################################
         # CALL ID : sqls_batch_max_date
         # 함수명   : 배치 히스토리 테이블의 가장 최근 일자 조회  
         # 작성일   : 2024.08.31
@@ -273,7 +248,7 @@ def sql_dao(request, sql_name, p_param):
         if sql_name == "sqls_batch_max_date":
 
             select_batch_query  = " SELECT  ifnull(max(trgt_page_date) ,'00000000') as trgt_page_date  "
-            select_batch_query += "   FROM  tb_part5_batch_hist "
+            select_batch_query += "   FROM  tb_batch_part5_test_hist "
 
             # 쿼리 실행
             cursor.execute(select_batch_query,)
@@ -463,31 +438,34 @@ def sql_dao(request, sql_name, p_param):
 
         '''
         ############################################################
-        # CALL ID : sqli_part5_batch_hist
+        # CALL ID : sqli_batch_part5_test_hist
         # 함수명   : 토익 PART 5 문제 자동 생성 스크립트용
         # 작성일   : 2024.08.31
-        # 작업     : 한시간 단위로 신규 토익 PART 5 문제 자동 생성 한다.           
+        # 작업     : 한시간 단위로 신규 토익 PART 5 문제 자동 생성 한다.    
+        #            7일전 배치 작업은 전체 삭제 한다.                          
         ############################################################  '''
-        if sql_name == "sqli_part5_batch_hist":
+        if sql_name == "sqli_batch_part5_test_hist":
 
             v_trgt_order_no  = p_param['trgt_order_no']
             v_trgt_page_date = p_param['trgt_page_date']
             v_prve_page_date = p_param['prve_page_date']
             v_next_page_date = p_param['next_page_date']
 
-            v_test_batch_hist_cnt = sql_dao(request, "sqls_part5_batch_hist", p_param)
-
-            if v_test_batch_hist_cnt == 1:
-                print("already inserted in tb_part5_batch_hist")
-                sql_dao(request, "sqlu_batch_update_date", p_param)
-            else:
-                batch_query = " INSERT INTO tb_part5_batch_hist "
+            try:
+                batch_query = " INSERT INTO tb_batch_part5_test_hist "
                 batch_query += " ( trgt_order_no, trgt_page_date, prve_page_date, next_page_date, update_date ) "
                 batch_query += " VALUES ( %s, %s, %s, %s, date_format(now(), '%Y-%m-%d %H:%i:%S') ) "
                 batch_params = ( v_trgt_order_no, v_trgt_page_date, v_prve_page_date, v_next_page_date, )
 
                 cursor.execute(batch_query, batch_params)
 
+            except Exception as e:
+                #  7일전 배치 작업은 전체 삭제 한다.
+                sql_dao(request, "sqld_batch_part5_test_hist", p_param)
+
+            finally:
+                print("sqli_batch_part5_test_hist finished")
+                
             return "OK"
 
         '''
@@ -569,25 +547,16 @@ def sql_dao(request, sql_name, p_param):
         ############## '''
         '''
         ############################################################
-        # CALL ID : sqlu_batch_update_date
-        # 함수명   : 배치 히스토리 테이블의 update_date 갱신  
+        # CALL ID : sqld_batch_part5_test_hist
+        # 함수명   : 배치 히스토리 테이블의 7일 이전의 데이터 삭제
         # 작성일   : 2024.08.31
         # 작업     : 배치 히스토리 테이블의 update_date 갱신 작업   
         ############################################################ '''
-        if sql_name == "sqlu_batch_update_date":
+        if sql_name == "sqld_batch_part5_test_hist":
 
-            v_trgt_order_no  = p_param['trgt_order_no']
-            v_trgt_page_date = p_param['trgt_page_date']
-
-            upd_batch_query  = " UPDATE tb_part5_batch_hist  "
-            upd_batch_query += "    SET update_date = date_format(now(),'%Y-%m-%d %H:%i:%S')   "
-            upd_batch_query += " WHERE  trgt_order_no  = %s  "
-            upd_batch_query += "   AND  trgt_page_date = %s  "
-            upd_batch_params = (
-                v_trgt_order_no,
-                v_trgt_page_date,
-            )
-            cursor.execute(upd_batch_query, upd_batch_params)
+           del_batch_query  = " DELETE FROM tb_batch_part5_test_hist "
+           del_batch_query += "  WHERE create_date <= DATE_SUB(now(), INTERVAL 7 DAY) "
+           cursor.execute(del_batch_query, )
 
         ''' 
         ##############

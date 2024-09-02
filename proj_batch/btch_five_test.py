@@ -74,7 +74,7 @@ def test_batch(request):
 
             res_value = sql_statement.sql_dao(request, "sqli_test_page_content_create", test_values)
 
-        res_value = sql_statement.sql_dao(request, "sqli_part5_batch_hist", test_values)
+        res_value = sql_statement.sql_dao(request, "sqli_batch_part5_test_hist", test_values)
 
     except Exception as e:
         print("test insert failed:", e)
