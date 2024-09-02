@@ -62,6 +62,6 @@ urlpatterns = [
     path('article/create-word/'        , article_views.create_word,         name='create-word'),
 
     path('test-batch/'                 , btch_five_test.test_batch,         name='test_batch'),
-    path('engl-batch/'                 , btch_living_english.living_english_batch,  name='test_batch'),
+    path('engl-batch/'                 , btch_living_english.living_english_batch,  name='engl-batch'),
 ]
  
