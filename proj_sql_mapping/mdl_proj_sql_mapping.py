@@ -21,12 +21,12 @@ def sql_dao(request, sql_name, p_param):
         ##############  '''
         '''
         ############################################################
-        # CALL ID : sqls_select_db_converted_sentn
+        # CALL ID : sqls_proj_converted_sentn
         # 함수명   : 변환 문장을 조회한다.   
         # 작성일   : 2024.07.10
         # 작업     : db_converted_sentn 에 저장된 자료를 조회한다.   
         ############################################################ '''
-        if sql_name == "sqls_select_tb_converted_sentn":
+        if sql_name == "sqls_proj_converted_sentn":
             topic_param = ""
 
             if p_param == "submit_topic":
@@ -56,7 +56,7 @@ def sql_dao(request, sql_name, p_param):
         # 작성일 : 2024.07.10
         # 작업 : 모든 페이지에서 문장 분석 프로시져 처리 여부 확인용도 
         ############################################################# '''
-        if sql_name == "sqls_submit_article_pre_check":
+        if sql_name == "sqls_proj_submit_article_pre_check":
             re_title_cnt = ""
 
             data = json.loads(request.body)

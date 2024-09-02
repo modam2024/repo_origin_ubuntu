@@ -92,35 +92,6 @@ def sql_dao(request, sql_name, p_param):
 
         '''
         #############################################################
-        # 문장 분석 submition 완료확인 함수
-        # 작성일 : 2024.07.10
-        # 작업 : 모든 페이지에서 문장 분석 프로시져 처리 여부 확인용도 
-        ############################################################# '''
-        if sql_name == "sqls_submit_article_pre_check":
-            re_title_cnt = ""
-
-            data = json.loads(request.body)
-            source_url   = data.get("sourceUrl")    # 소스 Url 추가
-            source_title = data.get("sourceTitle")  # 소스 Title 추가
-            source_type  = data.get("sourceType")   # 소스 Type 추가
-
-            select_query  = "  SELECT count(*)       "
-            select_query += "   FROM processed_words "
-            select_query += "  WHERE user_id    = %s "
-            select_query += "    AND src_url    = %s "
-            select_query += "    AND group_code = %s "
-            select_query += "    AND src_title  = %s "
-            select_params = ( current_username, source_url, source_type, source_title, )
-
-            # 쿼리 실행
-            cursor.execute(select_query, select_params, )
-            src_title_cnt = cursor.fetchone()
-            re_title_cnt = str(src_title_cnt[0])
-
-            return re_title_cnt
-
-        '''
-        #############################################################
         # SQL ID : sqls_recent_news_date
         # 작성일  : 2024.08.10
         # 작  업 : 뉴스 사이트 최대 생성일자 조회  

@@ -22,7 +22,7 @@ from django.urls import include, path
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 
-from article import morph_analysis as morph_analysis
+from app_living_english.pkg_views import view_living_eng_morph_analysis as morph_analysis
 from article import views as article_views
 from balance import views as balance_views
 from mdl_login_info import views as login_views
@@ -60,8 +60,6 @@ urlpatterns = [
     path('article/uncomplete-chapter/' , article_views.uncomplete_chapter,  name='uncomplete_chapter'),
     path('article/save-topic/'         , article_views.save_topic,          name='save-topic'),
     path('article/create-word/'        , article_views.create_word,         name='create-word'),
-
-    path('article/morph_analysis/'     , morph_analysis.submit_topic,       name='submit_topic'),
 
     path('test-batch/'                 , btch_five_test.test_batch,         name='test_batch'),
     path('engl-batch/'                 , btch_living_english.living_english_batch,  name='test_batch'),

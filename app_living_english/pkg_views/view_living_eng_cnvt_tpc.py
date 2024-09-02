@@ -1,13 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-import app_living_english.pkg_sql_statement.sql_statement as sql_statement
+from proj_sql_mapping import mdl_proj_sql_mapping as sql_statement
 
 
 @login_required(login_url='/login/')
 def main_cnvrt_tpc_exec(request):
 
-    existing_topic = sql_statement.sql_dao(request, "sqls_select_tb_converted_sentn", "main_cnvrt_tpc_exec")
+    existing_topic = sql_statement.sql_dao(request, "sqls_proj_converted_sentn", "main_cnvrt_tpc_exec")
 
     rows = []
 

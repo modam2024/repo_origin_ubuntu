@@ -5,7 +5,7 @@ import mysql.connector
 import spacy
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from googletrans import Translator
+# from googletrans import Translator
 
 from app_common import mdl_common_app as comn_func
 from proj_sql_mapping import fn_connector as proj_connector
@@ -46,13 +46,9 @@ def submit_sentence(request):
             article_content = comn_func.filter_text(eng_content)
             filted_eng_content = comn_func.filter_eng_text(kor_content)
 
-            source_url = data.get("sourceUrl")  # 소스 Url 추가
-            source_title = data.get("sourceTitle")  # 소스 Title 추가
-            source_type = data.get("sourceType")  # 소스 Type 추가
-
             # SpaCy 영어 모델 로드 (사전 학습된 모델)
             nlp = spacy.load('en_core_web_sm')
-            translator = Translator()
+            # translator = Translator()
 
             # 뉴스 기사 텍스트를 SpaCy의 nlp 객체로 분석
             doc = nlp(article_content)

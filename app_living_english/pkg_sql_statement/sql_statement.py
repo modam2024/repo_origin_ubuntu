@@ -322,37 +322,6 @@ def sql_dao(request, sql_name, p_param):
                print("sqls_living_english_content_resultcnt failed: ", e)
                return 0
 
-        '''
-        ############################################################
-        # CALL ID : sqls_select_db_converted_sentn
-        # 함수명   : 변환 문장을 조회한다.   
-        # 작성일   : 2024.07.10
-        # 작업     : db_converted_sentn 에 저장된 자료를 조회한다.   
-        ############################################################ '''
-        if sql_name == "sqls_select_tb_converted_sentn":
-            topic_param = ""
-
-            if p_param == "submit_topic":
-               data = json.loads(request.body)
-               topic_param = data.get("sourceUrl")  # 소스 Url 추가
-            elif p_param == "main_cnvrt_tpc_exec":
-               topic_param = request.GET.get("topic_num")
-
-            query = "  SELECT no, ifnull(topic_num,''), ifnull(src_title,''), ifnull(whitespace_converted,''), ifnull(converted_sentn,''), ifnull(original_sentn,'') "
-            query += "   FROM tb_converted_sentn "
-            if p_param == "submit_topic":
-                query += "  WHERE user_id   = %s "
-                query += "    AND src_url   = %s "
-            elif p_param == "main_cnvrt_tpc_exec":
-                query += "  WHERE user_id   = %s "
-                query += "    AND topic_num = %s "
-            query += "  ORDER BY no ASC "
-            params = (current_username, topic_param,)
-            cursor.execute(query, params)
-            existing_topic = cursor.fetchall()
-
-            return existing_topic
-
         ''' 
         ##############
          INSERT BLOCK

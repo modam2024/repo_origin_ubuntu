@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from app_living_english.pkg_views import view_living_english_morph as living_eng_morph
-from proj_sql_mapping import mdl_sql_mapping as sql_statement
+from proj_sql_mapping import mdl_proj_sql_mapping as sql_statement
 from proj_common import view_morph_new_words as morph_new_words
 from django.contrib.auth.decorators import login_required
 
@@ -13,12 +13,12 @@ def submit_topic(request):
     # POST 요청일 때만 처리
     if request.method == "POST":
         # 작업 : 모든 페이지에서 문장 분석 프로시져 처리 여부 확인용도
-        check_cnt = sql_statement.sql_dao(request, "sqls_submit_article_pre_check", "")
+        check_cnt = sql_statement.sql_dao(request, "sqls_proj_submit_article_pre_check", "")
         check_cnt = int(check_cnt)  # 문자열을 정수로 변환
 
         if check_cnt > 0:
             # 작업 : 변환 문장을 조회한다. db_converted_sentn 에 저장된 자료를 조회한다.
-            morph_check = sql_statement.sql_dao(request, "sqls_select_tb_converted_sentn", "submit_topic")
+            morph_check = sql_statement.sql_dao(request, "sqls_proj_converted_sentn", "submit_topic")
             if len(morph_check) == 0:
                # 생활회화 페이지에 특화된 로직이다.
                # submit_sentence 의 앞부분은 한글에 영어로 바꾸는 로직,
@@ -32,7 +32,7 @@ def submit_topic(request):
         rtn_result = morph_new_words.submit_topic(request)
 
         if rtn_result["status"] == "success":
-           morph_check = sql_statement.sql_dao(request, "sqls_select_tb_converted_sentn", "submit_topic")
+           morph_check = sql_statement.sql_dao(request, "sqls_proj_converted_sentn", "submit_topic")
            if len(morph_check) == 0:
                # 생활회화 페이지에 특화된 로직이다.
                # submit_sentence 의 앞부분은 한글에 영어로 바꾸는 로직,
