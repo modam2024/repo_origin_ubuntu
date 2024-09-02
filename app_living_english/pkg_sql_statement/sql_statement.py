@@ -419,7 +419,7 @@ def sql_dao(request, sql_name, p_param):
 
             cursor.execute(insert_query, insert_params)
 
-        '''    
+        '''
         ############################################################
         # CALL ID : sqli_insert_tb_converted_sentn
         # 함수명   : 변환된 문장을 저장한다.   
@@ -427,22 +427,23 @@ def sql_dao(request, sql_name, p_param):
         # 작업     : 변환된 문장을 저장한다.   
         ############################################################  '''
         if sql_name == "sqli_insert_tb_converted_sentn":
-            question_no      = p_param["question_no"]
-            source_url       = p_param["source_url"]
-            source_title     = p_param["source_title"]
-            source_type      = p_param["source_type"]
-            topic_num        = p_param["topic_num"]
-            list_rslt_sentns = p_param["list_rslt_sentns"]
+            data = json.loads(request.body)
+            source_url = data.get("sourceUrl")  # 소스 Url 추가
+            source_title = data.get("sourceTitle")  # 소스 Title 추가
+            source_type = data.get("sourceType")  # 소스 Type 추가
+            list_rslt_sentns = p_param
 
             int_test_cnt = 0
 
-            for converted_sentn, original_sentn in list_rslt_sentns:
+            # base_url 부분을 제거
+            base_url = "https://free.ybmclass.com/free/eng/eng_ybm_view.asp?idx="
+            topic_num = source_url.replace(base_url, "")
+
+            for whitespace_converted, converted_sentn, original_sentn, translated_sentn in list_rslt_sentns:
+                str_whitespace_converted = whitespace_converted
                 str_converted_sentn      = converted_sentn
                 str_original_sentn       = original_sentn
-                str_whitespace_converted = ""
-                str_translated_sentn     = ""
-
-                topic_num = topic_num + "-" + question_no
+                str_translated_sentn     = translated_sentn
 
                 int_test_cnt += 1
 
@@ -452,7 +453,7 @@ def sql_dao(request, sql_name, p_param):
                     " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
                 )
                 ins_params = (
-                    question_no,
+                    int_test_cnt,
                     current_username,
                     topic_num,
                     str_whitespace_converted,
