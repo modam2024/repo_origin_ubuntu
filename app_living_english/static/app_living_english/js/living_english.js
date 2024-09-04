@@ -240,7 +240,7 @@
             let sourceType  = $("#searchGrpCd").val();
 
             $.ajax({
-                url: "/article/morph_analysis/",
+                url: "/app_living_english/morph_analysis/",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({ 
