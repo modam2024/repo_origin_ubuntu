@@ -46,8 +46,9 @@ def sql_dao(request, sql_name, p_param):
         # 작업     : 뉴스 사이트 타이틀 조회  
         ############################################################# '''
         if sql_name == "sqls_news_info_titles":
-            p_news_date = p_param["today_news_date"]
-            p_max_date  = p_param["max_news_date"]
+            # p_news_date = p_param["today_news_date"]
+            # p_max_date  = p_param["max_news_date"]
+            p_max_date = p_param
 
             # tb_news_info_detail 테이블에 keyno 대상 최대 num 을 가져온다.
             select_query =  " SELECT keyno, title      "
