@@ -96,7 +96,7 @@
     }
     
     function splitTextAndSpeak(text) {
-        let maxLength  = 300; // 적당한 최대 길이 설정
+        let maxLength  = 230; // 적당한 최대 길이 설정
         let parts = [];
         let currentPart = "";
     
