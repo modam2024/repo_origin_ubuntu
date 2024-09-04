@@ -21,6 +21,13 @@ def test_batch(request):
 
     res_value = ""
 
+    test_values = {
+        'trgt_order_no'  : "0000",
+        'trgt_page_date' : "00000000",
+        'prve_page_date' : "00000000",
+        'next_page_date' : "00000000",
+    }
+
     conn, cursor, current_username = app_con.create_connection(request)
 
     if selectd_version == "max":
@@ -38,12 +45,6 @@ def test_batch(request):
     df_page_info, df_test_page_content = test_page_info(request)
     dict_test_page_content = df_test_page_content.to_dict('records')
     dict_page_info = df_page_info.to_dict('records')
-
-    values = {
-               'test_page_content': dict_test_page_content,
-               'test_page_info'   : dict_page_info,
-               'select_tag_info'  : "",
-             }
 
     try:
         for each_test_page_content in dict_test_page_content:
