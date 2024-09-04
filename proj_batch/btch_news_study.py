@@ -12,13 +12,7 @@ def batch_news_study(request):
     check_today_news, today_news_date, max_news_date = app_comn_func.get_recent_news_date(request)
 
     if check_today_news:
-       list_param = {
-           "today_news_date": today_news_date,
-           "max_news_date": max_news_date
-       }
-       titles, news_dates = sql_statement.sql_dao(request, "sqls_news_info_titles", list_param)
-
-       return HttpResponse("FROM DB")
+       return HttpResponse("FROM DB {}".format(today_news_date))
 
     url = "https://koreajoongangdaily.joins.com/section/currentIssues"
     # 공통 함수의 webdriver를 사용해서 파싱한다.

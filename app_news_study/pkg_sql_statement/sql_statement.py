@@ -55,7 +55,7 @@ def sql_dao(request, sql_name, p_param):
             select_query += "  WHERE user_id = %s      "
             select_query += "    AND DATE_FORMAT(create_date, '%Y-%m-%d') = %s "
             select_query += "  ORDER BY keyno          "
-            select_params = (current_username, p_news_date,)
+            select_params = (current_username, p_max_date,)
 
             # 쿼리 실행
             cursor.execute(select_query, select_params,)
