@@ -290,6 +290,34 @@ def sql_dao(request, sql_name, p_param):
 
             return str(news_count_num)
 
+        '''
+        ############################################################
+        # CALL ID : sqli_batch_news_study_hist
+        # 함수명   : 뉴스 배치 자동 생성 스크립트용
+        # 작성일   : 2024.09.04
+        # 작업     : 뉴스 배치 자동 생성 스크립트용  
+        ############################################################  '''
+        if sql_name == "sqli_batch_news_study_hist":
+
+            v_title = p_param['TITLE']
+
+            try:
+                batch_query = " INSERT INTO tb_batch_news_study_hist "
+                batch_query += " ( new_title, update_date ) "
+                batch_query += " VALUES ( %s, date_format(now(), '%Y-%m-%d %H:%i:%S') ) "
+                batch_params = (v_title,)
+
+                cursor.execute(batch_query, batch_params)
+
+            except Exception as e:
+                #  7일전 배치 작업은 전체 삭제 한다.
+                sql_dao(request, "sqld_batch_news_study_hist", p_param)
+
+            finally:
+                print("sqli_batch_news_study_hist finished")
+
+            return "OK"
+
         ''' 
         ##############
          UPDATE BLOCK
@@ -321,6 +349,20 @@ def sql_dao(request, sql_name, p_param):
         ##############
          DELETE BLOCK
         ############## '''
+
+        '''
+        ############################################################
+        # CALL ID : sqld_batch_news_study_hist
+        # 함수명   : 배치 히스토리 테이블의 7일 이전의 데이터 삭제
+        # 작성일   : 2024.08.31
+        # 작업     : 배치 히스토리 테이블의 7일 이전의 데이터 삭제
+        ############################################################ '''
+        if sql_name == "sqld_batch_news_study_hist":
+
+            del_batch_query = " DELETE FROM tb_batch_news_study_hist "
+            del_batch_query += "  WHERE create_date <= DATE_SUB(now(), INTERVAL 7 DAY) "
+            cursor.execute(del_batch_query, )
+
         '''
         ############################################################
         # CALL ID : sqld_invalid_news_info

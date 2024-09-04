@@ -19,6 +19,8 @@ def test_batch(request):
     selectd_chapter = request.GET.get("chapter")
     selectd_status  = request.GET.get("status")
 
+    res_value = ""
+
     conn, cursor, current_username = app_con.create_connection(request)
 
     if selectd_version == "max":
@@ -78,11 +80,12 @@ def test_batch(request):
 
     except Exception as e:
         print("test insert failed:", e)
+        res_value = "test insert failed:"
 
     finally:
         app_con.close_connection(conn, cursor)
 
-    return HttpResponse(v_trgt_page_date)
+    return HttpResponse(res_value)
 
 '''
 #######################################################

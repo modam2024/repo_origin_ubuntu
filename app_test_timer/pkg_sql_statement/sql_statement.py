@@ -585,23 +585,25 @@ def sql_dao(request, sql_name, p_param):
         ##############
          UPDATE BLOCK
         ############## '''
+        ''' 
+        ##############
+         DELETE BLOCK
+        ############## '''
+
         '''
         ############################################################
         # CALL ID : sqld_batch_part5_test_hist
         # 함수명   : 배치 히스토리 테이블의 7일 이전의 데이터 삭제
         # 작성일   : 2024.08.31
-        # 작업     : 배치 히스토리 테이블의 update_date 갱신 작업   
+        # 작업     : 배치 히스토리 테이블의 7일 이전의 데이터 삭제 
         ############################################################ '''
         if sql_name == "sqld_batch_part5_test_hist":
 
-           del_batch_query  = " DELETE FROM tb_batch_part5_test_hist "
-           del_batch_query += "  WHERE create_date <= DATE_SUB(now(), INTERVAL 7 DAY) "
-           cursor.execute(del_batch_query, )
+            del_batch_query = " DELETE FROM tb_batch_part5_test_hist "
+            del_batch_query += "  WHERE create_date <= DATE_SUB(now(), INTERVAL 7 DAY) "
+            cursor.execute(del_batch_query, )
 
-        ''' 
-        ##############
-         DELETE BLOCK
-        ############## '''
+
         '''
         ############################################################
         # CALL ID : sqld_feedback_page_content

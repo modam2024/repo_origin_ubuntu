@@ -28,6 +28,8 @@ from balance import views as balance_views
 from mdl_login_info import views as login_views
 from proj_batch import btch_five_test
 from proj_batch import btch_living_english
+from proj_batch import btch_news_study
+
 
 urlpatterns = [
     # 어플리케이션 url 참조
@@ -62,6 +64,7 @@ urlpatterns = [
     path('article/create-word/'        , article_views.create_word,         name='create-word'),
 
     path('test-batch/'                 , btch_five_test.test_batch,         name='test_batch'),
-    path('engl-batch/'                 , btch_living_english.living_english_batch,  name='engl-batch'),
+    path('news-batch/'                 , btch_news_study.batch_news_study,  name='engl-batch'),
+    path('engl-batch/'                 , btch_living_english.living_english_batch, name='engl-batch'),
 ]
  
