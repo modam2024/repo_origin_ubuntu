@@ -464,7 +464,7 @@ def sql_dao(request, sql_name, p_param):
 
             except Exception as e:
                 del_batch_query  = " DELETE FROM tb_batch_living_english_hist "
-                del_batch_query += "  WHERE create_date <= DATE_SUB(now(), INTERVAL 7 DAY) "
+                del_batch_query += "  WHERE create_date <= DATE_SUB(now(), INTERVAL 3 DAY) "
                 cursor.execute(del_batch_query, )
 
             finally:
