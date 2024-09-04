@@ -1,5 +1,4 @@
 from django.http import HttpResponse
-from django.http import JsonResponse
 
 from app_news_study.pkg_mdl_common import mdl_common_nwst as app_comn_func
 from app_news_study.pkg_sql_statement import sql_statement
@@ -7,6 +6,19 @@ from proj_common import mdl_common_proj as proj_comn_func
 
 
 def batch_news_study(request):
+    selected_date = request.GET.get("selected_date")
+
+    # tb_news_info_main 테이블에 오늘 날짜의 데이터가 있는지 확인한다.
+    check_today_news, today_news_date, max_news_date = app_comn_func.get_recent_news_date(request)
+
+    if check_today_news:
+       list_param = {
+           "today_news_date": today_news_date,
+           "max_news_date": max_news_date
+       }
+       titles, news_dates = sql_statement.sql_dao(request, "sqls_news_info_titles", list_param)
+
+       return HttpResponse("FROM DB")
 
     url = "https://koreajoongangdaily.joins.com/section/currentIssues"
     # 공통 함수의 webdriver를 사용해서 파싱한다.
@@ -70,4 +82,4 @@ def batch_news_study(request):
 
     res_value = sql_statement.sql_dao(request, "sqli_batch_news_study_hist", news_info)
 
-    return HttpResponse(res_value)
+    return HttpResponse("CREATE NEWS FINISH")
