@@ -16,6 +16,14 @@ def make_page_info(request):
     number = 1
     max_chapter_num = int(retrieve_max_chapter_num(request))
 
+    title_text = "YBM"
+
+    chapter_values = {
+        "chapter_num": max_chapter_num,
+        "title_text": title_text,
+        "audio_name": "YBM",
+    }
+
     while True:  # 무한 루프
         if number > 1:
             max_chapter_num += 1
@@ -58,10 +66,14 @@ def make_page_info(request):
                 for title in title_view.find_all("strong"):
                     title_text = title.get_text(strip=True)
 
+            chapter_values = {
+                "chapter_num": max_chapter_num,
+                "title_text": title_text,
+                "audio_name": audio_name,
+            }
+
             # CHAPTER 3가지 정보 테이블 저장
-            incr_cnt = do_insert_page_info(
-                request, max_chapter_num, title_text, audio_name
-            )
+            incr_cnt = do_insert_page_info( request, chapter_values )
             new_chapter_cnt += int(incr_cnt)
 
             # 신규 회차의 CONTENT 생성
@@ -169,6 +181,9 @@ def make_page_info(request):
                 break
             else:
                 err_cnt += 1
+
+    # 2024.09.02 - 신규 생활회화 생성 배치 히스토리 저장
+    hist_value = sql_statement.sql_dao(request, "sqli_batch_living_english_hist", chapter_values)
 
     return new_chapter_cnt  # while 수행 완료 후 return 함
 
@@ -300,19 +315,9 @@ def fetch_titles(request, selectd_chapter, selectd_status):
         rtn_selectd_voice_date,
     )
 
-def do_insert_page_info(request, p_chapter_num, p_title_text, p_audio_name):
-
-    chapter_values = {
-        "chapter_num" : p_chapter_num,
-        "title_text"  : p_title_text,
-        "audio_name"  : p_audio_name,
-    }
+def do_insert_page_info(request, chapter_values):
 
     res_value = sql_statement.sql_dao(request, "sqli_page_info", chapter_values)
-
-    # 2024.09.02 - 신규 생활회화 생성 배치 히스토리 저장
-    hist_value = sql_statement.sql_dao(request, "sqli_batch_living_english_hist", chapter_values)
-
     return res_value
 
 def retrieve_content_info(request, p_selectd_chapter):
