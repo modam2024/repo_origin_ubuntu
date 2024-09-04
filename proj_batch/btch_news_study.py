@@ -12,6 +12,11 @@ def batch_news_study(request):
     check_today_news, today_news_date, max_news_date = app_comn_func.get_recent_news_date(request)
 
     if check_today_news:
+       tmp_news_info = {
+           'TITLE': "FROM DB {}".format(today_news_date),
+       }
+       res_value = sql_statement.sql_dao(request, "sqli_batch_news_study_hist", tmp_news_info)
+
        return HttpResponse("FROM DB {}".format(today_news_date))
 
     url = "https://koreajoongangdaily.joins.com/section/currentIssues"

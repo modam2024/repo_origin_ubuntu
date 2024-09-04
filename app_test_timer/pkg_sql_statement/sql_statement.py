@@ -240,6 +240,34 @@ def sql_dao(request, sql_name, p_param):
 
         '''
         ############################################################
+        # CALL ID : sqls_test_page_content_cnt
+        # 함수명   : 테스트 문제 입력 여부 판단 함수  
+        # 작성일   : 2024.06.20
+        # 작업     : 테스트 문제 존재 여부로 판단해서 INSERT 여부 결정 목적   
+        ############################################################ '''
+        if sql_name == "sqls_test_page_content_cnt":
+            v_trgt_order_no  = p_param['trgt_order_no']
+            v_trgt_page_date = p_param['trgt_page_date']
+            v_question_no    = p_param['question_no']
+
+            select_query  = "    SELECT count(*) as cnt     "
+            select_query += "      FROM tb_part5_test_page  "
+            select_query += "  ORDER BY user_id = %s        "
+            select_query += "    AND  trgt_order_no  = %s "
+            select_query += "    AND  trgt_page_date = %s "
+            select_query += "    AND  question_no    = %s "
+
+            select_param = (current_username, v_trgt_order_no, v_trgt_page_date, v_question_no)
+
+            # 쿼리 실행
+            cursor.execute(select_query, select_param)
+            v_test_cnt   = cursor.fetchone()
+            int_test_cnt = int(v_test_cnt[0])
+
+            return int_test_cnt
+
+        '''
+        ############################################################
         # CALL ID : sqls_batch_max_date
         # 함수명   : 배치 히스토리 테이블의 가장 최근 일자 조회  
         # 작성일   : 2024.08.31
