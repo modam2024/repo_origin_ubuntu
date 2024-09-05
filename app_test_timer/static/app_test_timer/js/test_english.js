@@ -55,7 +55,7 @@
             articleContent += $("#lbl_b1").text() + " " + $("#lbl_b2").text() + " " + $("#lbl_b3").text() + " "
             articleContent += $("#lbl_c1").text() + " " + $("#lbl_c2").text() + " " + $("#lbl_c3").text() + " "
 
-            let sourceUrl   = "http://localhost:8001/app_test_timer/test-english/?trgt_order_no=" + selChapter;
+            let sourceUrl   = BASE_URL + "app_test_timer/test-english/?trgt_order_no=" + selChapter;
 
             var new_url = ""
             $.ajax({
