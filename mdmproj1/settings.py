@@ -162,3 +162,6 @@ LOGGING = {
         },
     },
 }
+
+#LYH:20240905 -collection all static files
+STATIC_ROOT = os.path.join(BASE_DIR, 'proj_all_static')
