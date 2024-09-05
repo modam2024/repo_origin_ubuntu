@@ -2,7 +2,7 @@
 
 from django.http import HttpResponse
 
-from app_living_english.pkg_mdl_common import mdl_common_lven as app_com_func
+from app_living_english.pkg_mdl_common import mdl_common_living as app_com_func
 
 '''
 #######################################################

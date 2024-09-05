@@ -171,28 +171,32 @@ def sql_dao(request, sql_name, p_param):
             return df_question
 
         '''
-        #############################################################
+        #########################################################################
         # 테스트 정보 쿼리 함수
         # 작성일 : 2024.06.20
-        # 작업 : 특정 일자에 해당하는 저장된 테스트 데이터를 읽어오는 쿼리 수행
-        ############################################################# '''
+        # 작업 : tb_part5_test_page 데이블에서 가장 최근의 레코드를 읽어온다. 
+                읽어온 레코드에는 다음일자가 없다. 하지만 대상 사이트을 다시 
+                읽어 다음일자가 있는지 확인한다. (call_sql_update_next_page_date)
+                다시 대상 사이트을 읽어도 다음일자가 없다면 현재일자를 다음일자 변수에
+                넣어서 다음일자를 리턴한다. 
+                작업의 목적은 대상 사이트에서 가장 최근 현재일자의 다음일자를 얻는 것이다. 
+                " 리턴된 이후에 리턴된 다음일자에 해당하는 대상 사이트를 다시 웹크롤링한다. "    
+        ######################################################################### '''
         if sql_name == "sqls_test_info_if_first":
 
             temp_next_page_date = ""
 
-            select_query = "  SELECT DISTINCT trgt_page_date, next_page_date, last_page_flag, prve_page_date "
-            select_query += "   FROM tb_part5_test_page "
-            select_query += "  WHERE user_id = %s "
+            select_query  = " SELECT DISTINCT trgt_page_date, next_page_date, last_page_flag, prve_page_date "
+            select_query += "   FROM tb_part5_test_page     "
+            select_query += "  WHERE user_id = %s           "
             select_query += "  ORDER BY trgt_page_date desc "
+            select_query += "  LIMIT 1 "
             select_param  = (current_username,)
 
             try:
                 # 쿼리 실행
                 cursor.execute(select_query, select_param)
-                existing_pagedates = cursor.fetchall()
-
-                # 첫 번째 튜플을 리스트로 변환
-                first_page_data_list = list(existing_pagedates[0])
+                first_page_data_list = cursor.fetchone()
 
                 temp_trgt_page_date = first_page_data_list[0]
                 temp_next_page_date = first_page_data_list[1]
@@ -209,6 +213,45 @@ def sql_dao(request, sql_name, p_param):
                 print(e)
 
             return temp_next_page_date
+
+        '''
+        #########################################################################
+        # 테스트 정보 쿼리 함수
+        # 작성일 : 2024.06.20
+        # 작업 : tb_part5_test_page 데이블에서 가장 최근의 레코드를 읽어온다. 
+                읽어온 레코드에는 다음일자가 없다. 하지만 대상 사이트을 다시 
+                읽어 다음일자가 있는지 확인한다. (call_sql_update_next_page_date)
+                다시 대상 사이트을 읽어도 다음일자가 없다면 현재일자를 다음일자 변수에
+                넣어서 다음일자를 리턴한다. 
+                작업의 목적은 대상 사이트에서 가장 최근 현재일자의 다음일자를 얻는 것이다. 
+                " 리턴된 이후에 리턴된 다음일자에 해당하는 대상 사이트를 다시 웹크롤링한다. "    
+        ######################################################################### '''
+        if sql_name == "sqls_part5_test_page_max_date":
+
+            current_trgt_date = ""
+
+            select_query  = " SELECT DISTINCT trgt_page_date "
+            select_query += "   FROM tb_part5_test_page      "
+            select_query += "  WHERE user_id = %s            "
+            select_query += "  ORDER BY trgt_page_date desc  "
+            select_query += "   LIMIT 1 "
+
+            select_param  = (current_username,)
+
+            try:
+                # 쿼리 실행
+                cursor.execute(select_query, select_param)
+                current_dates = cursor.fetchone()
+
+                # 첫 번째 튜플을 리스트로 변환
+                current_trgt_date = current_dates[0]
+
+            except Exception as e:
+                print(e)
+            finally:
+                print("현재일자 {}".format(current_trgt_date))
+
+            return current_trgt_date
 
         '''
         ############################################################
@@ -267,34 +310,13 @@ def sql_dao(request, sql_name, p_param):
             return int_test_cnt
 
         '''
-        ############################################################
-        # CALL ID : sqls_batch_max_date
-        # 함수명   : 배치 히스토리 테이블의 가장 최근 일자 조회  
-        # 작성일   : 2024.08.31
-        # 작업     : 배치 히스토리 테이블의 가장 최근 일자 확인   
-        ############################################################ '''
-        if sql_name == "sqls_batch_max_date":
-
-            select_batch_query  = " SELECT  ifnull(max(trgt_page_date) ,'00000000') as trgt_page_date  "
-            select_batch_query += "   FROM  tb_batch_part5_test_hist "
-
-            # 쿼리 실행
-            cursor.execute(select_batch_query,)
-            v_batch_max_date = cursor.fetchone()
-            batch_max_date   = v_batch_max_date[0]
-
-            return batch_max_date
-
-        '''
         #############################################################
         # 테스트 정보 쿼리 함수
         # 작성일 : 2024.06.20
         # 작업 : 특정 일자에 해당하는 저장된 테스트 데이터를 읽어오는 쿼리 수행
         ############################################################# '''
         if sql_name == "sqls_test_info_by_date":
-            v_trgt_page_date = request.GET.get("wdate")
-
-            df_page_info = pd.DataFrame()
+            v_trgt_page_date = p_param
 
             select_query  = " SELECT DISTINCT trgt_order_no, trgt_page_date, prve_page_date, next_page_date, last_page_flag  "
             select_query += "   FROM tb_part5_test_page  "
@@ -323,11 +345,10 @@ def sql_dao(request, sql_name, p_param):
         # 작업 : 특정 일자에 해당하는 저장된 테스트 질문 데이터를 읽어온다.
         ######################################################### '''
         if sql_name == "sqls_test_question_info_by_date":
-
-            v_trgt_page_date = request.GET.get("wdate")
+            v_trgt_page_date = p_param
 
             select_query = "  SELECT DISTINCT question_no, question_content, choice_a, choice_b, choice_c, choice_d  "
-            select_query += "   FROM tb_part5_test_page   "
+            select_query += "   FROM tb_part5_test_page  "
             select_query += "  WHERE user_id = %s        "
             select_query += "    AND trgt_page_date = %s "
             select_param = (current_username, v_trgt_page_date,)

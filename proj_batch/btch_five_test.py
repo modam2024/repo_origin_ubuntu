@@ -15,11 +15,6 @@ from proj_common import mdl_common_proj as proj_comn_func
 #######################################################
 '''
 def test_batch(request):
-    selectd_version = request.GET.get("check")
-    selectd_chapter = request.GET.get("chapter")
-    selectd_status  = request.GET.get("status")
-
-    res_value = ""
 
     test_values = {
         'trgt_order_no'  : "0000",
@@ -30,19 +25,9 @@ def test_batch(request):
 
     conn, cursor, current_username = app_con.create_connection(request)
 
-    if selectd_version == "max":
-       # request.GET을 mutable로 만들기
-       request.GET   = request.GET.copy()
-       tmp_selectd_wdate = sql_statement.sql_dao(request, "sqls_test_info_if_first", "")
-       # 새로운 값 추가
-       request.GET['wdate'] = tmp_selectd_wdate
+    tmp_selectd_wdate = sql_statement.sql_dao(request, "sqls_test_info_if_first", "")
 
-    # 변수 초기화
-    selectd_wdate   = request.GET.get("wdate")
-
-    df_page_info = pd.DataFrame()
-    df_test_page_content = pd.DataFrame()
-    df_page_info, df_test_page_content = test_page_info(request)
+    df_page_info, df_test_page_content = test_page_info(request, tmp_selectd_wdate)
     dict_test_page_content = df_test_page_content.to_dict('records')
     dict_page_info = df_page_info.to_dict('records')
 
@@ -77,6 +62,7 @@ def test_batch(request):
 
             res_value = sql_statement.sql_dao(request, "sqli_test_page_content_create", test_values)
 
+        # 배치 데이블에 결과를 저장한다.
         res_value = sql_statement.sql_dao(request, "sqli_batch_part5_test_hist", test_values)
 
     except Exception as e:
@@ -95,13 +81,11 @@ def test_batch(request):
 # 브라우져에서 호출하면 실행되는 main function
 #######################################################
 '''
-def test_page_info(request):
-    str_max_sdate = request.GET.get("wdate")
+def test_page_info(request, p_max_sdate):
+    str_max_sdate = p_max_sdate
 
-    df_page_info = pd.DataFrame()
-    df_questions = pd.DataFrame()
-    df_page_info = sql_statement.sql_dao(request, "sqls_test_info_by_date", "")
-    df_questions = sql_statement.sql_dao(request, "sqls_test_question_info_by_date", "")
+    df_page_info = sql_statement.sql_dao(request, "sqls_test_info_by_date", str_max_sdate)
+    df_questions = sql_statement.sql_dao(request, "sqls_test_question_info_by_date", str_max_sdate)
 
     if df_page_info.empty:
         try:

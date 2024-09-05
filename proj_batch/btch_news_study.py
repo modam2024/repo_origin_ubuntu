@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 
-from app_news_study.pkg_mdl_common import mdl_common_nwst as app_comn_func
+from app_news_study.pkg_mdl_common import mdl_common_news as app_comn_func
 from app_news_study.pkg_sql_statement import sql_statement
 from proj_common import mdl_common_proj as proj_comn_func
 

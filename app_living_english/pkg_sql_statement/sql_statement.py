@@ -138,25 +138,6 @@ def sql_dao(request, sql_name, p_param):
             return existing_comp_titles
 
         '''
-        ############################################################
-        # CALL ID : sqls_batch_max_date
-        # 함수명   : 배치 히스토리 테이블의 가장 최근 일자 조회  
-        # 작성일   : 2024.08.31
-        # 작업     : 배치 히스토리 테이블의 가장 최근 일자 확인   
-        ############################################################ '''
-        if sql_name == "sqls_batch_max_date":
-
-            select_batch_query  = " SELECT  ifnull(max(trgt_page_date) ,'00000000') as trgt_page_date  "
-            select_batch_query += "   FROM  tb_batch_part5_test_hist "
-
-            # 쿼리 실행
-            cursor.execute(select_batch_query,)
-            v_batch_max_date = cursor.fetchone()
-            batch_max_date   = v_batch_max_date[0]
-
-            return batch_max_date
-
-        '''
         #########################################################
         # CALL ID : sqls_classified_words
         # 단어 학습 진행 상황 조회
