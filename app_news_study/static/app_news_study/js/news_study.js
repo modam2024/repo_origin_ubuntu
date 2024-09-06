@@ -178,24 +178,24 @@ $(document).ready(function() { // applied
     });
 
     //proj_mdm_prep 사용
-    $("#submitButton").click(function() {
-        // 10초 동안 마우스 변경
-        setCursorShap(10000);
-        var data = {
-        };
-
-        $.ajax({
-            url: '/save-wordinfo/',
-            type: 'GET',
-            data: data,
-            success: function(response) {
-              $("#resMessage").val(response.message);
-            },
-            error: function(xhr, status, error) {
-              $("#resMessage").val("error : " + error);
-            }
-        });
-    });
+    // $("#submitButton").click(function() {
+    //     // 10초 동안 마우스 변경
+    //     setCursorShap(10000);
+    //     var data = {
+    //     };
+    //
+    //     $.ajax({
+    //         url: '/save-wordinfo/',
+    //         type: 'GET',
+    //         data: data,
+    //         success: function(response) {
+    //           $("#resMessage").val(response.message);
+    //         },
+    //         error: function(xhr, status, error) {
+    //           $("#resMessage").val("error : " + error);
+    //         }
+    //     });
+    // });
 
     //proj_mdm_prep 사용
     $("#completeButton").click(function() {
@@ -224,9 +224,9 @@ $(document).ready(function() { // applied
     });
 
     // proj_mdm_prep 사용
-    $(document).on('blur', 'textarea:not(.news_idiom)', function(e) {
-        $("#submitButton").click();
-    });
+    // $(document).on('blur', 'textarea:not(.news_idiom)', function(e) {
+    //     $("#submitButton").click();
+    // });
 
     selectNewsTitle();
  });

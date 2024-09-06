@@ -210,30 +210,33 @@ def sql_dao(request, sql_name, p_param):
             else:
                news_info_type = "NOT"
 
-            # tb_news_info_detail 테이블에 개발 news_info 저장
-            ins_query = " INSERT INTO tb_news_info_detail "
-            ins_query += " ( "
-            ins_query += "   user_id, keyno, num, keyitem, groupno, newstype, create_date, start_date, finish_date "
-            ins_query += " ) "
-            ins_query += " values "
-            ins_query += " ( "
-            ins_query += "   %s, %s, %s, %s, 0, %s, "
-            ins_query += "   date_format( now(), '%Y-%m-%d %H:%i:%S' ), '', '' "
-            ins_query += " ) "
-            ins_params = (
-                current_username,
-                news_info_keyno,
-                news_max_num,
-                news_info_keyitem,
-                news_info_type,
-            )
+            try:
+                # tb_news_info_detail 테이블에 개발 news_info 저장
+                ins_query = " INSERT INTO tb_news_info_detail "
+                ins_query += " ( "
+                ins_query += "   user_id, keyno, num, keyitem, groupno, newstype, create_date, start_date, finish_date "
+                ins_query += " ) "
+                ins_query += " values "
+                ins_query += " ( "
+                ins_query += "   %s, %s, %s, %s, 0, %s, "
+                ins_query += "   date_format( now(), '%Y-%m-%d %H:%i:%S' ), '', '' "
+                ins_query += " ) "
+                ins_params = (
+                    current_username,
+                    news_info_keyno,
+                    news_max_num,
+                    news_info_keyitem,
+                    news_info_type,
+                )
 
-            cursor.execute(ins_query, ins_params)
+                cursor.execute(ins_query, ins_params)
 
-            # tb_news_info_detail 테이블에 @joongang.co.kr 찾아서 삭제함
-            delete_query  = " DELETE FROM tb_news_info_detail "
-            delete_query += " WHERE keyitem LIKE '%@joongang.co.kr%' "
-            cursor.execute( delete_query, )
+                # tb_news_info_detail 테이블에 @joongang.co.kr 찾아서 삭제함
+                delete_query  = " DELETE FROM tb_news_info_detail "
+                delete_query += " WHERE keyitem LIKE '%@joongang.co.kr%' "
+                cursor.execute( delete_query, )
+            except Exception as e:
+                print("sqli_news_info exception =", e)
 
             return str(news_max_num)
 

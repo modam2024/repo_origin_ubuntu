@@ -19,7 +19,7 @@ def news_study(request):
     values = {
        "titles": titles,
        "news_dates": news_dates,
-       "selected_date": today_news_date
+       "selected_date": max_news_date
     }
 
     return render(request, "news_study.html", values)

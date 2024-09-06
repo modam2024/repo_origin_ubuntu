@@ -25,7 +25,7 @@ def test_english(request):
     selectd_wdate = sql_statement.sql_dao(request, "sqls_part5_test_page_max_date", "")
 
     if select_page_date:
-       selectd_wdate = selectd_wdate
+       selectd_wdate = select_page_date
 
     df_page_info, df_test_page_content = test_page_info(request, selectd_wdate)
     dict_test_page_content = df_test_page_content.to_dict('records')

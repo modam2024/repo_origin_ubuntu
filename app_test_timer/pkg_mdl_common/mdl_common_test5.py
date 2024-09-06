@@ -95,61 +95,6 @@ def is_date_string(text):
 
     return False
 
-'''
-#######################################################
-# 중앙일보 문장학습 정보 사전분석 작업 (DB 저장 함수)
-# 작성일 : 2024.08.07
-# 파라미터 news_info 의 구조
-news_info = {
-    'URL': link,
-    'TITLE': each_items[-2].replace("-", " "),
-    'DATE': each_items[4],
-    'DEPT': each_items[5],
-    'SECTION': each_items[6],
-    'KEYNO': each_items[-1],
-    'KEYITEM': list_keyitems
-}
-####################################################### '''
-def save_to_news_info_database(request, news_info):
-    res_sql_insert = ""
-
-    dic_news_info = {}
-    dic_news_info['NEWSORDER'] = news_info['NEWSORDER']
-    dic_news_info['URL']       = news_info['URL']
-    dic_news_info['TITLE']     = news_info['TITLE']
-    dic_news_info['DATE']      = news_info['DATE']
-    dic_news_info['DEPT']      = news_info['DEPT']
-    dic_news_info['SECTION']   = news_info['SECTION']
-    dic_news_info['KEYNO']     = news_info['KEYNO']
-    dic_news_info['KEYITEM']   = ""
-
-    bl_insert_flag = False
-    for item in news_info['KEYITEM']:
-       try:
-           if bl_insert_flag:
-              dic_news_info['KEYITEM'] = item['Text']
-              if except_rules(item['Text']):
-                 res_sql_insert = sql_statement.sql_dao(request, "sqli_news_info", dic_news_info)
-
-           is_date_item = is_date_string(item['Text'])
-           if is_date_item:
-              bl_insert_flag = True
-
-       except Exception as e:
-           print(f"Error inserting data into database: {e}")
-           res_sql_insert = ""
-
-    item_cnt:int = 0
-    if bl_insert_flag == False and len(news_info['KEYITEM']) > 10:
-        for item in news_info['KEYITEM']:
-            item_cnt += 1
-            if item_cnt > 3:
-               dic_news_info['KEYITEM'] = item['Text']
-               if except_rules(item['Text']):
-                  res_sql_insert = sql_statement.sql_dao(request, "sqli_news_info", dic_news_info)
-
-    return res_sql_insert
-
 def extract_english(text):
     # 영어 문자만 추출하는 정규식 패턴
     pattern = r'[a-zA-Z]+'
