@@ -43,7 +43,8 @@ urlpatterns = [
     path('login/',   auth_views.LoginView.as_view(template_name='registration/login.html'),  name='login'),
     path('logout/',  auth_views.LogoutView.as_view(), name='logout'),
     path('register/', login_views.register, name='register'),
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),  # 홈 페이지 URL 패턴
+    #path('', TemplateView.as_view(template_name='home.html'), name='home'),  # 홈 페이지 URL 패턴
+    path('', TemplateView.as_view(template_name='test_english.html'), name='test_part5'),  # 홈 페이지 URL 패턴
     path('balance/', balance_views.main_view),
     path('article/'                  , article_views.main_view         , name='main-article'),
     path('article/submit-article/'   , article_views.submit_article    ,  name='submit-article'),
