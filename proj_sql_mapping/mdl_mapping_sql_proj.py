@@ -1,6 +1,8 @@
 import json
 
 import pandas as pd
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 
 from . import create_connection, close_connection, handle_sql_error
 
@@ -113,5 +115,15 @@ def sql_dao(request, sql_name, p_param):
 '''         
 ##################   
 # 쿼리 CALL 함수 끝    
-##################        
+################## '''
 '''
+############################################################
+# CALL ID : check_login_status
+# 함수명   : request 객체의 url 값을 추출한다.   
+# 작성일   : 2024.09.08
+# 작업     : request 객체의 url 값을 추출한다.   
+############################################################ '''
+@login_required(login_url='/login/')
+def check_login_status(request):
+    full_url = request.build_absolute_uri()
+    return HttpResponseRedirect("http://modameng.com:8000/app_test_timer/test-english/?check=max&chapter=&status=C")

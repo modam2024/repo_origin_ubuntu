@@ -29,6 +29,7 @@ from mdl_login_info import views as login_views
 from proj_batch import btch_five_test
 from proj_batch import btch_living_english
 from proj_batch import btch_news_study
+from proj_sql_mapping import mdl_mapping_sql_proj as proj_sql_statement
 
 
 urlpatterns = [
@@ -44,7 +45,7 @@ urlpatterns = [
     path('logout/',  auth_views.LogoutView.as_view(), name='logout'),
     path('register/', login_views.register, name='register'),
     #path('', TemplateView.as_view(template_name='home.html'), name='home'),  # 홈 페이지 URL 패턴
-    path('', TemplateView.as_view(template_name='test_english.html'), name='test_part5'),  # 홈 페이지 URL 패턴
+    path('', proj_sql_statement.check_login_status, name='check_login_status'),
     path('balance/', balance_views.main_view),
     path('article/'                  , article_views.main_view         , name='main-article'),
     path('article/submit-article/'   , article_views.submit_article    ,  name='submit-article'),
