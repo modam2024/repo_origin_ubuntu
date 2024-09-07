@@ -528,7 +528,7 @@ def sql_dao(request, sql_name, p_param):
         # 함수명   : 토익 PART 5 문제 자동 생성 스크립트용
         # 작성일   : 2024.08.31
         # 작업     : 한시간 단위로 신규 토익 PART 5 문제 자동 생성 한다.    
-        #            7일전 배치 작업은 전체 삭제 한다.                          
+        #            3일전 배치 작업은 전체 삭제 한다.                          
         ############################################################  '''
         if sql_name == "sqli_batch_part5_test_hist":
 
@@ -546,11 +546,14 @@ def sql_dao(request, sql_name, p_param):
                 cursor.execute(batch_query, batch_params)
 
             except Exception as e:
-                #  7일전 배치 작업은 전체 삭제 한다.
+                #  3일전 배치 작업은 전체 삭제 한다.
                 sql_dao(request, "sqld_batch_part5_test_hist", p_param)
 
             finally:
+                #  3일전 배치 작업은 전체 삭제 한다.
+                sql_dao(request, "sqld_batch_part5_test_hist", p_param)
                 print("sqli_batch_part5_test_hist finished")
+
                 
             return "OK"
 
@@ -649,7 +652,7 @@ def sql_dao(request, sql_name, p_param):
         if sql_name == "sqld_batch_part5_test_hist":
 
             del_batch_query = " DELETE FROM tb_batch_part5_test_hist "
-            del_batch_query += "  WHERE create_date <= DATE_SUB(now(), INTERVAL 3 DAY) "
+            del_batch_query += "  WHERE create_date <= DATE_SUB(now(), INTERVAL 4 DAY) "
             cursor.execute(del_batch_query, )
 
 

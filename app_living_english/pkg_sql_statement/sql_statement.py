@@ -444,26 +444,14 @@ def sql_dao(request, sql_name, p_param):
                 cursor.execute(chapter_query, chapter_params)
 
             except Exception as e:
-                del_batch_query  = " DELETE FROM tb_batch_living_english_hist "
-                del_batch_query += "  WHERE create_date <= DATE_SUB(now(), INTERVAL 3 DAY) "
-                cursor.execute(del_batch_query, )
+                sql_dao(request, "sqld_batch_living_english_hist", p_param)
 
             finally:
-                del_batch_query  = " DELETE FROM tb_chapter_title     "
-                del_batch_query += "  WHERE src_chapter = 'undefined' "
-                cursor.execute(del_batch_query,)
+                #  3일전 배치 작업은 전체 삭제 한다.
+                sql_dao(request, "sqld_batch_living_english_hist", p_param)
 
-                del_batch_query  = " DELETE FROM tb_living_english_content "
-                del_batch_query += "  WHERE chapter_num = 'undefined'      "
-                cursor.execute(del_batch_query,)
-
-                del_batch_query  = " DELETE FROM tb_convert_living_english   "
-                del_batch_query += "  WHERE topic_num = 'undefined' "
-                cursor.execute(del_batch_query,)
-
-                del_batch_query  = " DELETE FROM tb_batch_living_english_hist "
-                del_batch_query += "  WHERE src_chapter = 'undefined' "
-                cursor.execute(del_batch_query,)
+                #  데이블에 가비지 데이터를 삭제 한다.
+                sql_dao(request, "sqld_tb_tables_undefined",       p_param)
 
                 print("sqli_batch_living_english_hist finish")
 
@@ -478,6 +466,45 @@ def sql_dao(request, sql_name, p_param):
         ##############
          DELETE BLOCK
         ############## '''
+        '''
+        ############################################################
+        # CALL ID : sqld_batch_living_english_hist
+        # 함수명   : 배치 히스토리 테이블의 7일 이전의 데이터 삭제
+        # 작성일   : 2024.08.31
+        # 작업     : 배치 히스토리 테이블의 7일 이전의 데이터 삭제 
+        ############################################################ '''
+        if sql_name == "sqld_batch_living_english_hist":
+
+            del_batch_query = " DELETE FROM tb_batch_living_english_hist "
+            del_batch_query += "  WHERE create_date <= DATE_SUB(now(), INTERVAL 4 DAY) "
+            cursor.execute(del_batch_query, )
+
+        '''
+        ############################################################
+        # CALL ID : sqld_tb_tables_undefined
+        # 함수명   : 각 데이블에 가비지 데이터를 삭제한다.
+        # 작성일   : 2024.09.07
+        # 작업     : 각 데이블에 가비지 데이터를 삭제한다.
+        ############################################################ '''
+        if sql_name == "sqld_tb_tables_undefined":
+
+            del_batch_query = " DELETE FROM tb_chapter_title     "
+            del_batch_query += "  WHERE src_chapter = 'undefined' "
+            cursor.execute(del_batch_query, )
+
+            del_batch_query = " DELETE FROM tb_living_english_content "
+            del_batch_query += "  WHERE chapter_num = 'undefined'      "
+            cursor.execute(del_batch_query, )
+
+            del_batch_query = " DELETE FROM tb_convert_living_english   "
+            del_batch_query += "  WHERE topic_num = 'undefined' "
+            cursor.execute(del_batch_query, )
+
+            del_batch_query = " DELETE FROM tb_batch_living_english_hist "
+            del_batch_query += "  WHERE src_chapter = 'undefined' "
+            cursor.execute(del_batch_query, )
+
+
 
     except Exception as e:
         return att.handle_sql_error(e, sql_name)

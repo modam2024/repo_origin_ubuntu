@@ -314,10 +314,12 @@ def sql_dao(request, sql_name, p_param):
                 cursor.execute(batch_query, batch_params)
 
             except Exception as e:
-                #  7일전 배치 작업은 전체 삭제 한다.
+                #  3일전 배치 작업은 전체 삭제 한다.
                 sql_dao(request, "sqld_batch_news_study_hist", p_param)
 
             finally:
+                #  3일전 배치 작업은 전체 삭제 한다.
+                sql_dao(request, "sqld_batch_news_study_hist", p_param)
                 print("sqli_batch_news_study_hist finished")
 
             return "OK"
@@ -364,7 +366,7 @@ def sql_dao(request, sql_name, p_param):
         if sql_name == "sqld_batch_news_study_hist":
 
             del_batch_query = " DELETE FROM tb_batch_news_study_hist "
-            del_batch_query += "  WHERE create_date <= DATE_SUB(now(), INTERVAL 3 DAY) "
+            del_batch_query += "  WHERE create_date <= DATE_SUB(now(), INTERVAL 4 DAY) "
             cursor.execute(del_batch_query, )
 
         '''
