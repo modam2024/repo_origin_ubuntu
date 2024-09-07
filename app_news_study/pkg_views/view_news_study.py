@@ -7,6 +7,8 @@ from proj_sql_mapping import mdl_mapping_sql_proj as proj_sql_statement
 
 
 def news_study(request):
+    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "news_study")
+
     selected_date = request.GET.get("selected_date")
 
     # tb_news_info_main 테이블에 오늘 날짜의 데이터가 있는지 확인한다.
@@ -23,11 +25,11 @@ def news_study(request):
        "selected_date": max_news_date
     }
 
-    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "news_study")
-
     return render(request, "news_study.html", values)
 
 def news_info_eng(request):
+    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "news_info_eng")
+
     selected_keyno = request.GET.get("selected_keyno")
 
     news_info_engs = sql_statement.sql_dao(request, "sqls_selected_news_info_eng", selected_keyno)
@@ -46,12 +48,12 @@ def news_info_eng(request):
         if newstype == "ENG":
            rows_cnt += 1
 
-    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "news_info_eng")
-
     # 처리 성공 응답
     return JsonResponse({"rows": rows, "rows_cnt": rows_cnt})
 
 def news_info_inf(request):
+    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "news_info_inf")
+
     p_keyno = request.GET.get("keyno")
     p_groupno = request.GET.get("groupno")
 
@@ -68,8 +70,6 @@ def news_info_inf(request):
         keyitem_inf = news_info_inf['keyitem']
 
         rows.append([keyitem_inf])
-
-    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "news_info_inf")
 
     # 처리 성공 응답
     return JsonResponse({"rows": rows})

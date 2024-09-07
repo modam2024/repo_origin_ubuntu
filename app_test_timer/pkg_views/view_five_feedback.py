@@ -12,6 +12,8 @@ from proj_sql_mapping import mdl_mapping_sql_proj as proj_sql_statement
 #######################################################  '''
 @login_required(login_url='/login/')
 def feedback_english(request):
+    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "feedback_english")
+
     # selectd_order_no = request.GET.get('test_order_no')
     selectd_wdate    = request.GET.get('test_page_date')
 
@@ -76,8 +78,6 @@ def feedback_english(request):
         print("feedback content failed:", e)
     finally:
         print("feedback_english completed")
-
-    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "feedback_english")
 
     return render(request, "feedback_english.html", values)
 

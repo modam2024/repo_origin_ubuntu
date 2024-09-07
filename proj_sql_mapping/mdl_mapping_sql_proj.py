@@ -90,7 +90,7 @@ def sql_dao(request, sql_name, p_param):
         # 작업 : 메인 메뉴 또는 서브 메뉴 클릭할 때마다 이력을 남긴다. 
         ############################################################# '''
         if sql_name == "sqli_click_study_hist":
-            p_menu_url = request.url
+            p_menu_url = p_menu_url = request.path
             p_main_menu_no = p_param
 
             click_query = " INSERT INTO tb_click_study_hist "

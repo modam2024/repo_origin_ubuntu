@@ -20,6 +20,8 @@ def handle_contractions(tokens, index):
 
 @csrf_exempt
 def convert_sentence(request):
+    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "convert_sentence")
+
     # 변환된 텍스트 저장용 리스트
     converted_sentences = []
     list_rslt_sentns = []
@@ -202,4 +204,3 @@ def convert_sentence(request):
             if conn is not None:
                 conn.commit()
                 cursor.close()
-                res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "convert_sentence")

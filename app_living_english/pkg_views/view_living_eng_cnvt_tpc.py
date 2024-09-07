@@ -6,7 +6,7 @@ from proj_sql_mapping import mdl_mapping_sql_proj as sql_statement
 
 @login_required(login_url='/login/')
 def main_cnvrt_tpc_exec(request):
-
+    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "main_cnvrt_tpc_exec")
     existing_topic = sql_statement.sql_dao(request, "sqls_proj_converted_sentn", "main_cnvrt_tpc_exec")
 
     rows = []
@@ -26,8 +26,6 @@ def main_cnvrt_tpc_exec(request):
     value = {
         "sent_rows":  rows,
     }
-
-    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "main_cnvrt_tpc_exec")
 
     return render(request, "living_english_cnvt_tpc.html", value)
 

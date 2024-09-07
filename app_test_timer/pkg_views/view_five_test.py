@@ -19,6 +19,8 @@ from proj_sql_mapping import mdl_mapping_sql_proj as proj_sql_statement
 '''
 @login_required(login_url='/login/')
 def test_english(request):
+    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "test_english")
+
     select_page_date  = request.GET.get("wdate")
 
     conn, cursor, current_username = app_con.create_connection(request)
@@ -113,8 +115,6 @@ def test_english(request):
     lst_classified_words.append(v_classified_words)
     values['lst_classified_words']   = lst_classified_words
 
-    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "test_english")
-
     return render(request, "test_english.html", values)
 
 '''
@@ -126,6 +126,8 @@ def test_english(request):
 '''
 @login_required(login_url='/login/')
 def test_result(request):
+    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "test_result")
+
     df_page_info, df_feedback_page_content = feedback_test_page_info(request)
     dict_feedback_page_content = df_feedback_page_content.to_dict('records')
     dict_page_info = df_page_info.to_dict('records')
@@ -174,8 +176,6 @@ def test_result(request):
 
     finally:
         print("test_result completed")
-
-    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "test_result")
 
     return JsonResponse(
         {"res": "OK"}
