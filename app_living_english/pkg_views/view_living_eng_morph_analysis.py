@@ -3,13 +3,15 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from app_living_english.pkg_views import view_living_english_morph as living_eng_morph
-from proj_sql_mapping import mdl_proj_sql_mapping as sql_statement
+from proj_sql_mapping import mdl_mapping_sql_proj as sql_statement
 from proj_common import view_morph_new_words as morph_new_words
 from django.contrib.auth.decorators import login_required
 
 @csrf_exempt
 @login_required(login_url='/login/')
 def submit_topic(request):
+    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "submit_topic")
+
     # POST 요청일 때만 처리
     if request.method == "POST":
         # 작업 : 모든 페이지에서 문장 분석 프로시져 처리 여부 확인용도

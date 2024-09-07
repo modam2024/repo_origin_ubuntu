@@ -1,9 +1,10 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from app_news_study.pkg_mdl_common    import mdl_common_news as app_comn_func
+from app_news_study.pkg_mdl_common import mdl_common_news as app_comn_func
 from app_news_study.pkg_sql_statement import sql_statement
-from proj_common import mdl_common_proj as proj_comn_func
+from proj_sql_mapping import mdl_mapping_sql_proj as proj_sql_statement
+
 
 def news_study(request):
     selected_date = request.GET.get("selected_date")
@@ -21,6 +22,8 @@ def news_study(request):
        "news_dates": news_dates,
        "selected_date": max_news_date
     }
+
+    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "news_study")
 
     return render(request, "news_study.html", values)
 
@@ -43,6 +46,8 @@ def news_info_eng(request):
         if newstype == "ENG":
            rows_cnt += 1
 
+    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "news_info_eng")
+
     # 처리 성공 응답
     return JsonResponse({"rows": rows, "rows_cnt": rows_cnt})
 
@@ -63,6 +68,8 @@ def news_info_inf(request):
         keyitem_inf = news_info_inf['keyitem']
 
         rows.append([keyitem_inf])
+
+    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "news_info_inf")
 
     # 처리 성공 응답
     return JsonResponse({"rows": rows})

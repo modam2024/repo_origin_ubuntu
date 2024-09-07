@@ -10,6 +10,7 @@ from googletrans import Translator
 from app_common import mdl_common_app as comn_func
 import app_test_timer.pkg_sql_statement.sql_statement as sql_statement
 from proj_sql_mapping import  fn_connector as proj_connector
+from proj_sql_mapping import mdl_mapping_sql_proj as proj_sql_statement
 
 # 축약형을 변환하는 함수 정의
 def handle_contractions(tokens, index):
@@ -201,3 +202,4 @@ def convert_sentence(request):
             if conn is not None:
                 conn.commit()
                 cursor.close()
+                res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "convert_sentence")

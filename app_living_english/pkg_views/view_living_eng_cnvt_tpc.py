@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from proj_sql_mapping import mdl_proj_sql_mapping as sql_statement
+from proj_sql_mapping import mdl_mapping_sql_proj as sql_statement
 
 
 @login_required(login_url='/login/')
@@ -26,6 +26,8 @@ def main_cnvrt_tpc_exec(request):
     value = {
         "sent_rows":  rows,
     }
+
+    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "main_cnvrt_tpc_exec")
 
     return render(request, "living_english_cnvt_tpc.html", value)
 

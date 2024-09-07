@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 # 2024.04.28 : spacy 포함
 from django.shortcuts import render
 
+from proj_sql_mapping import mdl_mapping_sql_proj as sql_statement
 from app_living_english.pkg_mdl_common import mdl_common_living as app_com_func
 from proj_common import mdl_common_proj as proj_comn_func
 
@@ -45,4 +46,7 @@ def living_english(request):
         "living_english_topic_dur_end"  : living_english_topic_dur_end,
         "living_english_new_count"      : new_count,
     }
+
+    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "living_english")
+
     return render(request, "living_english.html", values)

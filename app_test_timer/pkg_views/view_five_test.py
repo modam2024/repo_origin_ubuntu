@@ -8,6 +8,7 @@ from django.shortcuts import render
 import app_test_timer.pkg_sql_statement as app_con
 import app_test_timer.pkg_sql_statement.sql_statement as sql_statement
 from proj_common import mdl_common_proj as proj_comn_func
+from proj_sql_mapping import mdl_mapping_sql_proj as proj_sql_statement
 
 '''
 #######################################################
@@ -112,6 +113,8 @@ def test_english(request):
     lst_classified_words.append(v_classified_words)
     values['lst_classified_words']   = lst_classified_words
 
+    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "test_english")
+
     return render(request, "test_english.html", values)
 
 '''
@@ -171,6 +174,8 @@ def test_result(request):
 
     finally:
         print("test_result completed")
+
+    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "test_result")
 
     return JsonResponse(
         {"res": "OK"}

@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 import app_test_timer.pkg_sql_statement.sql_statement as sql_statement
+from proj_sql_mapping import mdl_mapping_sql_proj as proj_sql_statement
 
 '''
 #######################################################
@@ -75,6 +76,8 @@ def feedback_english(request):
         print("feedback content failed:", e)
     finally:
         print("feedback_english completed")
+
+    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "feedback_english")
 
     return render(request, "feedback_english.html", values)
 

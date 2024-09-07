@@ -11,7 +11,8 @@ from googletrans import Translator
 from nltk.corpus import wordnet
 
 from proj_sql_mapping import create_connection, close_connection
-from proj_sql_mapping import sql_mapping_article as sql_statement_article
+from proj_sql_mapping import mdl_mapping_sql_proj as sql_statement
+from proj_sql_mapping import mdl_mapping_sql_article as sql_statement_article
 from proj_common import mdl_common_proj as proj_comn_func
 from proj_common import view_morph_new_words as morph_new_words
 
@@ -62,6 +63,9 @@ def main_view(request):
     values = {
         "group_codes": group_codes,
     }
+
+    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "main_view")
+
     return render(request, "article.html", values)
 
 def get_mean_kr_from_naver_dic(en_word):
@@ -188,6 +192,8 @@ def main_word_check(request):
         "group_codes": group_codes,
     }
 
+    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "main_word_check")
+
     return render(request, "word_check.html", values)
 
 @login_required(login_url='/login/')
@@ -207,6 +213,8 @@ def main_word_table(request):
         rows.append([cur_no, cur_word, cur_mean_en, cur_tag_text, cur_create_date])
         rows_cnt += 1
 
+    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "main_word_table")
+
     # 처리 성공 응답
     return JsonResponse({"rows": rows, "rows_cnt": rows_cnt})
 
@@ -215,12 +223,17 @@ def delete_content(request):
 
     rows_cnt = sql_statement_article.sql_dao(request, "sqld_delete_content", "")
 
+    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "delete_content")
+
     # 처리 성공 응답
     return JsonResponse({"rows_cnt": rows_cnt})
 
 @csrf_exempt
 @login_required(login_url='/login/')
 def submit_article(request):
+
+    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "main_view")
+
     # POST 요청일 때만 처리
     if request.method == "POST":
         # 기존의 submit-article 함수를 모듈화 시켰다.
@@ -391,6 +404,8 @@ def confirm_word_check(request):
                 except Exception as e:
                     print("Update mean_kr failed: ", e)
 
+            res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "confirm_word_check")
+
             # 처리 성공 응답
             return JsonResponse(
                 {
@@ -483,6 +498,8 @@ def word_detail(request):
         "wrd_kor_example2": cur_word_kor_example2,
     }
 
+    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "word_detail")
+
     return render(request, "word_detail.html", value)
 
 @login_required(login_url='/login/')
@@ -538,7 +555,10 @@ def save_wordinfo(request):
     except Exception as e:
         print("Updating Word Info failed: ", e)
 
+    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "save_wordinfo")
+
     return JsonResponse({"message": "OK"})
+
 @login_required(login_url='/login/')
 def complete_word(request):
 
@@ -571,11 +591,15 @@ def complete_word(request):
     finally:
         close_connection(conn, cursor)
 
+    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "complete_word")
+
     return JsonResponse({"message": "COMPLETED"})
 @login_required(login_url='/login/')
 def call_process(request):
 
     curr_undone_cnt, undone_tot_cnt = sql_statement_article.sql_dao(request, "sqls_call_process", "")
+
+    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "call_process")
 
     return JsonResponse(
         {"process_cnt": curr_undone_cnt, "undone_tot_cnt": undone_tot_cnt}
@@ -620,6 +644,8 @@ def goto_mobile(request):
     finally:
         close_connection(conn, cursor)
 
+    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "goto_mobile")
+
     return JsonResponse({"result": "Go to Mobile"})
 
 @login_required(login_url='/login/')
@@ -646,6 +672,7 @@ def complete_chapter(request):
         return JsonResponse({"message": "완료 오류 발생."})
     finally:
         close_connection(conn, cursor)
+        res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "complete_chapter")
 
 '''
 #############################################################
@@ -656,11 +683,14 @@ def complete_chapter(request):
 @login_required(login_url='/login/')
 def uncomplete_chapter(request):
     selectd_chapter = sql_statement_article.sql_dao(request, "sqls_uncomplete_chapter", "")
+    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "uncomplete_chapter")
     return JsonResponse({"uncomplete_chapter": selectd_chapter})
 
 @csrf_exempt
 @login_required(login_url='/login/')
 def save_topic(request):
+    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "save_topic")
+
     if request.method == "POST":
         rtn_code = sql_statement_article.sql_dao(request, "sqliu_save_topic", "")
 
@@ -671,6 +701,7 @@ def save_topic(request):
 @csrf_exempt
 @login_required(login_url='/login/')
 def create_word(request):
+    res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "create_word")
     if request.method == "POST":
        rtn_code = sql_statement_article.sql_dao(request, "sqli_create_word", "")
 
