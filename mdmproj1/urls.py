@@ -30,6 +30,7 @@ from proj_batch import btch_five_test
 from proj_batch import btch_living_english
 from proj_batch import btch_news_study
 from proj_sql_mapping import mdl_mapping_sql_proj as proj_sql_statement
+from proj_common import mdl_common_proj as proj_mdl_common
 
 
 urlpatterns = [
@@ -48,7 +49,6 @@ urlpatterns = [
     path('', proj_sql_statement.check_login_status, name='check_login_status'),
     path('balance/', balance_views.main_view),
     path('article/'                  , article_views.main_view         , name='main-article'),
-    path('article/submit-article/'   , article_views.submit_article    ,  name='submit-article'),
     path('article/main-wordcheck/'   , article_views.main_word_check   ,  name='main-word-check'),
     path('article/delete-content/'   , article_views.delete_content    ,  name='delete-content'),
     path('article/main-wordtable/'   , article_views.main_word_table   ,  name='main-word-table'),
@@ -68,5 +68,7 @@ urlpatterns = [
     path('test-batch/'                 , btch_five_test.test_batch,         name='test_batch'),
     path('news-batch/'                 , btch_news_study.batch_news_study,  name='engl-batch'),
     path('engl-batch/'                 , btch_living_english.living_english_batch, name='engl-batch'),
+
+    path('proj-common/submit_analysis_words/', proj_mdl_common.submit_analysis_words, name='submit-article'),
 ]
  

@@ -20,7 +20,7 @@
         <form id="submitForm">
             <div class="content-wrapper_header">
                <div id="navigator_header" class="navigator_header">
-                <select id="searchGrpCd">
+                <select id="news_date_list">
                    {% for news_date in news_dates %}
                     <option value="{{ news_date }}" {% if news_date == selected_date %}selected{% endif %}>
                         {{ news_date }}
@@ -28,17 +28,18 @@
                    {% endfor %}
                 </select>&nbsp;
                 <button type="button" id="searchBtn">조회</button>&nbsp; &nbsp;
-                COUNT:&nbsp <input type="text" id="rows_cnt" value="{{ rows_cnt }}" style="text-align:center; width:40px;" readonly></input>&nbsp&nbsp
+                COUNT:&nbsp; <input type="text" id="rows_cnt" value="{{ rows_cnt }}" style="text-align:center; width:40px;" readonly></input>&nbsp;&nbsp;
                </div>
             </div>
             <div class="content-title">
-                <div class="button-container">
+                <div>
                     <select id="titleList" onchange="selectNewsTitle()">
                         {% for keyno, title in titles %}
                         <option value="{{ keyno }}">{{ title }}</option>
                         {% endfor %}
                     </select>&nbsp;
-                </div><br>
+                    <button type="button" id="submitButton"><i class="fas fa-save"></i>어휘분석</button>
+                </div>
             </div>
             <div class="content">
 
@@ -56,9 +57,6 @@
             <div class="right-side">
                 <!-- 좌측 섹션 내용 변경 -->
                 <div class="label-container">
-                    <div class="submit-container">
-                        <button type="button" id="submitButton"><i class="fas fa-save"></i>Save Info</button><br>
-                    </div><br>
                     <div class="submit-container">
                         <button type="button" id="completeButton"><i class="fas fa-check"></i>Completion</button><br>
                     </div>

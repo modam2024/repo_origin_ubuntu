@@ -14,7 +14,7 @@ from proj_sql_mapping import create_connection, close_connection
 from proj_sql_mapping import mdl_mapping_sql_proj as proj_sql_statement
 from proj_sql_mapping import mdl_mapping_sql_article as sql_statement_article
 from proj_common import mdl_common_proj as proj_comn_func
-from proj_common import view_morph_new_words as morph_new_words
+from proj_common import mdl_morph_words_proj as morph_new_words
 
 # nltk 리소스 다운로드 (서버 시작 시 한 번만 수행하면 됩니다)
 nltk.download("punkt")
@@ -226,23 +226,6 @@ def delete_content(request):
 
     # 처리 성공 응답
     return JsonResponse({"rows_cnt": rows_cnt})
-
-@csrf_exempt
-@login_required(login_url='/login/')
-def submit_article(request):
-
-    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "main_view")
-
-    # POST 요청일 때만 처리
-    if request.method == "POST":
-        # 기존의 submit-article 함수를 모듈화 시켰다.
-        rtn_result = morph_new_words.submit_topic(request)
-        return JsonResponse(rtn_result)
-    else:
-        # POST 요청이 아닐 때의 처리
-        return JsonResponse(
-            {"status": "error", "message": "Invalid request"}, status=400
-        )
 
 @csrf_exempt
 @login_required(login_url='/login/')

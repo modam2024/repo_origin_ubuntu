@@ -81,7 +81,7 @@
         //     let sourceType  = $("#searchGrpCd").val();
         //
         //     $.ajax({
-        //         url: "/article/submit-article/",
+        //         url: "/proj-common/submit_analysis_words/",
         //         type: "POST",
         //         contentType: "application/json",
         //         data: JSON.stringify({

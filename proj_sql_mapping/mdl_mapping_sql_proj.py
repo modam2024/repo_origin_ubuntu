@@ -4,6 +4,7 @@ import pandas as pd
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
+from mdmproj1 import settings
 from . import create_connection, close_connection, handle_sql_error
 
 '''
@@ -125,5 +126,14 @@ def sql_dao(request, sql_name, p_param):
 ############################################################ '''
 @login_required(login_url='/login/')
 def check_login_status(request):
-    full_url = request.build_absolute_uri()
-    return HttpResponseRedirect("http://modameng.com:8000/app_test_timer/test-english/?check=max&chapter=&status=C")
+    full_url  = request.build_absolute_uri()
+    base_url  = "http://modameng.com:8000"
+    local_url = "http://localhost:8001"
+    page_url  = "/article/main-wordcheck/?source_url=&source_title=&source_type=NEWS&source_status=C"
+
+    if base_url in full_url:
+        source_url = base_url + page_url
+    else:
+        source_url = local_url + page_url
+
+    return HttpResponseRedirect(source_url)

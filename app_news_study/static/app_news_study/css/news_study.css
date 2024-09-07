@@ -114,13 +114,13 @@ form {
     /* 버튼 스타일링 추가 */
 }
 
-.submit-container {
-    width: 100%; /* Make submit-container take full width of its parent */
-    display: flex;
-    justify-content: center; /* Center the button horizontally */
-}
+/*.submit-container {*/
+/*    width: 100%; !* Make submit-container take full width of its parent *!*/
+/*    display: flex;*/
+/*    justify-content: center; !* Center the button horizontally *!*/
+/*}*/
 
-#submitButton, #completeButton {
+#completeButton {
     width: 80%; /* Adjust the width as per requirement */
     height: auto; /* Height will adjust according to content */
     padding: 10px 0; /* Adjust padding to control height */
