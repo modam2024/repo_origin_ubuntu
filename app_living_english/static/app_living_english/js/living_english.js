@@ -222,20 +222,14 @@
         $("#submitForm").submit(function(e) {
             e.preventDefault();
             $("#resMessage").val('Status: Starting');
-            let hddnUrl = $('#hddn_url');
 
             let artclContent1 = $("#artcl_content1").val();
             let artclContent2 = $("#artcl_content2").val();
             let artclContent3 = $("#artcl_content3").val();
-            let articleContent = $("#artcl_content1").val()+ $("#artcl_content3").val();
+            let articleContent = artclContent1 + artclContent3;
 
             let selChapter = $("#selChapter").val();
-            let sourceUrl  = hddnUrl.val();
-            if (sourceUrl === "https://free.ybmclass.com/free/eng/eng_ybm_view.asp?idx=")
-               sourceUrl   = sourceUrl + selChapter;
-            
-            hddnUrl.val(sourceUrl)
-               
+            let sourceUrl  = "https://free.ybmclass.com/free/eng/eng_ybm_view.asp?idx="+ selChapter;
             let sourceTitle = $("#selTitle").val();
             let sourceType  = $("#searchGrpCd").val();
 
@@ -252,16 +246,9 @@
                     "sourceType": sourceType
                 }),
                 success: function(response) {
-                    var res_check = response.status;
-                    if ( res_check == "check" ) {
-                        $("#resMessage").val(" Message: " + response.message);
-                    } else {
-                        $("#resMessage").val("Count: " +  response.word_insert_count + " / " + response.word_count + ", Message: " + response.message);
-                    }
+                    $("#resMessage").val(" Message: " + response.message);
                 },
                 error: function(xhr) {
-                    // Handle the error response
-                    // `xhr` is the XMLHttpRequest object
                     let errorMessage = xhr.status + ': ' + xhr.statusText;
                     $("#result").html("Error - " + errorMessage);
                 }
@@ -278,12 +265,41 @@
 
         $("#wordCheckButton").click(function(e) {
             e.preventDefault();
-            let sourceUrl   = $("#hddn_url").val();
-            let sourceTitle = $("#selChapter").val();
+            $("#resMessage").val('Status: Starting');
+
+            let artclContent1 = $("#artcl_content1").val();
+            let artclContent2 = $("#artcl_content2").val();
+            let artclContent3 = $("#artcl_content3").val();
+            let articleContent = artclContent1 + artclContent3;
+
+            let selChapter = $("#selChapter").val();
+            let sourceUrl  = "https://free.ybmclass.com/free/eng/eng_ybm_view.asp?idx="+ selChapter;
+            let sourceTitle = $("#selTitle").val();
             let sourceType  = $("#searchGrpCd").val();
-            let url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&source_status=C';
-            //window.location.href = url;
-            window.open(url, '_blank');
+
+            $.ajax({
+                url: "/proj-common/submit_analysis_words/",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    "article": articleContent,
+                    "artclContent1": artclContent1,
+                    "artclContent2": artclContent2,
+                    "sourceUrl": sourceUrl,
+                    "sourceTitle": sourceTitle,
+                    "sourceType": sourceType
+                }),
+                success: function(response) {
+                    let living_url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&source_status=C';
+                    window.location.href = living_url;
+                },
+                error: function(xhr) {
+                    // Handle the error response
+                    // `xhr` is the XMLHttpRequest object
+                    let errorMessage = xhr.status + ': ' + xhr.statusText;
+                    $("#result").html("Error - " + errorMessage);
+                }
+            });
         });
 
         $("#cnvrtTpcButton").click(function(e) {

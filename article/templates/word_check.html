@@ -16,9 +16,9 @@
                       <option value="{{ group_code }}">{{ group_code }}</option>
                    {% endfor %}
                 </select>&nbsp;
-                <button type="button" id="searchBtn">조회</button>&nbsp; &nbsp;
+                <button type="button" id="searchBtn"><i class="fas fa-search"></i>조회</button>&nbsp; &nbsp;
                 COUNT:&nbsp <input type="text" id="rows_cnt" value="{{ rows_cnt }}" style="text-align:center; width:40px;" readonly></input>&nbsp&nbsp
-                <button type="button" id="backBtn">되돌아가기</button>&nbsp; &nbsp;
+                <button type="button" id="backBtn"><i class="fas fa-undo"></i>되돌아가기</button>&nbsp; &nbsp;
                </div>
             </div>
             <div class="content-title">
@@ -32,8 +32,8 @@
                         <option value="D">완료</option>
                         <option value="C" selected >미완료</option>
                     </select>&nbsp;
-                    <button type="button" id="refreshBtn">SELECT</button>&nbsp;
-                    <button type="button" id="deleteBtn">DELETE</button>&nbsp;
+                    <button type="button" id="refreshBtn"><i class="fas fa-search"></i>조회</button>&nbsp;
+                    <button type="button" id="deleteBtn"><i class="fas fa-trash"></i>삭제</button>&nbsp;
                 </div><br>
             </div>
             <div class="content">
@@ -62,14 +62,14 @@
                <div class="navigator_header">
                     <label style="color:blue;"></label><br><br>
                     <ul>
-                       <li style="color:#fff;font-weight: bold;">일별 생활 영어</li>
+                       <li style="color:#fff;font-weight: bold;">어휘 진행 현황</li>
                     </ul>
                </div>
             </div>
             <div class="right-side">
                 <!-- 좌측 섹션 내용 변경 -->
                 <div class="label-container">
-                    <label>WORD CHECK LIST</label>
+                    <label><i class="fas fa-download"></i>상태별 처리 버튼</label>
                     <ul>
                         <li><a href="#" id="wordCheckBtn">1차 (미완료->완료)</a></li>
                         <li><a href="#" id="callProcess" style="background-color:#aaa;color:black;">DONE 진행상태</a></li>

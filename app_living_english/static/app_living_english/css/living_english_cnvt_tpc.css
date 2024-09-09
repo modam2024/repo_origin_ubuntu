@@ -135,3 +135,7 @@ textarea {
     border: 3px solid #ddd;
 }
 
+.speakSentence, .originalSpeech {
+    background-color: #8C0028;
+    color : white;
+}

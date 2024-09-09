@@ -250,14 +250,15 @@ $(document).ready(function() { // applied
         $("#resMessage").val('Status: Starting');
 
         let sourceType  = "TOPS";
-        let v_titleList  = $('#titleList option:selected').val();
-        let newsDateList = $('#news_date_list option:selected').text().trim()
+        let v_titleVaule = $('#titleList option:selected').val();
+        let v_titleList  = $('#titleList option:selected').text().trim();
+        let newsDateList = $('#news_date_list option:selected').text().trim();
 
         let sourceTitle = `Issue : ${newsDateList} : ${v_titleList}`;
 
         let articleContent = $("#txt_eng_example300").val();
 
-        let sourceUrl = BASE_URL + "app_news_study/news_study/${newsDateList}";
+        let sourceUrl = BASE_URL + "app_news_study/news_study/"+v_titleVaule;
         var new_url   = ""
 
         $.ajax({
