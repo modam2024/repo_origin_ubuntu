@@ -544,6 +544,7 @@ def sql_dao(request, sql_name, p_param):
                 batch_params = ( v_trgt_order_no, v_trgt_page_date, v_prve_page_date, v_next_page_date, )
 
                 cursor.execute(batch_query, batch_params)
+                conn.commit()
 
             except Exception as e:
                 #  3일전 배치 작업은 전체 삭제 한다.

@@ -435,13 +435,14 @@ def sql_dao(request, sql_name, p_param):
             p_audio_name  = chapter_values["audio_name"]
 
             try:
-                chapter_query  = " INSERT INTO tb_batch_living_english_hist "
-                chapter_query += " ( src_chapter, src_title, voice_date, update_date ) "
-                chapter_query += " VALUES "
-                chapter_query += " ( %s, %s, %s, date_format(now(), '%Y-%m-%d %H:%i:%S') ) "
+                batch_query  = " INSERT INTO tb_batch_living_english_hist "
+                batch_query += " ( src_chapter, src_title, voice_date, update_date ) "
+                batch_query += " VALUES "
+                batch_query += " ( %s, %s, %s, date_format(now(), '%Y-%m-%d %H:%i:%S') ) "
 
-                chapter_params = ( p_chapter_num, p_title_text, p_audio_name )
-                cursor.execute(chapter_query, chapter_params)
+                batch_params = ( p_chapter_num, p_title_text, p_audio_name )
+                cursor.execute(batch_query, batch_params)
+                conn.commit()
 
             except Exception as e:
                 sql_dao(request, "sqld_batch_living_english_hist", p_param)
