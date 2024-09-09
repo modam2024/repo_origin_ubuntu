@@ -366,7 +366,7 @@ def sql_dao(request, sql_name, p_param):
         if sql_name == "sqld_batch_news_study_hist":
             print(" INTERVAL 4  sqld_batch_news_study_hist ")
             del_batch_query = " DELETE FROM tb_batch_news_study_hist "
-            del_batch_query += "  WHERE create_date <= DATE_SUB(now(), INTERVAL 4 DAY) "
+            del_batch_query += "  WHERE create_date <= DATE_SUB(now(), INTERVAL 2 DAY) "
             cursor.execute(del_batch_query, )
 
         '''
