@@ -474,7 +474,7 @@ def sql_dao(request, sql_name, p_param):
         # 작업     : 배치 히스토리 테이블의 7일 이전의 데이터 삭제 
         ############################################################ '''
         if sql_name == "sqld_batch_living_english_hist":
-
+            print(" INTERVAL 4  qld_batch_living_english_hist ")
             del_batch_query = " DELETE FROM tb_batch_living_english_hist "
             del_batch_query += "  WHERE create_date <= DATE_SUB(now(), INTERVAL 4 DAY) "
             cursor.execute(del_batch_query, )
