@@ -313,7 +313,14 @@
         $("#searchButton").click(function() {
             $("#resMessage").val("조회 중입니다.");
             let selectdChapter = $('#titleList option:selected').val();
-            let url = BASE_URL + "app_living_english/living-english/?chapter="+selectdChapter+"&status=C";
+
+            let url = "";
+            if (selectdChapter.trim().length === 0) {
+                url = BASE_URL + "app_living_english/living-english/?check=max&chapter=&status=C";
+            } else {
+                url = BASE_URL + "app_living_english/living-english/?chapter=" + selectdChapter + "&status=C";
+            }
+
             window.open(url, '_self');
         });
         
