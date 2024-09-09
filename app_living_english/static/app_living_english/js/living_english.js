@@ -115,6 +115,7 @@
 
             saveTopicInfo();
 
+            $('#hddn_titleVal').val("")
             $("#searchButton").click();
             audioElement = null;
         });
@@ -312,12 +313,18 @@
         
         $("#searchButton").click(function() {
             $("#resMessage").val("조회 중입니다.");
+            let hddn_selectdChapter = $('#hddn_titleVal').val();
             let selectdChapter = $('#titleList option:selected').val();
 
             let url = "";
-            if (selectdChapter.trim().length === 0) {
+            if (hddn_selectdChapter && hddn_selectdChapter.trim().length !== 0) {
+                // hddn_selectdChapter 유효한 값이 있는 경우
+                url = BASE_URL + "app_living_english/living-english/?chapter=" + hddn_selectdChapter + "&status=C";
+            } else if (!selectdChapter || selectdChapter.trim().length === 0) {
+                // selectdChapter가 undefined이거나, 공백만 있는 경우
                 url = BASE_URL + "app_living_english/living-english/?check=max&chapter=&status=C";
             } else {
+                // selectdChapter가 유효한 값이 있는 경우
                 url = BASE_URL + "app_living_english/living-english/?chapter=" + selectdChapter + "&status=C";
             }
 
@@ -336,7 +343,7 @@
                 data: data,
                 success: function(response) {
                   $("#resMessage").val("완료 했습니다.");
-                  $('#titleList').val(response.complete_chapter);
+                  $('#hddn_titleVal').val(response.complete_next_chapter);
                   $("#searchButton").click();
                 },
                 error: function(xhr, status, error) {
@@ -348,6 +355,7 @@
         // #2024.03.20-titleList 셀렉터에 대한 change 이벤트 핸들러를 설정
         $("#titleList").change(function() {
             // 옵션이 선택될 때 #searchButton 버튼의 클릭 이벤트를 트리거함
+            $('#hddn_titleVal').val("")
             $('#searchButton').click();
         });
 
@@ -365,6 +373,7 @@
                 data: data,
                 success: function() {
                   $("#resMessage").val("미완료 처리 했습니다.");
+                  $('#hddn_titleVal').val(selectd_chapter);
                   $("#searchButton").click();
                 },
                 error: function(xhr, status, error) {

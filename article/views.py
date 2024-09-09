@@ -38,23 +38,6 @@ def fn_word_syns_kr(p_word):
             def_list_kr = korean_definition.text
     return def_list_kr
 
-def retrieve_ing_chapter_num(request):
-    conn, cursor, current_username = create_connection(request)
-
-    try:
-        # 이미 데이터베이스에 해당 단어가 있는지 확인
-        cursor.execute(
-            "SELECT ifnull(max(src_chapter), 0) as max_chapter_num FROM tb_chapter_title WHERE user_id = %s and status = 'C' ",
-            (current_username,),
-        )
-        existing_max_chapter_num = cursor.fetchone()
-        return existing_max_chapter_num[0]
-    except Exception as e:
-        print("retrieve max num query failed: ", e)
-        return "0"
-    finally:
-        close_connection(conn, cursor)
-
 # 단어 추출 첫화면 조회, group_code 셋팅
 @login_required(login_url='/login/')
 def main_view(request):
@@ -646,8 +629,8 @@ def complete_chapter(request):
         complete_params = (current_username, selectd_chapter,)
         cursor.execute(complete_query, complete_params)
 
-        max_chapter_num = retrieve_ing_chapter_num(request)
-        return JsonResponse({"complete_chapter": max_chapter_num})
+        max_chapter_num = proj_sql_statement.sql_dao(request, "sqls_retrieve_ing_chapter_num", selectd_chapter);
+        return JsonResponse({"complete_next_chapter": max_chapter_num})
     except Exception as e:
         print("Chapter Complete query failed:", e)
         return JsonResponse({"message": "완료 오류 발생."})

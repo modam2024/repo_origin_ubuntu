@@ -82,6 +82,35 @@ def sql_dao(request, sql_name, p_param):
 
             return re_title_cnt
 
+        '''
+        #############################################################
+        # CALL ID : sqls_retrieve_ing_chapter_num
+        # 함수명   : 완료된  capther  번호 다음 번호 조회
+        # 작업     : 완료된  capther  번호 다음 번호 조회        
+        # 작성일   : 2024.09.10
+        # 작성자   : 이용학 
+        ############################################################# '''
+        if sql_name == "sqls_retrieve_ing_chapter_num":
+
+            selectd_chapter = p_param
+
+            try:
+                # 이미 데이터베이스에 해당 단어가 있는지 확인
+                select_query  = "  SELECT ifnull(max(src_chapter), 0) as max_chapter_num "
+                select_query += "   FROM tb_chapter_title  "
+                select_query += "  WHERE user_id     = %s  "
+                select_query += "    AND src_chapter < %s  "
+                select_query += "    AND status      = 'C' "
+                select_param = (current_username, selectd_chapter)
+
+                # 쿼리 실행
+                cursor.execute(select_query, select_param, )
+                existing_max_chapter_num = cursor.fetchone()
+                return existing_max_chapter_num[0]
+            except Exception as e:
+                print("retrieve max num query failed: ", e)
+                return "0"
+
         ''' 
         ##############
          INSERT BLOCK
