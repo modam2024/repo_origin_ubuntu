@@ -187,9 +187,7 @@
             });
         }
 
-        $("#convertExampleEng1").click(function() {
-            convertExampleEng(1);
-        });
+        $("#convertExampleEng1").click(function() { convertExampleEng(1); });
         $("#convertExampleEng2").click(function() { convertExampleEng(2); });
         $("#convertExampleEng3").click(function() { convertExampleEng(3); });
 

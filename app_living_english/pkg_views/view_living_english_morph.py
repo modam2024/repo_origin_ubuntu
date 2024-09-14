@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from app_common import mdl_common_app as comn_func
 from proj_sql_mapping import fn_connector as proj_connector
 import app_living_english.pkg_sql_statement.sql_statement as sql_statement
+from proj_sql_mapping import mdl_mapping_sql_proj as proj_sql_statement
 
 
 # 축약형을 변환하는 함수 정의
@@ -20,10 +21,11 @@ def handle_contractions(tokens, index):
 
 @csrf_exempt
 def submit_sentence(request):
+    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "submit_sentence")
+
     # 변환된 텍스트 저장용 리스트
     converted_sentences = []
     list_rslt_sentns = []
-    modal_verbs = ['will', 'shall', 'can', 'must', 'may', 'might', 'would', 'should', 'could']  # 조동사 리스트
 
     # POST 요청일 때만 처리
     if request.method == "POST":
@@ -87,76 +89,17 @@ def submit_sentence(request):
                     sent = new_doc[:] # 원래 Span 객체의 정보를 이용하여 새 Span 객체 생성
 
                 original_sentence = tmp_sent
-                converted_tokens = []
-                skip_token = False
-                for i, token in enumerate(sent):
-                    if skip_token:
-                        skip_token = False
-                        continue
-                    contraction, is_contraction = handle_contractions(sent, i)
-                    if is_contraction:
-                        # 공백 제거를 위한 정규 표현식
-                        contraction_no_spaces = re.sub(r'\s+', '', contraction)
-                        converted_tokens.append(contraction_no_spaces)
-                        skip_token = True
-                    elif token.text == ',':
-                        converted_tokens.append(',')
-                    elif token.pos_ == 'DET' and token.text.lower() in ['the', 'a', 'an']:
-                        converted_tokens.append(',')  # 정관사 및 부정관사
-                    elif token.pos_ == 'ADP':
-                        if converted_tokens and converted_tokens[-1] == ',':
-                            continue  # 앞에 쉼표가 있는 경우 전치사 생략
-                        converted_tokens.append(',,')  # 전치사
-                    elif token.tag_ == 'TO':
-                        if converted_tokens and converted_tokens[-1] == ',':
-                            continue  # 앞에 쉼표가 있는 경우 부정사 생략
-                        converted_tokens.append(',,')  # 부정사 'to'
-                    elif token.pos_ == 'PRON' and token.dep_ in ['relcl']:
-                        if converted_tokens and converted_tokens[-1] == ',':
-                            continue  # 앞에 쉼표가 있는 경우 관계대명사 생략
-                        converted_tokens.append(',,,')  # 관계대명사
-                    elif token.pos_ == 'CCONJ' or token.pos_ == 'SCONJ':
-                        if converted_tokens and converted_tokens[-1] == ',':
-                            continue  # 앞에 쉼표가 있는 경우 접속사 생략
-                        converted_tokens.append(',,,,')  # 접속사
-                    elif token.pos_ == 'VERB' and token.tag_ == 'MD' and token.text.lower() in modal_verbs:
-                         if token.nbor(1).text.lower() == "n't":
-                             print('MD')
-                         else:
-                             converted_tokens.append(',,')
-                    else:
-                        converted_tokens.append(token.text)  # 다른 단어는 그대로 추가
-                # 변환된 토큰들을 하나의 텍스트로 결합하여 문장 리스트에 추가
-                converted_sentence = ' '.join(converted_tokens)
+                # 어플 공통 : 대상 영문장을 변환문장시 전처리한다.
+                original_sentence, converted_sentence = comn_func.fn_preparation_process_of_convert(sent, original_sentence)
                 converted_sentences.append((original_sentence, converted_sentence))
 
             # 결과 출력
             for original_sentence, converted_sentence in converted_sentences:
-                whitespace_converted = ' '.join(converted_sentence.replace(',', '').split())
-                translated_sentence = ""
-                # translated_sentence = translator.translate(original_sentence.strip(), src='en', dest='ko').text
-                result_whitespace_converted = whitespace_converted.strip()
-                result_converted_sentn  = converted_sentence.strip()
-                result_original_sentn   = original_sentence.strip()
-                result_translated_sentn = translated_sentence
-
-                result_whitespace_converted = result_whitespace_converted.replace(" !", "!")
-                result_converted_sentn      = result_converted_sentn.replace(" !", "!")
-                result_whitespace_converted = result_whitespace_converted.replace(" ?", "?")
-                result_converted_sentn      = result_converted_sentn.replace(" ?", "?")
-                result_whitespace_converted = result_whitespace_converted.replace(" ’", "’")
-                result_converted_sentn      = result_converted_sentn.replace(" ’", "’")
-                result_whitespace_converted = result_whitespace_converted.replace(" ,", ",")
-                result_converted_sentn      = result_converted_sentn.replace(" ,", ",")
-                result_whitespace_converted = result_whitespace_converted.replace(" .", ".")
-                result_converted_sentn      = result_converted_sentn.replace(" .", ".")
-                result_whitespace_converted = result_whitespace_converted.replace(" n’", "n’")
-                result_converted_sentn      = result_converted_sentn.replace(" n’", "n’")
-
+                # 어플 공통 : 변환문장에서 특수문자 전처리한다.
+                result_whitespace_converted, result_converted_sentn, result_original_sentn, result_translated_sentn = comn_func.fn_comma_process_of_convert(original_sentence, converted_sentence)
                 list_rslt_sentns.append((result_whitespace_converted, result_converted_sentn, result_original_sentn, result_translated_sentn))
 
             v_test_no = sql_statement.sql_dao(request, "sqli_convert_living_english", list_rslt_sentns)
-
 
             # 처리 성공 응답
             return JsonResponse(

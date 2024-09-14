@@ -7,6 +7,11 @@ button {
     color : white;
 }
 
+button#submitButton {
+    background-color: #4D92AA;
+    color : white;
+}
+
 button#completeButton {
     background-color: lightgreen;
     color: initial;

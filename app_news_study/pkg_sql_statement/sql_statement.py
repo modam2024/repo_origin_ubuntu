@@ -325,6 +325,66 @@ def sql_dao(request, sql_name, p_param):
 
             return "OK"
 
+        '''    
+        ############################################################
+        # CALL ID : sqli_convert_news_study
+        # 함수명   : NEWS 문장을 변환된 문장을 저장한다.   
+        # 작성일   : 2024.09.13
+        # 작업     : NEWS 문장을 변환된 문장을 저장한다.  
+        ############################################################  '''
+        if sql_name == "sqli_convert_news_study":
+            news_text_no     = p_param["news_text_no"]
+            source_url       = p_param["source_url"]
+            source_title     = p_param["source_title"]
+            source_type      = p_param["source_type"]
+            news_date        = p_param["news_date"]
+            list_rslt_sentns = p_param["list_rslt_sentns"]
+
+            int_test_cnt = 0
+
+            for whitespace_converted, converted_sentn, original_sentn, translated_sentn in list_rslt_sentns:
+                str_whitespace_converted = whitespace_converted
+                str_converted_sentn      = converted_sentn
+                str_original_sentn       = original_sentn
+                str_translated_sentn     = translated_sentn
+
+                int_test_cnt += 1
+
+                try:
+                    del_query  = " DELETE FROM tb_convert_news_study "
+                    del_query += "  WHERE user_id      = %s "
+                    del_query += "    AND no           = %s "
+                    del_query += "    AND news_date    = %s "
+                    del_query += "    AND news_text_no = %s "
+                    del_params = ( current_username, int_test_cnt, news_date, news_text_no )
+                    cursor.execute(del_query, del_params)
+                    conn.commit()
+
+                    ins_query = " INSERT INTO tb_convert_news_study "
+                    ins_query += " (user_id, no, news_date, news_text_no, whitespace_converted, converted_sentn, original_sentn, translated_sentn, src_url, group_code, src_title) "
+                    ins_query += " VALUES "
+                    ins_query += " (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
+
+                    ins_params = (
+                        current_username,
+                        int_test_cnt,
+                        news_date,
+                        news_text_no,
+                        str_whitespace_converted,
+                        str_converted_sentn,
+                        str_original_sentn,
+                        str_translated_sentn,
+                        source_url,
+                        source_type,
+                        source_title,
+                    )
+                    cursor.execute(ins_query, ins_params)
+
+                except Exception as e:
+                    int_test_cnt -= 1
+
+            return int_test_cnt
+
         ''' 
         ##############
          UPDATE BLOCK

@@ -4,6 +4,11 @@ function speaking(order) {
     splitTextAndSpeak(news_sentence);
 };
 
+function convert_speaking(order) {
+    var news_sentence = $("#artcl_convert_content"+order).val();
+    splitTextAndSpeak(news_sentence);
+};
+
 // proj_mdm_prep 사용
 function callEngIdiom(keyno, groupno) {
     var in_keyno   = keyno;
@@ -37,6 +42,7 @@ function callEngIdiom(keyno, groupno) {
 $(document).ready(function() { // applied
     // 1초 동안 마우스 변경;
     setCursorShap(1000);
+    iTextCnt = 0;
 
     // initAllTextArea();
     // applyActiveWordStyle();
@@ -63,6 +69,7 @@ $(document).ready(function() { // applied
                 var rec_news_eng_full = ""
                 var contentDiv = $(".content"); // 컨텐츠를 추가할 부모 div
                 $("#rows_cnt").val(response.rows_cnt);
+                iTextCnt = response.rows_cnt;
 
                 $.each(response.rows, function (i, record) {
                     rec_number  = i + 1;
@@ -98,7 +105,20 @@ $(document).ready(function() { // applied
                         type: 'button',
                         id: 'speakExampleEng' + i,
                         text: 'Speaking'
-                    }).on('click', function() { speaking(i); }) ).append('&nbsp;');
+                    }).on('click', function() {
+                        $('#txt_eng_example'+ i).css("display", "block");
+                        $('#artcl_wspace_content' + i).css("display", "none");
+                        speaking(i); }) ).append('&nbsp;');
+
+                    buttonGroupEng.append($('<button>', {
+                        type: 'button',
+                        id: 'speakConvertEng' + i,
+                        text: 'convt.Speaking',
+                        style: 'background-color: #4D92AA'
+                    }).on('click', function() {
+                        $('#txt_eng_example'+ i).css("display", "none");
+                        $('#artcl_wspace_content' + i).css("display", "block");
+                        convert_speaking(i); })).append('&nbsp;');
 
                     buttonGroupEng.append($('<button>', {
                         type: 'button',
@@ -106,13 +126,31 @@ $(document).ready(function() { // applied
                         text: 'Stop Speaking'
                     }));
 
+                    buttonGroupEng.append($('<button>', {
+                        id: 'convertExampleEng' + i,
+                        type: 'button',
+                        text: 'converting',
+                        style: 'display: none'
+                    }).on('click', function() { convertExampleEng(i); })).append('&nbsp;');
+
                     labelDivEng.append(buttonGroupEng);
                     labelDivEng.append($('<textarea>', {
                         id: 'txt_eng_example' + i,
                         rows: '5',
                         placeholder: 'Enter Example (ENG) here...'
                     }));
-
+                    labelDivEng.append($('<textarea>', {
+                        id: 'artcl_wspace_content' + i,
+                        rows: '5',
+                        style: 'display: none',
+                        placeholder: 'Enter Example (ENG) here...'
+                    }));
+                    labelDivEng.append($('<textarea>', {
+                        id: 'artcl_convert_content' + i,
+                        rows: '5',
+                        style: 'display : none',
+                        placeholder: 'Enter Example (ENG) here...'
+                    }));
                     // 한국어 예제 부분
                     var labelDivKor = $('<div>', {class: 'label-div'});
                     var buttonGroupKor = $('<div>', {class: 'label-button-group'});
@@ -174,6 +212,11 @@ $(document).ready(function() { // applied
                 });
                 // txt_eng_example300 의 300 은 특별한 의미가 없고 최대한 본 문단과 겹치지 않을 숫자로 젛한 것이다.
                 $("#txt_eng_example300").val(rec_news_eng_full);
+
+                // ** 동적 화면 구성 완료 후에 변형 문장 작업을 건수만큼 수행한다. **
+                $.each(response.rows, function (i, record) {
+                    convertExampleEng(i);
+                });
             },
             error: function(xhr, status, error) {
                 console.error(error);
@@ -191,50 +234,29 @@ $(document).ready(function() { // applied
         window.location.href = BASE_URL + 'app_news_study/news_study/?selected_date=' + encodeURIComponent(send_date) ;
     });
 
-    //proj_mdm_prep 사용
-    // $("#submitButton").click(function() {
-    //     // 10초 동안 마우스 변경
-    //     setCursorShap(10000);
-    //     var data = {
-    //     };
-    //
-    //     $.ajax({
-    //         url: '/save-wordinfo/',
-    //         type: 'GET',
-    //         data: data,
-    //         success: function(response) {
-    //           $("#resMessage").val(response.message);
-    //         },
-    //         error: function(xhr, status, error) {
-    //           $("#resMessage").val("error : " + error);
-    //         }
-    //     });
-    // });
-
-    //proj_mdm_prep 사용
     $("#completeButton").click(function() {
-        // 10초 동안 마우스 변경
-        setCursorShap(10000);
-
-        var complt_title = $("#wrd_title").val();
-
-        var data = {
-            complt_word: $("#txt_word").val(),
-        };
-
-        $.ajax({
-            url: '/complete-word/',
-            type: 'GET',
-            data: data,
-            success: function(response) {
-              $("#resMessage").val(response.message);
-              var complt_voca     = "completed-go-to-next-word";
-              window.location.href = BASE_URL + 'app_news_study/news_study/?word=' + encodeURIComponent(complt_voca)  + '&wrd_title=' + encodeURIComponent(complt_title);
-            },
-            error: function(xhr, status, error) {
-              $("#resMessage").val("error : " + error);
-            }
-        });
+        // // 10초 동안 마우스 변경
+        // setCursorShap(10000);
+        //
+        // var complt_title = $("#wrd_title").val();
+        //
+        // var data = {
+        //     complt_word: $("#txt_word").val(),
+        // };
+        //
+        // $.ajax({
+        //     url: '/complete-word/',
+        //     type: 'GET',
+        //     data: data,
+        //     success: function(response) {
+        //       $("#resMessage").val(response.message);
+        //       var complt_voca     = "completed-go-to-next-word";
+        //       window.location.href = BASE_URL + 'app_news_study/news_study/?word=' + encodeURIComponent(complt_voca)  + '&wrd_title=' + encodeURIComponent(complt_title);
+        //     },
+        //     error: function(xhr, status, error) {
+        //       $("#resMessage").val("error : " + error);
+        //     }
+        // });
     });
 
     // "Submit Article" 링크에 클릭 이벤트 리스너 추가
@@ -283,6 +305,64 @@ $(document).ready(function() { // applied
             }
         });
     });
+
+    function convertExampleEng(news_text_no) {
+        // 1초 동안 마우스 변경;
+        setCursorShap(1000);
+        var news_date = $('#news_date_list option:selected').val();
+        let sourceTitle = $('#titleList option:selected').text();
+
+        var articleContent = $("#txt_eng_example" + news_text_no).val();
+        let sourceUrl  = BASE_URL + "app_news_study/news_study/?selected_date=" + news_date;
+        let sourceType = "TOPS";
+
+        $.ajax({
+            url: "/app_news_study/news_convert_sentence/",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+                "news_text_no" : news_text_no,
+                "article"      : articleContent,
+                "sourceUrl"    : sourceUrl,
+                "sourceTitle"  : sourceTitle,
+                "sourceType"   : sourceType,
+                "news_date"    : news_date
+            }),
+            success: function (response) {
+                $("#resMessage").val("OK");
+                var res_news_text_no = response.news_text_no;
+                var res_rslt_sentns = response.list_rslt_sentns;
+
+                if (res_rslt_sentns.length > 0) {
+                    var v_artcl_wspace_content  = "#artcl_wspace_content" + res_news_text_no;
+                    var v_artcl_convert_content = "#artcl_convert_content" + res_news_text_no;
+
+                    let i = 0;
+                    let res_wspc_rslt_sentn = "";
+                    let res_convert_rslt_sentn  = "";
+
+                    for (res_rslt_sentn of res_rslt_sentns)
+                    {
+                        i += 1;
+                        if (i === 1) {
+                            res_wspc_rslt_sentn     = res_rslt_sentn[0];
+                            res_convert_rslt_sentn  = res_rslt_sentn[1];
+                        } else {
+                            res_wspc_rslt_sentn     += "\n" + res_rslt_sentn[0];
+                            res_convert_rslt_sentn  += "\n" + res_rslt_sentn[1];
+                        }
+                    }
+
+                    $(v_artcl_wspace_content).val(res_wspc_rslt_sentn);
+                    $(v_artcl_convert_content).val(res_convert_rslt_sentn);
+                }
+            },
+            error: function (xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText;
+                $("#result").html("Error - " + errorMessage);
+            }
+        });
+    }
 
     selectNewsTitle();
  });

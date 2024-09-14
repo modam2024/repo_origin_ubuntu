@@ -1,16 +1,15 @@
 import json
-import re
 
 import mysql.connector
 import spacy
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from googletrans import Translator
 
+import app_news_study.pkg_sql_statement.sql_statement as sql_statement
 from app_common import mdl_common_app as comn_func
-import app_test_timer.pkg_sql_statement.sql_statement as sql_statement
-from proj_sql_mapping import  fn_connector as proj_connector
+from proj_sql_mapping import fn_connector as proj_connector
 from proj_sql_mapping import mdl_mapping_sql_proj as proj_sql_statement
+
 
 # 축약형을 변환하는 함수 정의
 def handle_contractions(tokens, index):
@@ -19,8 +18,7 @@ def handle_contractions(tokens, index):
     return tokens[index].text.strip(), False
 
 @csrf_exempt
-def convert_sentence(request):
-    # 학습 이력 남기기
+def news_convert_sentence(request):
     res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "convert_sentence")
 
     # 변환된 텍스트 저장용 리스트
@@ -43,19 +41,19 @@ def convert_sentence(request):
         try:
             # 요청의 본문을 JSON으로 파싱
             data = json.loads(request.body)
-
-            question_no     = data.get("question_no")
+            article_content = data.get("article")
+            news_text_no    = data.get("news_text_no")
             source_url      = data.get("sourceUrl")
             source_title    = data.get("sourceTitle")
-            source_type     = "YBM(TEST)"
-            topic_num       = data.get("topic_num")
+            source_type     = data.get("sourceType")
+            news_date       = data.get("news_date")
 
-            tmp_values = {
-                "topic_num"   : topic_num,
-                "question_no" : question_no,
-            }
-            # 연속 공백을 정답으로 치환한 문장을 받아온다.
-            article_content = sql_statement.sql_dao(request, "sqls_fdbck_question_content", tmp_values)
+            # tmp_values = {
+            #     "topic_num"   : topic_num,
+            #     "question_no" : question_no,
+            # }
+            # # 연속 공백을 정답으로 치환한 문장을 받아온다.
+            # article_content = sql_statement.sql_dao(request, "sqls_fdbck_question_content", tmp_values)
 
             # SpaCy 영어 모델 로드 (사전 학습된 모델)
             nlp = spacy.load('en_core_web_sm')
@@ -80,22 +78,22 @@ def convert_sentence(request):
                 list_rslt_sentns.append((result_whitespace_converted, result_converted_sentn, result_original_sentn, result_translated_sentn))
 
             convert_values = {
-                "question_no" : question_no,
-                "source_url"  : source_url,
-                "source_title": source_title,
-                "source_type" : source_type,
-                "topic_num"   : topic_num,
+                "news_text_no" : news_text_no,
+                "source_url"   : source_url,
+                "source_title" : source_title,
+                "source_type"  : source_type,
+                "news_date"    : news_date,
                 "list_rslt_sentns": list_rslt_sentns,
             }
 
-            v_test_no = sql_statement.sql_dao(request, "sqli_convert_test_timer", convert_values)
+            v_test_no = sql_statement.sql_dao(request, "sqli_convert_news_study", convert_values)
 
             # 처리 성공 응답
             return JsonResponse(
                 {
-                    "message": "success",
-                    "topic_num": topic_num,
-                    "question_no": question_no,
+                    "message"         : "success",
+                    "news_date"       : news_date,
+                    "news_text_no"    : news_text_no,
                     "list_rslt_sentns": list_rslt_sentns
                 }
             )
