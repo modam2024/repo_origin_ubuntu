@@ -113,15 +113,6 @@ $(document).ready(function() { // applied
 
                     buttonGroupEng.append($('<button>', {
                         type: 'button',
-                        id: 'speakExampleEng' + i,
-                        text: 'Speaking'
-                    }).on('click', function() {
-                        $('#txt_eng_example'+ i).css("display", "block");
-                        $('#artcl_wspace_content' + i).css("display", "none");
-                        speaking(i); }) ).append('&nbsp;');
-
-                    buttonGroupEng.append($('<button>', {
-                        type: 'button',
                         id: 'speakConvertEng' + i,
                         text: 'convt.Speaking',
                         style: 'background-color: #4D92AA'
@@ -129,6 +120,15 @@ $(document).ready(function() { // applied
                         $('#txt_eng_example'+ i).css("display", "none");
                         $('#artcl_wspace_content' + i).css("display", "block");
                         convert_speaking(i); })).append('&nbsp;');
+
+                    buttonGroupEng.append($('<button>', {
+                        type: 'button',
+                        id: 'speakExampleEng' + i,
+                        text: 'Speaking'
+                    }).on('click', function() {
+                        $('#txt_eng_example'+ i).css("display", "block");
+                        $('#artcl_wspace_content' + i).css("display", "none");
+                        speaking(i); }) ).append('&nbsp;');
 
                     buttonGroupEng.append($('<button>', {
                         type: 'button',
