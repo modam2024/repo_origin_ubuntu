@@ -1,18 +1,20 @@
 // 단어 클릭 이벤트 핸들러 추가
 function speaking(order) {
     var news_sentence = $("#artcl_org_content"+order).val();
-    var arr_news_sentence = news_sentence.split("...");
+    var arr_news_sentence = news_sentence.split("....");
     for (news_sentence of arr_news_sentence)
     {
+        news_sentence = news_sentence + ".";
         splitTextAndSpeak(news_sentence);
     }
 };
 
 function convert_speaking(order) {
     var news_sentence = $("#artcl_convert_content"+order).val();
-    var arr_news_sentence = news_sentence.split("...");
+    var arr_news_sentence = news_sentence.split("....");
     for (news_sentence of arr_news_sentence)
     {
+        news_sentence = news_sentence + ".";
         splitTextAndSpeak(news_sentence);
     }
 };
@@ -150,19 +152,19 @@ $(document).ready(function() { // applied
                     labelDivEng.append($('<textarea>', {
                         id: 'artcl_wspace_content' + i,
                         rows: '5',
-                        style: 'display: none',
+                        style: 'display: block',
                         placeholder: 'Enter Example (ENG) here...'
                     }));
                     labelDivEng.append($('<textarea>', {
                         id: 'artcl_convert_content' + i,
                         rows: '5',
-                        style: 'display : none',
+                        style: 'display : block',
                         placeholder: 'Enter Example (ENG) here...'
                     }));
                     labelDivEng.append($('<textarea>', {
                         id: 'artcl_org_content' + i,
                         rows: '5',
-                        style: 'display : none',
+                        style: 'display : block',
                         placeholder: 'Enter Example (ENG) here...'
                     }));
 
