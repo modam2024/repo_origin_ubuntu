@@ -1,12 +1,20 @@
 // 단어 클릭 이벤트 핸들러 추가
 function speaking(order) {
-    var news_sentence = $("#txt_eng_example"+order).val();
-    splitTextAndSpeak(news_sentence);
+    var news_sentence = $("#artcl_org_content"+order).val();
+    var arr_news_sentence = news_sentence.split("...");
+    for (news_sentence of arr_news_sentence)
+    {
+        splitTextAndSpeak(news_sentence);
+    }
 };
 
 function convert_speaking(order) {
     var news_sentence = $("#artcl_convert_content"+order).val();
-    splitTextAndSpeak(news_sentence);
+    var arr_news_sentence = news_sentence.split("...");
+    for (news_sentence of arr_news_sentence)
+    {
+        splitTextAndSpeak(news_sentence);
+    }
 };
 
 // proj_mdm_prep 사용
@@ -151,6 +159,13 @@ $(document).ready(function() { // applied
                         style: 'display : none',
                         placeholder: 'Enter Example (ENG) here...'
                     }));
+                    labelDivEng.append($('<textarea>', {
+                        id: 'artcl_org_content' + i,
+                        rows: '5',
+                        style: 'display : none',
+                        placeholder: 'Enter Example (ENG) here...'
+                    }));
+
                     // 한국어 예제 부분
                     var labelDivKor = $('<div>', {class: 'label-div'});
                     var buttonGroupKor = $('<div>', {class: 'label-button-group'});
@@ -336,10 +351,12 @@ $(document).ready(function() { // applied
                 if (res_rslt_sentns.length > 0) {
                     var v_artcl_wspace_content  = "#artcl_wspace_content" + res_news_text_no;
                     var v_artcl_convert_content = "#artcl_convert_content" + res_news_text_no;
+                    var v_artcl_org_content     = "#artcl_org_content" + res_news_text_no;
 
                     let i = 0;
-                    let res_wspc_rslt_sentn = "";
-                    let res_convert_rslt_sentn  = "";
+                    let res_wspc_rslt_sentn   = "";
+                    let res_convert_rslt_sentn= "";
+                    let res_org_rslt_sentn    = "";
 
                     for (res_rslt_sentn of res_rslt_sentns)
                     {
@@ -347,14 +364,17 @@ $(document).ready(function() { // applied
                         if (i === 1) {
                             res_wspc_rslt_sentn     = res_rslt_sentn[0];
                             res_convert_rslt_sentn  = res_rslt_sentn[1];
+                            res_org_rslt_sentn      = res_rslt_sentn[2];
                         } else {
                             res_wspc_rslt_sentn     += "\n" + res_rslt_sentn[0];
-                            res_convert_rslt_sentn  += "\n" + res_rslt_sentn[1];
+                            res_convert_rslt_sentn  += "..." + res_rslt_sentn[1];
+                            res_org_rslt_sentn      += "..." + res_rslt_sentn[2];
                         }
                     }
 
                     $(v_artcl_wspace_content).val(res_wspc_rslt_sentn);
                     $(v_artcl_convert_content).val(res_convert_rslt_sentn);
+                    $(v_artcl_org_content).val(res_org_rslt_sentn);
                 }
             },
             error: function (xhr, status, error) {
