@@ -152,19 +152,19 @@ $(document).ready(function() { // applied
                     labelDivEng.append($('<textarea>', {
                         id: 'artcl_wspace_content' + i,
                         rows: '5',
-                        style: 'display: block',
+                        style: 'display: none',
                         placeholder: 'Enter Example (ENG) here...'
                     }));
                     labelDivEng.append($('<textarea>', {
                         id: 'artcl_convert_content' + i,
                         rows: '5',
-                        style: 'display : block',
+                        style: 'display : none',
                         placeholder: 'Enter Example (ENG) here...'
                     }));
                     labelDivEng.append($('<textarea>', {
                         id: 'artcl_org_content' + i,
                         rows: '5',
-                        style: 'display : block',
+                        style: 'display : none',
                         placeholder: 'Enter Example (ENG) here...'
                     }));
 
