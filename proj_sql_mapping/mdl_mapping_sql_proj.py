@@ -4,8 +4,8 @@ import pandas as pd
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
-from mdmproj1 import settings
 from . import create_connection, close_connection, handle_sql_error
+from proj_common import mdl_morph_words_proj as morph_new_words
 
 '''
 #######################################################
@@ -111,6 +111,29 @@ def sql_dao(request, sql_name, p_param):
                 print("retrieve max num query failed: ", e)
                 return "0"
 
+        '''
+        #############################################################
+        # CALL ID : sqls_processed_words
+        # 작업     : processed_words 에 대상 단어의 정보가 존재하는지 확인        
+        # 작성일   : 2024.09.16
+        # 작성자   : 이용학 
+        ############################################################# '''
+        if sql_name == "sqls_processed_words":
+           lemma_word = p_param
+
+           # 쿼리 정의
+           lemma_query  = " SELECT word, status, ifnull(mean_en,'X') as mean_en "
+           lemma_query += "   FROM processed_words "
+           lemma_query += "  WHERE user_id = %s    "
+           lemma_query += "    AND word    = %s    "
+           lemma_param = (current_username, lemma_word,)
+
+           # 쿼리 실행
+           cursor.execute(lemma_query, lemma_param)
+           existing_word = cursor.fetchone()
+
+           return existing_word
+
         ''' 
         ##############
          INSERT BLOCK
@@ -122,7 +145,7 @@ def sql_dao(request, sql_name, p_param):
         # 작업 : 메인 메뉴 또는 서브 메뉴 클릭할 때마다 이력을 남긴다. 
         ############################################################# '''
         if sql_name == "sqli_click_study_hist":
-            p_menu_url = p_menu_url = request.path
+            p_menu_url = request.path
             p_main_menu_no = p_param
 
             click_query = " INSERT INTO tb_click_study_hist "
@@ -133,9 +156,152 @@ def sql_dao(request, sql_name, p_param):
             cursor.execute(click_query, click_params)
 
         '''
+        #############################################################
+        # CALL ID : sqlii_processed_words
+        # 작업     : 데이터베이스에 해당 단어가 없으면 INSERT 쿼리 실행        
+        # 작성일   : 2024.09.16
+        # 작성자   : 이용학  
+        ############################################################# '''
+        if sql_name == "sqlii_processed_words":
+
+            dic_words_info = p_param
+
+            word_insert_count = dic_words_info["word_insert_count"]
+            lemma_word        = dic_words_info["lemma_word"]
+            tag               = dic_words_info["tag"]
+            tag_text          = dic_words_info["tag_text"]
+            source_url        = dic_words_info["source_url"]
+            source_type       = dic_words_info["source_type"]
+            source_title      = dic_words_info["source_title"]
+            mean_en_text      = dic_words_info["mean_en_text"]
+
+            mean_en_text = morph_new_words.fn_word_syns_en(lemma_word)
+
+            if mean_en_text == "":
+               mean_en_text = "None"
+
+            ins_query  = " INSERT INTO processed_words "
+            ins_query += " (no, user_id, word, mean_en, mean_kr, tag, tag_text, src_url, group_code, src_title) "
+            ins_query += (
+                " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
+            )
+            ins_params = (
+                word_insert_count,
+                current_username,
+                lemma_word,
+                mean_en_text,
+                "-",
+                tag,
+                tag_text,
+                source_url,
+                source_type,
+                source_title,
+            )
+            cursor.execute(ins_query, ins_params)
+
+            voca_query  = " INSERT INTO daily_voca "
+            voca_query += " (num, user_id, word, mean, tag, group_code, noun, verb, adjective, adverb, order_priority, frequency, status, src_url, src_title, create_date, start_date, finish_date) "
+            voca_query += " SELECT no, user_id, word, mean_kr, mean_en, group_code, "
+            voca_query += "        CASE WHEN SUBSTRING(tag, 1, 1) = 'N' THEN 1 ELSE 0 END, "
+            voca_query += "        CASE WHEN SUBSTRING(tag, 1, 1) = 'V' THEN 1 ELSE 0 END, "
+            voca_query += "        CASE WHEN SUBSTRING(tag, 1, 1) = 'J' THEN 1 ELSE 0 END, "
+            voca_query += "        CASE WHEN SUBSTRING(tag, 1, 1) = 'R' THEN 1 ELSE 0 END, "
+            voca_query += "        IFNULL(level, 'L'), frequency, status, src_url, src_title, create_date, start_date, finish_date "
+            voca_query += " FROM  processed_words "
+            voca_query += " WHERE user_id = %s "
+            voca_query += "   AND word    = %s "
+            voca_params = (current_username, lemma_word,)
+
+            cursor.execute(voca_query, voca_params)
+
+        '''
         ##############
          UPDATE BLOCK
         ############## '''
+        '''
+        #############################################################
+        # CALL ID : sqluu_cond_processed_words
+        # 작업     : processed_words 에 해당 단어의 정보를 업데이트 한다.   
+        #           이미 데이터베이스에 해당 단어가 완료되지 않은 상태면 
+        #           다시 url, title, 영문뜻, 날짜들을 갱신해 준다.
+        # 작성일   : 2024.09.16
+        # 작성자   : 이용학  
+        ############################################################# '''
+        if sql_name == "sqluu_cond_processed_words":
+
+            dic_words_info = p_param
+
+            existing_word_2   = dic_words_info["existing_word_2"]
+            lemma_word        = dic_words_info["lemma_word"]
+            source_url        = dic_words_info["source_url"]
+            source_type       = dic_words_info["source_type"]
+            source_title      = dic_words_info["source_title"]
+            mean_en_text      = dic_words_info["mean_en_text"]
+
+            try:
+                renewal_query  = " UPDATE processed_words   "
+                renewal_query += "    SET src_url      = %s "
+                renewal_query += "      , group_code   = %s "
+                renewal_query += "      , src_title    = %s "
+                if existing_word_2 == "X":
+                   mean_en_text = morph_new_words.fn_word_syns_en(lemma_word)
+                   renewal_query += "      , mean_en  = %s "
+                renewal_query += "      , create_date  = now() "
+                renewal_query += "      , finish_date  = NULL  "
+                renewal_query += "  WHERE word    = %s "
+                renewal_query += "    AND user_id = %s "
+
+                if existing_word_2 == "X":
+                    renewal_params = (
+                        source_url,
+                        source_type,
+                        source_title,
+                        mean_en_text,
+                        lemma_word,
+                        current_username,
+                    )
+                else:
+                    renewal_params = (
+                        source_url,
+                        source_type,
+                        source_title,
+                        lemma_word,
+                        current_username,
+                    )
+                cursor.execute(renewal_query, renewal_params)
+
+                renewal_query = " UPDATE daily_voca "
+                renewal_query += "    SET src_url    = %s "
+                renewal_query += "      , group_code = %s "
+                renewal_query += "      , src_title  = %s "
+                if existing_word_2 == "X":
+                    mean_en_text = morph_new_words.fn_word_syns_en(lemma_word)
+                    renewal_query += "      , mean_en  = %s "
+                renewal_query += "      , create_date  = now() "
+                renewal_query += "      , finish_date  = NULL  "
+                renewal_query += " WHERE  word    = %s "
+                renewal_query += "   AND  user_id = %s "
+                if existing_word_2 == "X":
+                    renewal_params = (
+                        source_url,
+                        source_type,
+                        source_title,
+                        mean_en_text,
+                        lemma_word,
+                        current_username,
+                    )
+                else:
+                    renewal_params = (
+                        source_url,
+                        source_type,
+                        source_title,
+                        lemma_word,
+                        current_username,
+                    )
+                cursor.execute(renewal_query, renewal_params)
+
+            except Exception as e:
+                print("Renewal query failed:", e)
 
     except Exception as e:
         return handle_sql_error(e, sql_name)

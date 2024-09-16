@@ -81,6 +81,8 @@ def fn_preparation_process_of_convert(sent, p_text_original_sentence):
             if converted_tokens and converted_tokens[-1] == ',':
                 continue  # 앞에 쉼표가 있는 경우 접속사 생략
             converted_tokens.append(' ,,,,')  # 접속사
+        elif token.pos_ == 'AUX' and token.tag_ == 'MD' and token.text.lower() in modal_verbs:
+            converted_tokens.append(' ,,')
         elif token.pos_ == 'VERB' and token.tag_ == 'MD' and token.text.lower() in modal_verbs:
             if token.nbor(1).text.lower() == "n't":
                 print('MD')

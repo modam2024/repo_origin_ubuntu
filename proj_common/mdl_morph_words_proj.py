@@ -8,9 +8,9 @@ from django.views.decorators.csrf import csrf_exempt
 from nltk import pos_tag, word_tokenize
 from nltk.corpus import wordnet
 from nltk.stem import WordNetLemmatizer
-from app_common import mdl_common_app as comn_func
-from proj_sql_mapping import create_connection, close_connection
 
+from proj_sql_mapping import create_connection, close_connection
+from proj_sql_mapping import mdl_mapping_sql_proj as proj_sql_statement
 
 def fn_spacy_ner(p_nlp, p_word, p_stop_words):
     spacy_tokens = p_nlp(p_word)
@@ -120,6 +120,7 @@ def submit_topic(request):
         # 기사 내용을 단어로 토큰화 및 품사 태깅
         tokens = word_tokenize(article_content)
         tagged = pos_tag(tokens) # 텍스트를 토큰화한 후 각 토큰(단어)에 대해 품사를 태깅
+        tag_text = ""
 
         for word, tag in tagged:
             wntag = get_wordnet_pos(tag, word) # 품사 정보 변환
@@ -179,124 +180,40 @@ def submit_topic(request):
                     elif tag == "VBZ":
                         tag_text = "동사, 3인칭 단수 현재형"
 
-                    # 이미 데이터베이스에 해당 단어가 있는지 확인
-                    cursor.execute(
-                        "SELECT word, status,ifnull(mean_en,'X') as mean_en FROM processed_words WHERE user_id = %s AND word = %s",
-                        (current_username, lemma,),
-                    )
-
-                    existing_word = cursor.fetchone()
+                    existing_word = proj_sql_statement.sql_dao(request, "sqls_processed_words",  lemma)
 
                     # 이미 데이터베이스에 해당 단어가 완료되지 않은 상태면 다시 url, title, 영문뜻, 날짜들을 갱신해 준다.
                     if existing_word and existing_word[1] != "D":
-                        try:
-                            renewal_query = " UPDATE processed_words   "
-                            renewal_query += "    SET src_url      = %s "
-                            renewal_query += "      , group_code   = %s "
-                            renewal_query += "      , src_title    = %s "
-                            if existing_word[2] == "X":
-                                mean_en_text = fn_word_syns_en(lemma)
-                                renewal_query += "      , mean_en  = %s "
-                            renewal_query += "      , create_date  = now() "
-                            renewal_query += "      , finish_date  = NULL  "
-                            renewal_query += "  WHERE word    = %s "
-                            renewal_query += "    AND user_id = %s "
-                            if existing_word[2] == "X":
-                                renewal_params = (
-                                    source_url,
-                                    source_type,
-                                    source_title,
-                                    mean_en_text,
-                                    lemma,
-                                    current_username,
-                                )
-                            else:
-                                renewal_params = (
-                                    source_url,
-                                    source_type,
-                                    source_title,
-                                    lemma,
-                                    current_username,
-                                )
-                            cursor.execute(renewal_query, renewal_params)
-
-                            renewal_query = " UPDATE daily_voca "
-                            renewal_query += "    SET src_url    = %s "
-                            renewal_query += "      , group_code = %s "
-                            renewal_query += "      , src_title  = %s "
-                            if existing_word[2] == "X":
-                                mean_en_text = fn_word_syns_en(lemma)
-                                renewal_query += "      , mean_en  = %s "
-                            renewal_query += "      , create_date  = now() "
-                            renewal_query += "      , finish_date  = NULL  "
-                            renewal_query += " WHERE  word    = %s "
-                            renewal_query += "   AND  user_id = %s "
-                            if existing_word[2] == "X":
-                                renewal_params = (
-                                    source_url,
-                                    source_type,
-                                    source_title,
-                                    mean_en_text,
-                                    lemma,
-                                    current_username,
-                                )
-                            else:
-                                renewal_params = (
-                                    source_url,
-                                    source_type,
-                                    source_title,
-                                    lemma,
-                                    current_username,
-                                )
-                            cursor.execute(renewal_query, renewal_params)
-
-                        except Exception as e:
-                            print("Renewal query failed:", e)
+                        dic_words_info = {
+                            "existing_word_2": existing_word[2],
+                            "word_insert_count": 0,
+                            "lemma_word": lemma,
+                            'tag': tag,
+                            'tag_text': tag_text,
+                            "source_url": source_url,
+                            "source_type": source_type,
+                            "source_title": source_title,
+                            "mean_en_text": "",
+                        }
+                        proj_sql_statement.sql_dao(request, "sqluu_cond_processed_words", dic_words_info)
 
                     if not existing_word:
-
-                        mean_en_text = fn_word_syns_en(lemma)
-                        # mean_kr_text = fn_word_syns_kr(lemma)
-
-                        if mean_en_text == "":
-                            mean_en_text = "None"
 
                         # 데이터베이스에 해당 단어가 없으면 INSERT 쿼리 실행
                         try:
                             word_insert_count += 1
-                            ins_query = " INSERT INTO processed_words "
-                            ins_query += " (no, user_id, word, mean_en, mean_kr, tag, tag_text, src_url, group_code, src_title) "
-                            ins_query += (
-                                " VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
-                            )
-                            ins_params = (
-                                word_insert_count,
-                                current_username,
-                                lemma,
-                                mean_en_text,
-                                "-",
-                                tag,
-                                tag_text,
-                                source_url,
-                                source_type,
-                                source_title,
-                            )
 
-                            cursor.execute(ins_query, ins_params)
-
-                            voca_query = " INSERT INTO daily_voca "
-                            voca_query += " (num, user_id, word, mean, tag, group_code, noun, verb, adjective, adverb, order_priority, frequency, status, src_url, src_title, create_date, start_date, finish_date) "
-                            voca_query += " SELECT no, user_id, word, mean_kr, mean_en, group_code, "
-                            voca_query += "        CASE WHEN SUBSTRING(tag, 1, 1) = 'N' THEN 1 ELSE 0 END, "
-                            voca_query += "        CASE WHEN SUBSTRING(tag, 1, 1) = 'V' THEN 1 ELSE 0 END, "
-                            voca_query += "        CASE WHEN SUBSTRING(tag, 1, 1) = 'J' THEN 1 ELSE 0 END, "
-                            voca_query += "        CASE WHEN SUBSTRING(tag, 1, 1) = 'R' THEN 1 ELSE 0 END, "
-                            voca_query += "        IFNULL(level, 'L'), frequency, status, src_url, src_title, create_date, start_date, finish_date "
-                            voca_query += " FROM  processed_words "
-                            voca_query += " WHERE user_id = %s "
-                            voca_query += "   AND word    = %s "
-                            voca_params = (current_username, lemma, )
-                            cursor.execute(voca_query, voca_params)
+                            dic_words_info = {
+                                "word_insert_count": word_insert_count,
+                                "lemma_word": lemma,
+                                'tag': tag,
+                                'tag_text': tag_text,
+                                "source_url": source_url,
+                                "source_type": source_type,
+                                "source_title": source_title,
+                                "mean_en_text": "",
+                            }
+                            proj_sql_statement.sql_dao(request, "sqlii_processed_words", dic_words_info)
 
                         except Exception as e:
                             print("Insert query failed:", e)

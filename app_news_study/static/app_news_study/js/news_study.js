@@ -99,7 +99,8 @@ $(document).ready(function() { // applied
                     buttonGroupEng.append($('<button>', {
                         type: 'button',
                         id: 'clearExampleEng' + i,
-                        text: 'Clear Text'
+                        text: 'Clear Text',
+                        style: 'display : none'
                     }).on('click', function() { en_clearing(i); }) ).append('&nbsp;');
 
                     buttonGroupEng.append($('<button>', {
@@ -124,7 +125,7 @@ $(document).ready(function() { // applied
                     buttonGroupEng.append($('<button>', {
                         type: 'button',
                         id: 'speakExampleEng' + i,
-                        text: 'Speaking'
+                        text: 'Full Speaking'
                     }).on('click', function() {
                         $('#txt_eng_example'+ i).css("display", "block");
                         $('#artcl_wspace_content' + i).css("display", "none");
@@ -133,7 +134,7 @@ $(document).ready(function() { // applied
                     buttonGroupEng.append($('<button>', {
                         type: 'button',
                         onclick: 'stopSpeaking()',
-                        text: 'Stop Speaking'
+                        text: 'Stop'
                     }));
 
                     buttonGroupEng.append($('<button>', {
@@ -181,7 +182,8 @@ $(document).ready(function() { // applied
                     buttonGroupKor.append($('<button>', {
                         type: 'button',
                         id: 'clearExampleKor' + i,
-                        text: 'Clear Text'
+                        text: 'Clear Text',
+                        style: 'display : none'
                     }).on('click', function() { kr_clearing(i); }) ).append('&nbsp;');
 
                     labelDivKor.append(buttonGroupKor);
@@ -277,7 +279,7 @@ $(document).ready(function() { // applied
     });
 
     // "Submit Article" 링크에 클릭 이벤트 리스너 추가
-    $('#submitButton').click(function(e) {
+    $("#submitButton").click(function(e) {
         e.preventDefault(); // 기본 앵커 클릭 이벤트 중지
         $('#submitForm').submit(); // 폼 제출
     });
