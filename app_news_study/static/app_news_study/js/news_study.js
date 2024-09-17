@@ -60,6 +60,8 @@ $(document).ready(function() { // applied
     // 동적 html 에 함수적용이 아닌 window 에 함수 적용한다.
     // 동적 html 이전에 함수 적용이 가능함
     window.selectNewsTitle = function() {
+        setCursorShap(3000);
+
         var rec_number  = 0
         // <textarea> 내용 초기화
         $('#txt_news_idiom').val('');
