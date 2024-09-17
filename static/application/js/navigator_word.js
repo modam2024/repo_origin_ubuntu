@@ -94,61 +94,112 @@
     
         speechSynthesis.speak(utterance);
     }
-    
+
     function splitTextAndSpeak(text) {
-        let maxLength  = 180; // 적당한 최대 길이 설정
+        let maxLength = 200; // 최대 바이트 길이
         let parts = [];
         let currentPart = "";
-    
+
         text.split(/\s+/).forEach(word => {
-            if ((currentPart.length + word.length) <= maxLength) {
+            let wordLength = new Blob([word]).size;
+            let currentPartLength = new Blob([currentPart]).size;
+
+            if ((currentPartLength + wordLength + (currentPart.length > 0 ? 1 : 0)) <= maxLength) {
                 currentPart += (currentPart.length > 0 ? " " : "") + word;
             } else {
                 parts.push(currentPart);
                 currentPart = word;
             }
         });
-    
+
         if (currentPart.length > 0) {
             parts.push(currentPart);
         }
-    
-        parts.forEach(part => {
-            speak(part);
-        });
+
+        let currentIndex = 0; // 현재 읽고 있는 텍스트의 인덱스
+
+        function speakNextPart() {
+            if (currentIndex < parts.length) {
+                orgSpeak(parts[currentIndex++]);
+            }
+        }
+
+        function orgSpeak(text) {
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US'; // 언어 설정
+
+            utterance.onend = function(event) {
+                console.log('음성 재생 완료');
+                speakNextPart(); // 다음 텍스트 부분 재생
+            };
+
+            utterance.onerror = function(event) {
+                console.log('음성 재생 오류 발생');
+                // 오류 발생 시 처리 로직 (재시도 또는 경고 메시지 등)
+            };
+
+            speechSynthesis.speak(utterance);
+        }
+
+        speakNextPart(); // 최초로 텍스트 음성 변환 시작
     }
+
     function splitTextAndSpeakBySentence(text) {
-        let maxLength   = 200; // 적당한 최대 길이 설정
+        let maxLength = 200; // 적당한 최대 길이 설정
         let currentPart = "";
         let parts = [];
-        
+
         let sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || []; // 문장으로 나누기
-    
+
         sentences.forEach(sentence => {
             let trimmedSentence = sentence.trim();
             if (trimmedSentence.length <= maxLength) {
                 parts.push(trimmedSentence);
             } else {
                 trimmedSentence.split(/\s+/).forEach(word => {
-                    if ((currentPart.length + word.length) <= maxLength) {
+                    if ((currentPart.length + word.length + (currentPart.length > 0 ? 1 : 0)) <= maxLength) {
                         currentPart += (currentPart.length > 0 ? " " : "") + word;
                     } else {
                         parts.push(currentPart);
                         currentPart = word;
                     }
                 });
-            
+
                 if (currentPart.length > 0) {
                     parts.push(currentPart);
+                    currentPart = ""; // 부분을 추가한 후 currentPart 초기화
                 }
             }
         });
-    
-        parts.forEach(part => {
-            speak(part);
-        });
+
+        let currentIndex = 0; // 현재 읽고 있는 텍스트의 인덱스
+
+        function speakNextPart() {
+            if (currentIndex < parts.length) {
+                stnSpeak(parts[currentIndex++]);
+            }
+        }
+
+        function stnSpeak(text) {
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US'; // 언어 설정
+
+            utterance.onend = function(event) {
+                console.log('음성 재생 완료');
+                speakNextPart(); // 다음 텍스트 부분 재생
+            };
+
+            utterance.onerror = function(event) {
+                console.log('음성 재생 오류 발생');
+                // 오류 발생 시 처리 로직 (재시도 또는 경고 메시지 등)
+            };
+
+            speechSynthesis.speak(utterance);
+        }
+
+        speakNextPart(); // 최초로 텍스트 음성 변환 시작
     }
-   
+
     // 단어 클릭 이벤트 핸들러 추가
     $("#naverWord").click(function() {
         var word = $(this).val();

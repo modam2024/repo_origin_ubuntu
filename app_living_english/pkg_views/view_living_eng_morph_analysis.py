@@ -2,7 +2,7 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from app_living_english.pkg_views import view_living_english_morph as living_eng_morph
+from app_living_english.pkg_views import view_living_english_convert as living_eng_morph
 from proj_sql_mapping import mdl_mapping_sql_proj as sql_statement
 from proj_common import mdl_morph_words_proj as morph_new_words
 from django.contrib.auth.decorators import login_required

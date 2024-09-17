@@ -10,13 +10,6 @@ from app_common import mdl_common_app as comn_func
 from proj_sql_mapping import fn_connector as proj_connector
 from proj_sql_mapping import mdl_mapping_sql_proj as proj_sql_statement
 
-
-# 축약형을 변환하는 함수 정의
-def handle_contractions(tokens, index):
-    if index + 1 < len(tokens) and tokens[index + 1].text in ["'s", "'re", "'m", "'ve", "'d", "'ll"]:
-        return tokens[index].text + tokens[index + 1].text, True
-    return tokens[index].text.strip(), False
-
 @csrf_exempt
 def news_convert_sentence(request):
     res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "convert_sentence")

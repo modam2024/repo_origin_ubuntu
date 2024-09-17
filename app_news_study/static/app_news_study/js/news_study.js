@@ -5,7 +5,7 @@ function speaking(order) {
     for (news_sentence of arr_news_sentence)
     {
         news_sentence = news_sentence + ".";
-        splitTextAndSpeak(news_sentence);
+        splitTextAndSpeakBySentence(news_sentence);
     }
 };
 
@@ -15,7 +15,7 @@ function convert_speaking(order) {
     for (news_sentence of arr_news_sentence)
     {
         news_sentence = news_sentence + ".";
-        splitTextAndSpeak(news_sentence);
+        splitTextAndSpeakBySentence(news_sentence);
     }
 };
 
@@ -61,7 +61,6 @@ $(document).ready(function() { // applied
     // 동적 html 이전에 함수 적용이 가능함
     window.selectNewsTitle = function() {
         setCursorShap(3000);
-
         var rec_number  = 0
         // <textarea> 내용 초기화
         $('#txt_news_idiom').val('');
@@ -120,7 +119,7 @@ $(document).ready(function() { // applied
                         text: 'convt.Speaking',
                         style: 'background-color: #4D92AA'
                     }).on('click', function() {
-                        $('#txt_eng_example'+ i).css("display", "none");
+                        $('#txt_eng_example'+ i).css("display", "block");
                         $('#artcl_wspace_content' + i).css("display", "block");
                         convert_speaking(i); })).append('&nbsp;');
 
@@ -130,7 +129,7 @@ $(document).ready(function() { // applied
                         text: 'Full Speaking'
                     }).on('click', function() {
                         $('#txt_eng_example'+ i).css("display", "block");
-                        $('#artcl_wspace_content' + i).css("display", "none");
+                        $('#artcl_wspace_content' + i).css("display", "block");
                         speaking(i); }) ).append('&nbsp;');
 
                     buttonGroupEng.append($('<button>', {
@@ -143,7 +142,7 @@ $(document).ready(function() { // applied
                         id: 'convertExampleEng' + i,
                         type: 'button',
                         text: 'converting',
-                        style: 'display: none'
+                        style: 'display: block'
                     }).on('click', function() { convertExampleEng(i); })).append('&nbsp;');
 
                     labelDivEng.append(buttonGroupEng);
@@ -155,19 +154,19 @@ $(document).ready(function() { // applied
                     labelDivEng.append($('<textarea>', {
                         id: 'artcl_wspace_content' + i,
                         rows: '5',
-                        style: 'display: none',
+                        style: 'display: block',
                         placeholder: 'Enter Example (ENG) here...'
                     }));
                     labelDivEng.append($('<textarea>', {
                         id: 'artcl_convert_content' + i,
                         rows: '5',
-                        style: 'display : none',
+                        style: 'display : block',
                         placeholder: 'Enter Example (ENG) here...'
                     }));
                     labelDivEng.append($('<textarea>', {
                         id: 'artcl_org_content' + i,
                         rows: '5',
-                        style: 'display : none',
+                        style: 'display : block',
                         placeholder: 'Enter Example (ENG) here...'
                     }));
 

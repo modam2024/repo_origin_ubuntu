@@ -63,6 +63,8 @@ def fn_preparation_process_of_convert(sent, p_text_original_sentence):
             skip_token = True
         elif token.text == ',':
             converted_tokens.append(',')
+        elif token.text == '"':
+            converted_tokens.append(' ')
         elif token.pos_ == 'DET' and token.text.lower() in ['the', 'a', 'an']:
             converted_tokens.append(',')  # 정관사 및 부정관사
         elif token.pos_ == 'ADP':
@@ -89,7 +91,7 @@ def fn_preparation_process_of_convert(sent, p_text_original_sentence):
             else:
                 converted_tokens.append(' ,,')
              # VBP 는 verb, non-3rd person singular present, VBZ 는 verb, 3rd person singular present
-        elif token.pos_ == 'AUX' and (token.tag_ == 'VBP' or token.tag_ == 'VBZ') and token.text.lower() in be_verbs:
+        elif token.pos_ == 'AUX' and (token.tag_ == 'VBP'  or token.tag_ == 'VBZ' or token.tag_ == 'VB') and token.text.lower() in be_verbs:
              converted_tokens.append(' ,,')
              # 'VBD' 는 verb, past tense, VBN' 는 verb, past participle
         elif (token.pos_ == 'VERB' or token.pos_ == 'AUX') and (token.tag_ == 'VBD' or token.tag_ == 'VBN') and token.text.lower() in past_verbs:
