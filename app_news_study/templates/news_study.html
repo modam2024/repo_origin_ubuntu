@@ -29,7 +29,7 @@
                    {% endfor %}
                 </select>&nbsp;
                 <button type="button" id="searchBtn">조회</button>&nbsp; &nbsp;
-                COUNT:&nbsp; <input type="text" id="rows_cnt" value="{{ rows_cnt }}" style="text-align:center; width:40px;" readonly></input>&nbsp;&nbsp;
+                COUNT:&nbsp; <input type="text" id="rows_cnt" value="" style="text-align:center; width:40px;" readonly></input>&nbsp;&nbsp;
                </div>
             </div>
             <div class="content-title">
@@ -40,6 +40,7 @@
                         {% endfor %}
                     </select>&nbsp;
                     <button type="button" id="submitButton"><i class="fas fa-chart-bar"></i>어휘분석</button>
+                    미완료:&nbsp; <input type="text" id="ing_cnt" value="" style="text-align:center; width:40px;" readonly></input>&nbsp;&nbsp;
                 </div>
             </div>
             <div class="content">

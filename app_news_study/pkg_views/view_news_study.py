@@ -32,11 +32,15 @@ def news_info_eng(request):
     res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "news_info_eng")
 
     selected_keyno = request.GET.get("selected_keyno")
+    selected_title = request.GET.get("selected_title")
 
     news_info_engs = sql_statement.sql_dao(request, "sqls_selected_news_info_eng", selected_keyno)
 
     rows = []
     rows_cnt = 0
+
+    # 선택된 뉴스 기사의 미완료된 단어의 건수를 조회한다. (2024.09.18)
+    ing_cnt = sql_statement.sql_dao(request, "sqls_uncompleted_words", selected_title)
 
     cur_no = 0
     for news_info_eng in news_info_engs:
@@ -53,7 +57,7 @@ def news_info_eng(request):
            rows_cnt += 1
 
     # 처리 성공 응답
-    return JsonResponse({"rows": rows, "rows_cnt": rows_cnt})
+    return JsonResponse({"rows": rows, "rows_cnt": rows_cnt, "ing_cnt": ing_cnt})
 
 def news_info_inf(request):
     res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "news_info_inf")

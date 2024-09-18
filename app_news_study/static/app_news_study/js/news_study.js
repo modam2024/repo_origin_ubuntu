@@ -66,12 +66,14 @@ $(document).ready(function() { // applied
         $('#txt_news_idiom').val('');
 
         var selectedKeyno = $('#titleList option:selected').val();
+        var selectedTitle = $('#titleList option:selected').text();
 
         $.ajax({
             url: BASE_URL + 'app_news_study/news_info_eng/',
             type: 'GET',
             data: {
                 'selected_keyno': selectedKeyno,
+                'selected_title': selectedTitle,
             },
             beforeSend: function() {
                 $(".content").empty(); // AJAX 호출 전에 컨텐츠 DIV 비우기
@@ -80,6 +82,7 @@ $(document).ready(function() { // applied
                 var rec_news_eng_full = ""
                 var contentDiv = $(".content"); // 컨텐츠를 추가할 부모 div
                 $("#rows_cnt").val(response.rows_cnt);
+                $("#ing_cnt").val(response.ing_cnt);
                 iTextCnt = response.rows_cnt;
 
                 $.each(response.rows, function (i, record) {

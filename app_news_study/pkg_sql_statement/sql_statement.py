@@ -210,6 +210,32 @@ def sql_dao(request, sql_name, p_param):
 
             return news_info_infs_dicts
 
+        '''
+        #############################################################
+        # SQL ID : sqls_uncompleted_words
+        # 작성일  : 2024.09.18
+        # 작  업 : 선택된 뉴스 기사의 미완료된 단어의 건수를 조회한다.   
+        ############################################################# '''
+        if sql_name == "sqls_uncompleted_words":
+            p_param = p_param.strip()
+            selected_title = "%" + p_param + "%"
+
+            # tb_news_info_detail 테이블에 keyno 대상 최대 num 을 가져온다.
+            select_query  = " SELECT COUNT(*)          "
+            select_query += "   FROM processed_words   "
+            select_query += "  WHERE user_id   = %s    "
+            select_query += "    AND src_title LIKE %s "
+            select_query += "    AND status     != 'D' "
+            select_query += "    AND init_status = 'B' "
+            select_params = (current_username, selected_title)
+
+            # 쿼리 실행
+            cursor.execute(select_query, select_params,)
+            ing_count = cursor.fetchone()
+            ing_cnt   = ing_count[0]
+
+            return ing_cnt
+
         ''' 
         ##############
          INSERT BLOCK
