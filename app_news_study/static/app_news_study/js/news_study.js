@@ -119,7 +119,7 @@ $(document).ready(function() { // applied
                         text: 'convt.Speaking',
                         style: 'background-color: #4D92AA'
                     }).on('click', function() {
-                        $('#txt_eng_example'+ i).css("display", "block");
+                        $('#txt_eng_example'+ i).css("display", "none");
                         $('#artcl_wspace_content' + i).css("display", "block");
                         convert_speaking(i); })).append('&nbsp;');
 
@@ -129,7 +129,7 @@ $(document).ready(function() { // applied
                         text: 'Full Speaking'
                     }).on('click', function() {
                         $('#txt_eng_example'+ i).css("display", "block");
-                        $('#artcl_wspace_content' + i).css("display", "block");
+                        $('#artcl_wspace_content' + i).css("display", "none");
                         speaking(i); }) ).append('&nbsp;');
 
                     buttonGroupEng.append($('<button>', {
@@ -137,13 +137,6 @@ $(document).ready(function() { // applied
                         onclick: 'stopSpeaking()',
                         text: 'Stop'
                     }));
-
-                    buttonGroupEng.append($('<button>', {
-                        id: 'convertExampleEng' + i,
-                        type: 'button',
-                        text: 'converting',
-                        style: 'display: block'
-                    }).on('click', function() { convertExampleEng(i); })).append('&nbsp;');
 
                     labelDivEng.append(buttonGroupEng);
                     labelDivEng.append($('<textarea>', {
@@ -154,19 +147,19 @@ $(document).ready(function() { // applied
                     labelDivEng.append($('<textarea>', {
                         id: 'artcl_wspace_content' + i,
                         rows: '5',
-                        style: 'display: block',
+                        style: 'display: none',
                         placeholder: 'Enter Example (ENG) here...'
                     }));
                     labelDivEng.append($('<textarea>', {
                         id: 'artcl_convert_content' + i,
                         rows: '5',
-                        style: 'display : block',
+                        style: 'display : none',
                         placeholder: 'Enter Example (ENG) here...'
                     }));
                     labelDivEng.append($('<textarea>', {
                         id: 'artcl_org_content' + i,
                         rows: '5',
-                        style: 'display : block',
+                        style: 'display : none',
                         placeholder: 'Enter Example (ENG) here...'
                     }));
 
@@ -217,12 +210,23 @@ $(document).ready(function() { // applied
                     var rec_news_inf = ""
                     var rec_news_kor = ""
 
+                    var rec_whitespace_converted = ""
+                    var rec_converted_sentn      = ""
+                    var rec_original_sentn       = ""
+
                     if ( i % 2 == 0 ) {
                         if (i == 0) tmp_eng_order = 0;
                         rec_news_eng = record[0];
                         rec_news_inf = record[1];
-                        $("#txt_eng_example" + tmp_eng_order).val(rec_news_eng);
-                        $("#callEngIdiom"    + tmp_eng_order).val(rec_news_inf);
+                        rec_whitespace_converted = record[3]
+                        rec_converted_sentn      = record[4]
+                        rec_original_sentn       = record[5]
+
+                        $("#txt_eng_example"       + tmp_eng_order).val(rec_news_eng);
+                        $("#artcl_wspace_content"  + tmp_eng_order).val(rec_whitespace_converted);
+                        $("#artcl_convert_content" + tmp_eng_order).val(rec_converted_sentn);
+                        $("#artcl_org_content"     + tmp_eng_order).val(rec_original_sentn);
+                        $("#callEngIdiom"          + tmp_eng_order).val(rec_news_inf);
                         rec_news_eng_full += " " + rec_news_eng
                     } else {
                         rec_news_kor = record[0];
@@ -232,11 +236,6 @@ $(document).ready(function() { // applied
                 });
                 // txt_eng_example300 의 300 은 특별한 의미가 없고 최대한 본 문단과 겹치지 않을 숫자로 젛한 것이다.
                 $("#txt_eng_example300").val(rec_news_eng_full);
-
-                // ** 동적 화면 구성 완료 후에 변형 문장 작업을 건수만큼 수행한다. **
-                $.each(response.rows, function (i, record) {
-                    convertExampleEng(i);
-                });
             },
             error: function(xhr, status, error) {
                 console.error(error);

@@ -28,6 +28,7 @@ def news_study(request):
     return render(request, "news_study.html", values)
 
 def news_info_eng(request):
+    # 학습 진행 히스토리 저장
     res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "news_info_eng")
 
     selected_keyno = request.GET.get("selected_keyno")
@@ -43,8 +44,11 @@ def news_info_eng(request):
         groupno  = news_info_eng['groupno']
         newstype = news_info_eng['newstype']
         keyno    = news_info_eng['keyno']
+        whitespace_converted = news_info_eng['whitespace_converted']
+        converted_sentn      = news_info_eng['converted_sentn']
+        original_sentn       = news_info_eng['original_sentn']
 
-        rows.append([keyitem, groupno, keyno])
+        rows.append([keyitem, groupno, keyno, whitespace_converted, converted_sentn, original_sentn])
         if newstype == "ENG":
            rows_cnt += 1
 

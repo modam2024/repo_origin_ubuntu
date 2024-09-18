@@ -1,6 +1,9 @@
-import json
+import re
 
-from app_news_study.pkg_mdl_common    import mdl_common_news as app_comn_func
+import spacy
+
+from app_common import mdl_common_app as comn_func
+from app_news_study.pkg_mdl_common import mdl_common_news as app_comn_func
 from app_news_study.pkg_sql_statement import create_connection, close_connection, handle_sql_error
 
 '''
@@ -121,6 +124,7 @@ def sql_dao(request, sql_name, p_param):
         ############################################################# '''
         if sql_name == "sqls_selected_news_info_eng":
             keyno_eng = p_param
+            news_info_engs_dicts = []
 
             # tb_news_info_detail 테이블에 keyno 대상 최대 num 을 가져온다.
             select_query =  " SELECT keyitem, groupno, newstype, keyno "
@@ -135,8 +139,45 @@ def sql_dao(request, sql_name, p_param):
             cursor.execute( select_query, select_params, )
             news_info_engs = cursor.fetchall()
 
-            # 튜플의 리스트를 사전의 리스트로 변환
-            news_info_engs_dicts = [{'keyitem': row[0], 'groupno': row[1], 'newstype': row[2], 'keyno': row[3]} for row in news_info_engs]
+            for news_info_eng in news_info_engs:
+                tmp_orderno  = news_info_eng[1]
+                tmp_newstype = news_info_eng[2]
+
+                tmp_whitespace_converted = ""
+                tmp_converted_sentn = ""
+                tmp_original_sentn = ""
+
+                if tmp_newstype == "ENG":
+                   # tb_news_info_detail 테이블에 keyno 대상 최대 num 을 가져온다.
+                   study_query =  " SELECT whitespace_converted, converted_sentn, original_sentn "
+                   study_query += "   FROM tb_convert_news_study  "
+                   study_query += "  WHERE user_id   = %s    "
+                   study_query += "    AND key_no    = %s    "
+                   study_query += "    AND group_no  = %s    "
+                   study_query += "  ORDER BY order_no ASC   "
+                   study_params = (current_username, keyno_eng, tmp_orderno)
+                   # 쿼리 실행
+                   cursor.execute( study_query, study_params, )
+                   cnvrt_engs_info = cursor.fetchall()
+
+                   if cnvrt_engs_info:
+                      for cnvrt_eng in cnvrt_engs_info:
+                          tmp_whitespace_converted += cnvrt_eng[0]
+                          tmp_converted_sentn      += cnvrt_eng[1]
+                          tmp_original_sentn       += cnvrt_eng[2]
+
+                news_study_eng = {
+                   'keyitem'  : news_info_eng[0],
+                   'groupno'  : news_info_eng[1],
+                   'newstype' : news_info_eng[2],
+                   'keyno'    : news_info_eng[3],
+                   'whitespace_converted' : tmp_whitespace_converted.strip(),
+                   'converted_sentn'      : tmp_converted_sentn.strip(),
+                   'original_sentn'       : tmp_original_sentn.strip(),
+                }
+
+                # 튜플의 리스트를 사전의 리스트로 변환
+                news_info_engs_dicts.append(news_study_eng)
 
             return news_info_engs_dicts
 
@@ -230,15 +271,21 @@ def sql_dao(request, sql_name, p_param):
                 )
 
                 cursor.execute(ins_query, ins_params)
+                conn.commit()
 
                 # tb_news_info_detail 테이블에 @joongang.co.kr 찾아서 삭제함
                 delete_query  = " DELETE FROM tb_news_info_detail "
                 delete_query += " WHERE keyitem LIKE '%@joongang.co.kr%' "
                 cursor.execute( delete_query, )
+                conn.commit()
+
+                if news_info_type == "ENG":
+                   sql_news_convert_sentence(request, news_info_keyitem, news_max_num, dic_news_info_detail)
+
             except Exception as e:
                 print("sqli_news_info exception =", e)
 
-            return str(news_max_num)
+            return str(news_max_num), ins_params
 
         '''
         ############################################################
@@ -333,43 +380,40 @@ def sql_dao(request, sql_name, p_param):
         # 작업     : NEWS 문장을 변환된 문장을 저장한다.  
         ############################################################  '''
         if sql_name == "sqli_convert_news_study":
-            news_text_no     = p_param["news_text_no"]
+            key_no           = p_param["key_no"]
+            group_no         = p_param["group_no"]
             source_url       = p_param["source_url"]
             source_title     = p_param["source_title"]
             source_type      = p_param["source_type"]
-            news_date        = p_param["news_date"]
             list_rslt_sentns = p_param["list_rslt_sentns"]
 
             int_test_cnt = 0
 
             for whitespace_converted, converted_sentn, original_sentn, translated_sentn in list_rslt_sentns:
+
+                # “ 와 ” 문자를 제거합니다.
+                clean_converted_sentn = re.sub(r'[“”]', '', converted_sentn)
+                clean_original_sentn  = re.sub(r'[“”]', '', original_sentn)
+
+
                 str_whitespace_converted = whitespace_converted
-                str_converted_sentn      = converted_sentn
-                str_original_sentn       = original_sentn
+                str_converted_sentn      = clean_converted_sentn
+                str_original_sentn       = clean_original_sentn
                 str_translated_sentn     = translated_sentn
 
                 int_test_cnt += 1
 
                 try:
-                    del_query  = " DELETE FROM tb_convert_news_study "
-                    del_query += "  WHERE user_id      = %s "
-                    del_query += "    AND no           = %s "
-                    del_query += "    AND news_date    = %s "
-                    del_query += "    AND news_text_no = %s "
-                    del_params = ( current_username, int_test_cnt, news_date, news_text_no )
-                    cursor.execute(del_query, del_params)
-                    conn.commit()
-
                     ins_query = " INSERT INTO tb_convert_news_study "
-                    ins_query += " (user_id, no, news_date, news_text_no, whitespace_converted, converted_sentn, original_sentn, translated_sentn, src_url, group_code, src_title) "
+                    ins_query += " (user_id, key_no, group_no, order_no, whitespace_converted, converted_sentn, original_sentn, translated_sentn, src_url, group_code, src_title) "
                     ins_query += " VALUES "
                     ins_query += " (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
 
                     ins_params = (
                         current_username,
+                        key_no,
+                        group_no,
                         int_test_cnt,
-                        news_date,
-                        news_text_no,
                         str_whitespace_converted,
                         str_converted_sentn,
                         str_original_sentn,
@@ -379,6 +423,12 @@ def sql_dao(request, sql_name, p_param):
                         source_title,
                     )
                     cursor.execute(ins_query, ins_params)
+                    conn.commit()
+
+                    delete_query = " DELETE FROM tb_convert_news_study "
+                    delete_query += " WHERE original_sentn LIKE '%@joongang.co.kr%' "
+                    cursor.execute(delete_query, )
+                    conn.commit()
 
                 except Exception as e:
                     int_test_cnt -= 1
@@ -416,7 +466,6 @@ def sql_dao(request, sql_name, p_param):
         ##############
          DELETE BLOCK
         ############## '''
-
         '''
         ############################################################
         # CALL ID : sqld_batch_news_study_hist
@@ -546,3 +595,52 @@ def sql_dao(request, sql_name, p_param):
 # 쿼리 CALL 함수 끝    
 ##################        
 '''
+'''
+#######################################################
+# 배치작업시 중앙일보 문장변환 후 저장하는 함수
+# 작성일 : 2024.09.16
+####################################################### '''
+def sql_news_convert_sentence(request, article_content, p_group_no, news_info):
+    # 변환된 텍스트 저장용 리스트
+    convert_values = {
+        "key_no"           : news_info['KEYNO'],
+        "group_no"         : p_group_no,
+        "source_url"       : news_info['URL'],
+        "source_title"     : news_info['TITLE'],
+        "source_type"      : "ENG",
+        "list_rslt_sentns" : [],
+    }
+
+    # 변환된 텍스트 저장용 리스트
+    converted_sentences = []
+    list_rslt_sentns = []
+
+    nlp = spacy.load('en_core_web_sm')
+
+    # 뉴스 기사 텍스트를 SpaCy의 nlp 객체로 분석
+    doc = nlp(article_content)
+
+    # 문장 단위로 분리된 리스트 생성
+    sentences = list(doc.sents)
+
+    # 문장에서 각 품사를 변환
+    for sent in sentences:
+        original_sentence = sent.text
+        # 어플 공통 : 대상 영문장을 변환문장시 전처리한다.
+        original_sentence, converted_sentence = comn_func.fn_preparation_process_of_convert(sent, original_sentence)
+        converted_sentences.append((original_sentence, converted_sentence))
+
+    # 결과 출력
+    for original_sentence, converted_sentence in converted_sentences:
+        # 어플 공통 : 변환문장에서 특수문자 전처리한다.
+        result_whitespace_converted, result_converted_sentn, result_original_sentn, result_translated_sentn = comn_func.fn_comma_process_of_convert(
+            original_sentence, converted_sentence)
+        list_rslt_sentns.append(
+            (result_whitespace_converted, result_converted_sentn, result_original_sentn, result_translated_sentn))
+
+    convert_values["list_rslt_sentns"] = list_rslt_sentns
+
+    v_test_no = sql_dao(request, "sqli_convert_news_study", convert_values)
+
+    # 처리 성공 응답
+    return "OK"

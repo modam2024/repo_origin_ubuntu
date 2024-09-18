@@ -79,7 +79,7 @@ def news_convert_sentence(request):
                 "list_rslt_sentns": list_rslt_sentns,
             }
 
-            v_test_no = sql_statement.sql_dao(request, "sqli_convert_news_study", convert_values)
+            # v_test_no = sql_statement.sql_dao(request, "sqli_convert_news_study", convert_values)
 
             # 처리 성공 응답
             return JsonResponse(

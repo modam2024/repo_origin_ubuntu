@@ -4,8 +4,11 @@ from typing import List, Dict
 
 import pandas as pd
 import pytz
+import spacy
+from django.http import JsonResponse
 
-from app_news_study.pkg_sql_statement import sql_statement as sql_statement
+import app_news_study.pkg_sql_statement.sql_statement as sql_statement
+from app_common import mdl_common_app as comn_func
 from proj_common import mdl_common_proj as proj_comn_func
 
 '''
@@ -84,7 +87,7 @@ def is_date_string(text):
 
             # strptime을 사용하여 문자열을 datetime 객체로 파싱
             date_obj = datetime.datetime.strptime(date_part, '%Y')
-            print(date_obj)
+
             return True
     except ValueError:
         # 'date_part'가 연도 형식이 아닌 경우
@@ -94,6 +97,60 @@ def is_date_string(text):
         return False
 
     return False
+
+'''
+#######################################################
+# 배치작업시 중앙일보 문장변환 후 저장하는 함수
+# 작성일 : 2024.09.16
+####################################################### '''
+def btch_news_convert_sentence(request, article_content, p_group_no, news_info):
+    # 변환된 텍스트 저장용 리스트
+    convert_values = {
+        "key_no"           : news_info['KEYNO'],
+        "group_no"         : p_group_no,
+        "source_url"       : news_info['URL'],
+        "source_title"     : news_info['TITLE'],
+        "source_type"      : "ENG",
+        "list_rslt_sentns" : [],
+    }
+
+    # 변환된 텍스트 저장용 리스트
+    converted_sentences = []
+    list_rslt_sentns = []
+
+    nlp = spacy.load('en_core_web_sm')
+
+    # 뉴스 기사 텍스트를 SpaCy의 nlp 객체로 분석
+    doc = nlp(article_content)
+
+    # 문장 단위로 분리된 리스트 생성
+    sentences = list(doc.sents)
+
+    # 문장에서 각 품사를 변환
+    for sent in sentences:
+        original_sentence = sent.text
+        # 어플 공통 : 대상 영문장을 변환문장시 전처리한다.
+        original_sentence, converted_sentence = comn_func.fn_preparation_process_of_convert(sent, original_sentence)
+        converted_sentences.append((original_sentence, converted_sentence))
+
+    # 결과 출력
+    for original_sentence, converted_sentence in converted_sentences:
+        # 어플 공통 : 변환문장에서 특수문자 전처리한다.
+        result_whitespace_converted, result_converted_sentn, result_original_sentn, result_translated_sentn = comn_func.fn_comma_process_of_convert(
+            original_sentence, converted_sentence)
+        list_rslt_sentns.append(
+            (result_whitespace_converted, result_converted_sentn, result_original_sentn, result_translated_sentn))
+
+    convert_values["list_rslt_sentns"] = list_rslt_sentns
+
+    v_test_no = sql_statement.sql_dao(request, "sqli_convert_news_study", convert_values)
+
+    # 처리 성공 응답
+    return JsonResponse(
+        {
+            "message": "success",
+        }
+    )
 
 '''
 #######################################################
@@ -111,7 +168,7 @@ news_info = {
 }
 ####################################################### '''
 def save_to_news_info_database(request, news_info):
-    res_sql_insert = ""
+    res_group_no = ""
 
     dic_news_info = {}
     dic_news_info['NEWSORDER'] = news_info['NEWSORDER']
@@ -129,7 +186,7 @@ def save_to_news_info_database(request, news_info):
            if bl_insert_flag:
               dic_news_info['KEYITEM'] = item['Text']
               if except_rules(item['Text']):
-                 res_sql_insert = sql_statement.sql_dao(request, "sqli_news_info", dic_news_info)
+                 res_group_no = sql_statement.sql_dao(request, "sqli_news_info", dic_news_info)
 
            is_date_item = is_date_string(item['Text'])
            if is_date_item:
@@ -137,7 +194,7 @@ def save_to_news_info_database(request, news_info):
 
        except Exception as e:
            print(f"Error inserting data into database: {e}")
-           res_sql_insert = ""
+           res_group_no = 0
 
     item_cnt:int = 0
     if bl_insert_flag == False and len(news_info['KEYITEM']) > 10:
@@ -146,9 +203,9 @@ def save_to_news_info_database(request, news_info):
             if item_cnt > 3:
                dic_news_info['KEYITEM'] = item['Text']
                if except_rules(item['Text']):
-                  res_sql_insert = sql_statement.sql_dao(request, "sqli_news_info", dic_news_info)
+                  res_group_no = sql_statement.sql_dao(request, "sqli_news_info", dic_news_info)
 
-    return res_sql_insert
+    return res_group_no
 
 def extract_english(text):
     # 영어 문자만 추출하는 정규식 패턴

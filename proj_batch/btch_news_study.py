@@ -6,10 +6,10 @@ from proj_common import mdl_common_proj as proj_comn_func
 
 
 def batch_news_study(request):
-    selected_date = request.GET.get("selected_date")
+    # selected_date = request.GET.get("selected_date")
 
     # tb_news_info_main 테이블에 오늘 날짜의 데이터가 있는지 확인한다.
-    check_today_news, today_news_date, max_news_date = app_comn_func.get_recent_news_date(request)
+    # check_today_news, today_news_date, max_news_date = app_comn_func.get_recent_news_date(request)
 
     # if check_today_news:
     #    tmp_news_info = {
@@ -42,6 +42,7 @@ def batch_news_study(request):
             if link:  # href가 존재하는지 확인
                 each_items = link.split("/")
                 if len(each_items) > 6:  # 필요한 모든 세그먼트가 있는지 확인
+                    # 데이터베이스에 저장된 기사인지 체크한다.
                     news_max_num = sql_statement.sql_dao(request, "sqls_check_news_info", each_items[-1])
 
                     if news_max_num: continue
