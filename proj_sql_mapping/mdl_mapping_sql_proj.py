@@ -239,13 +239,15 @@ def sql_dao(request, sql_name, p_param):
             mean_en_text      = dic_words_info["mean_en_text"]
 
             try:
-                renewal_query  = " UPDATE processed_words   "
-                renewal_query += "    SET src_url      = %s "
-                renewal_query += "      , group_code   = %s "
-                renewal_query += "      , src_title    = %s "
+                renewal_query  = " UPDATE processed_words    "
+                renewal_query += "    SET src_url      = %s  "
+                renewal_query += "      , group_code   = %s  "
+                renewal_query += "      , init_status  = 'A' "
+                renewal_query += "      , src_title    = %s  "
                 if existing_word_2 == "X":
                    mean_en_text = morph_new_words.fn_word_syns_en(lemma_word)
-                   renewal_query += "      , mean_en  = %s "
+                   renewal_query += "   , mean_en  = %s "
+                renewal_query += "      , start_date = date_format(now(), '%Y-%m-%d %H:%i:%S') "
                 renewal_query += "      , create_date  = now() "
                 renewal_query += "      , finish_date  = NULL  "
                 renewal_query += "  WHERE word    = %s "
