@@ -316,7 +316,7 @@ $(document).ready(function() { // applied
                 "sourceType": sourceType
             }),
             success: function(response) {
-                new_url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&source_status=C';
+                new_url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&selected_date=' + encodeURIComponent(newsDateList) + '&source_status=C' + '&gubun=news';
                 window.location.href = new_url;
             },
             error: function(xhr) {

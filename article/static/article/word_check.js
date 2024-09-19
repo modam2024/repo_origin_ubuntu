@@ -274,21 +274,27 @@
             // 10초 동안 마우스 변경
             setCursorShap(10000);
 
+            var url = "";
             $("#resMessage").val("테스트 페이지로 이동중입니다.");
-
-            let back_data = {
-                check:   "none",
-                status:  "C",
-                wdate:   $("#test_page_date").val(),
-            };
-
             let source_gubun = $("#sourceGubun").val();
+
             if (source_gubun === "test") {
-                var url = BASE_URL + "app_test_timer/test-english/?" + $.param(back_data);
+                let back_data = {
+                    check:   "none",
+                    status:  "C",
+                    wdate:   $("#test_page_date").val(),
+                };
+                url = BASE_URL + "app_test_timer/test-english/?" + $.param(back_data);
+                window.location.href = url;
+            } else if (source_gubun === "news") {
+                let back_data = {
+                    selected_date:   $("#selected_date").val(),
+                };
+                url = BASE_URL + "app_news_study/news_study/?" + $.param(back_data);
+                window.location.href = url;
             } else {
                 alert("호출 페이지가 존재 하지 않습니다.");
             }
-            // window.location.href = url;
         });
 
         if (sourceType === "ALL") {
