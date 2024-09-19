@@ -64,44 +64,6 @@
         let pause_currentTime = 0;
         replaceText();
 
-        // $("#submitForm").submit(function(e) {
-        //     e.preventDefault();
-        //     $("#resMessage").val('Status: Starting');
-        //     let hddnUrl = $('#hddn_url');
-        //
-        //     let articleContent = $("#artcl_content1").val()+ $("#artcl_content3").val();
-        //     let selChapter = $("#selChapter").val();
-        //     let sourceUrl  = hddnUrl.val();
-        //     if (sourceUrl === "https://free.ybmclass.com/free/eng/eng_ybm_view.asp?idx=")
-        //        sourceUrl   = sourceUrl + selChapter;
-        //
-        //     hddnUrl.val(sourceUrl)
-        //
-        //     let sourceTitle = $("#selTitle").val();
-        //     let sourceType  = $("#searchGrpCd").val();
-        //
-        //     $.ajax({
-        //         url: "/proj-common/submit_analysis_words/",
-        //         type: "POST",
-        //         contentType: "application/json",
-        //         data: JSON.stringify({
-        //             "article": articleContent,
-        //             "sourceUrl": sourceUrl,
-        //             "sourceTitle": sourceTitle,
-        //             "sourceType": sourceType
-        //         }),
-        //         success: function(response) {
-        //             $("#resMessage").val("Count: " +  response.word_insert_count + " / " + response.word_count + ", Message: " + response.message);
-        //         },
-        //         error: function(xhr) {
-        //             // Handle the error response
-        //             // `xhr` is the XMLHttpRequest object
-        //             let errorMessage = xhr.status + ': ' + xhr.statusText;
-        //             $("#result").html("Error - " + errorMessage);
-        //         }
-        //     });
-        // });
-        
         $('#clearButton').click(function() {
             $('#artcl_content').val("");
             $('#src_url').val("");
@@ -110,16 +72,16 @@
             $('#result').html("");
         });
 
-        $("#wordCheckButton").click(function(e) {
-            e.preventDefault();
-            let sourceUrl   = $("#hddn_url").val();
-            let sourceTitle = $("#selChapter").val();
-            let sourceType  = $("#searchGrpCd").val();
-
-            let url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&source_status=C';
-            //window.location.href = url;
-            window.open(url, '_blank');
-        });
+        // $("#wordCheckButton").click(function(e) {
+        //     e.preventDefault();
+        //     let sourceUrl   = $("#hddn_url").val();
+        //     let sourceTitle = $("#selChapter").val();
+        //     let sourceType  = $("#searchGrpCd").val();
+        //
+        //     let url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&source_status=C';
+        //     //window.location.href = url;
+        //     window.open(url, '_blank');
+        // });
 
         // TEST ENGLISH 클릭 이벤트
         $("#backButton").click(function() {

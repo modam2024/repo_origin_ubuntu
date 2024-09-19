@@ -146,7 +146,7 @@
         
         $("#searchBtn").click(function() {
             var searchGrpCd = $('#searchGrpCd option:selected').text();
-            
+
             var url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(searchGrpCd)  + '&source_status=C';
             window.location.href = url; 
         });
@@ -171,7 +171,8 @@
                 type: 'GET',
                 data: {
                     'source_title': selectedTitle,
-                    'source_status': selectedStatus
+                    'source_status': selectedStatus,
+                    'source_type': searchGrpCd
                 },
                 success: function(response) {
                   
@@ -262,11 +263,46 @@
             }
         });
 
-        $("#backBtn").click(function(){
-            // 2초 동안 마우스 변경;
-            setCursorShap(2000);
-            window.history.back();
+        // $("#backBtn").click(function(){
+        //     // 2초 동안 마우스 변경;
+        //     setCursorShap(2000);
+        //     window.history.back();
+        // });
+
+        // TEST ENGLISH 클릭 이벤트
+        $("#backBtn").click(function() {
+            // 10초 동안 마우스 변경
+            setCursorShap(10000);
+
+            $("#resMessage").val("테스트 페이지로 이동중입니다.");
+
+            let back_data = {
+                check:   "none",
+                status:  "C",
+                wdate:   $("#test_page_date").val(),
+            };
+
+            let source_gubun = $("#sourceGubun").val();
+            if (source_gubun === "test") {
+                var url = BASE_URL + "app_test_timer/test-english/?" + $.param(back_data);
+            } else {
+                alert("호출 페이지가 존재 하지 않습니다.");
+            }
+            // window.location.href = url;
         });
 
+        if (sourceType === "ALL") {
+            $("#refreshBtn").prop("disabled", true);
+            $("#deleteBtn").prop("disabled", true);
+            $("#refreshBtn").css("background-color", "grey");
+            $("#deleteBtn").css("background-color", "grey");
+        } else {
+            $("#refreshBtn").prop("disabled", false);
+            $("#deleteBtn").prop("disabled", false);
+            $("#refreshBtn").css("background-color", "#8C0028");
+            $("#deleteBtn").css("background-color", "#8C0028");
+        }
+
         $("#refreshBtn").click();
+
     });

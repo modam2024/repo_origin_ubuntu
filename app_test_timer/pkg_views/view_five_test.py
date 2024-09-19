@@ -71,6 +71,9 @@ def test_english(request):
 
             res_value = sql_statement.sql_dao(request, "sqli_test_page_content_create", test_values)
 
+            if res_value == 1:
+               break
+
     except Exception as e:
         print("test insert failed:", e)
 

@@ -37,10 +37,12 @@
                 </div><br>
             </div>
             <div class="content">
-                <input type="hidden" id="sourceUrl"     value="{{ source_url }}" />
-                <input type="hidden" id="sourceTitle"   value="{{ source_title }}" />
-                <input type="hidden" id="sourceStatus"  value="{{ source_status }}" />
-                <input type="hidden" id="sourceType"    value="{{ source_type }}" />
+                <input type="hidden" id="sourceUrl"      value="{{ source_url }}" />
+                <input type="hidden" id="sourceTitle"    value="{{ source_title }}" />
+                <input type="hidden" id="sourceStatus"   value="{{ source_status }}" />
+                <input type="hidden" id="sourceType"     value="{{ source_type }}" />
+                <input type="hidden" id="sourceGubun"    value="{{ source_gubun }}" />
+                <input type="hidden" id="test_page_date" value="{{ test_page_date }}" />
                 <!-- 'Go Source' 버튼 추가 -->
                 # 체크 : 완료대상 단어
                 <div class="table-container">
@@ -51,7 +53,7 @@
                                 <th>단어</th>
                                 <th>English</th>
                                 <th>Korean</th>
-                                <th>생성일자</th>
+                                <th>생성일자/그룹코드</th>
                             </tr>
                         </table>
                 </div>

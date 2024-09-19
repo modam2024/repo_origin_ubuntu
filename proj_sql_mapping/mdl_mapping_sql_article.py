@@ -32,12 +32,24 @@ def sql_dao(request, sql_name, p_param):
             source_type   = request.GET.get("source_type")
 
             try:
-                query = "SELECT no, word, mean_en, mean_kr, DATE(create_date) as create_date "
-                query += "  FROM processed_words "
-                query += " WHERE  user_id = %s   "
-                query += "   AND status = %s and src_title = %s  and group_code = %s "
-                query += " ORDER BY DATE(create_date) DESC, no ASC "
-                params = (current_username, source_status, source_title, source_type)
+                if source_type == "ALL":
+                    query  = "SELECT no, word, mean_en, mean_kr, DATE(create_date) as create_date "
+                    query += "  FROM processed_words   "
+                    query += " WHERE  user_id    = %s  "
+                    query += "   AND status     != 'D' "
+                    query += "   AND init_status = 'B' "
+                    query += " ORDER BY DATE(create_date) DESC, no ASC "
+                    params = (current_username,)
+                else:
+                    query  = "SELECT no, word, mean_en, mean_kr, DATE(create_date) as create_date "
+                    query += "  FROM processed_words   "
+                    query += " WHERE  user_id    = %s  "
+                    query += "   AND status      = %s  "
+                    query += "   AND src_title   = %s  "
+                    query += "   AND group_code  = %s  "
+                    query += " ORDER BY DATE(create_date) DESC, no ASC "
+                    params = (current_username, source_status, source_title, source_type)
+
                 cursor.execute(query, params)
 
             except Exception as e:
@@ -57,16 +69,29 @@ def sql_dao(request, sql_name, p_param):
             source_type   = request.GET.get("source_type")
 
             try:
-                query  = "SELECT DISTINCT src_url, src_title  "
-                query += "  FROM processed_words "
-                query += " WHERE user_id = %s   "
-                query += "   AND src_url is not null and group_code = %s and status = %s "
-                query += " ORDER BY init_status DESC, create_date DESC "
-                params = (
-                    current_username,
-                    source_type,
-                    "C",
-                )
+                if source_type == "ALL":
+                    query  = "SELECT DISTINCT src_url, src_title "
+                    query += "  FROM processed_words   "
+                    query += " WHERE  user_id    = %s  "
+                    query += "   AND status     != 'D' "
+                    query += "   AND init_status = 'B' "
+                    query += " ORDER BY DATE(create_date) DESC, no ASC "
+                    query += " LIMIT 10 "
+                    params = (current_username,)
+                else:
+                    query  = "SELECT DISTINCT src_url, src_title  "
+                    query += "  FROM processed_words     "
+                    query += " WHERE user_id    = %s     "
+                    query += "   AND src_url is not null "
+                    query += "   AND group_code = %s     "
+                    query += "   AND status     = %s     "
+                    query += " ORDER BY init_status DESC, create_date DESC "
+                    params = (
+                        current_username,
+                        source_type,
+                        "C",
+                    )
+
                 cursor.execute(query, params)
 
             except Exception as e:
@@ -83,16 +108,28 @@ def sql_dao(request, sql_name, p_param):
         # 작성일 : 2024.07.20
         #############################################################  '''
         if sql_name == "sqls_main_word_table":
-            source_title = request.GET.get("source_title")
+            source_title  = request.GET.get("source_title")
             source_status = request.GET.get("source_status")
+            source_type   = request.GET.get("source_type")
 
             try:
-                query  = "SELECT word, mean_en, mean_kr, DATE(create_date) as create_date "
-                query += "  FROM processed_words   "
-                query += " WHERE user_id = %s      "
-                query += "   AND status  = %s and src_title = %s    "
-                # query += " ORDER BY DATE(create_date) DESC, no ASC "
-                params = (current_username, source_status, source_title)
+                if source_type == "ALL":
+                    query  = "SELECT word, mean_en, mean_kr, group_code as create_date "
+                    query += "  FROM processed_words   "
+                    query += " WHERE  user_id    = %s  "
+                    query += "   AND status     != 'D' "
+                    query += "   AND init_status = 'B' "
+                    query += "   AND group_code != 'TOPS' "
+                    query += " ORDER BY CASE WHEN group_code = 'TOPS' THEN 0 ELSE 1 END, DATE(create_date) DESC, no ASC "
+                    query += " LIMIT 10 "
+                    params = (current_username,)
+                else:
+                    query  = "SELECT word, mean_en, mean_kr, DATE(create_date) as create_date "
+                    query += "  FROM processed_words   "
+                    query += " WHERE user_id = %s      "
+                    query += "   AND status  = %s and src_title = %s    "
+                    params = (current_username, source_status, source_title)
+
                 cursor.execute(query, params)
 
             except Exception as e:

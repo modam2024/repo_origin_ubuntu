@@ -146,10 +146,12 @@ def fetch_titles(request, selectd_chapter, selectd_status):
 def main_word_check(request):
     res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "main_word_check")
 
-    source_url = request.GET.get("source_url")
-    source_title = request.GET.get("source_title")
-    source_status = request.GET.get("source_status")
-    source_type = request.GET.get("source_type")
+    source_url     = request.GET.get("source_url")
+    source_title   = request.GET.get("source_title")
+    source_status  = request.GET.get("source_status")
+    source_type    = request.GET.get("source_type")
+    source_gubun   = request.GET.get("gubun")
+    test_page_date = request.GET.get("test_page_date")
 
     existing_words = sql_statement_article.sql_dao(request, "sqls_main_word_check", "")
 
@@ -175,6 +177,8 @@ def main_word_check(request):
         "source_status": source_status,
         "source_type": source_type,
         "group_codes": group_codes,
+        "source_gubun": source_gubun,
+        "test_page_date": test_page_date,
     }
 
     return render(request, "word_check.html", values)

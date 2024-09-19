@@ -326,7 +326,7 @@ def check_login_status(request):
     full_url  = request.build_absolute_uri()
     base_url  = "http://modameng.com:8000"
     local_url = "http://localhost:8001"
-    page_url  = "/article/main-wordcheck/?source_url=&source_title=&source_type=NEWS&source_status=C"
+    page_url  = "/article/main-wordcheck/?source_url=&source_title=&source_type=ALL&source_status=C"
 
     if base_url in full_url:
         source_url = base_url + page_url

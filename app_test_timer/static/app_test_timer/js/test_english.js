@@ -56,6 +56,7 @@
             articleContent += $("#lbl_c1").text() + " " + $("#lbl_c2").text() + " " + $("#lbl_c3").text() + " "
 
             let sourceUrl   = BASE_URL + "app_test_timer/test-english/?trgt_order_no=" + selChapter;
+            let test_page_date     = $('#test_page_date').val();
 
             var new_url = ""
             $.ajax({
@@ -69,7 +70,7 @@
                     "sourceType": sourceType
                 }),
                 success: function(response) {
-                    new_url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&source_status=C';
+                    new_url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&test_page_date=' + encodeURIComponent(test_page_date) + '&source_status=C' + '&gubun=test';
                     window.location.href = new_url;
                 },
                 error: function(xhr) {

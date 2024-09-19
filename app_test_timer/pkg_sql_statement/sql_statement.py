@@ -520,7 +520,7 @@ def sql_dao(request, sql_name, p_param):
 
                 cursor.execute(insert_query, insert_params)
 
-            return "OK"
+            return v_test_page_content_cnt
 
         '''
         ############################################################

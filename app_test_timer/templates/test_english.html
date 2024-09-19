@@ -15,7 +15,8 @@
                        <li><a href="#" id="submitButton"         style="color:#fff;font-weight: bold;">어휘분석</a></li>
                        <li><a href="#" id="feedbackButton"       style="color:#fff;font-weight: bold;">해석보기</a></li>
                        <li><a href="#"                           style="color:#fff;font-weight: bold;"> >| </a></li>
-                       <li><a href="#" id="completeButton"       style="color:#fff;font-weight: bold;">정답제출</a></li>
+                       <li><a href="#" id="completeButton"       style="color:blue;font-weight: bold;">
+                           <i class="fas fa-envelope" style="color:white;"></i>정답제출</a></li>
                        <li><a href="#"                           style="color:#fff;font-weight: bold;"> | </a></li>
                        <li><a href="#" id="rs_completeButton"    style="color:#fff;font-weight: bold;">완료처리</a></li>
                     </ul>
@@ -27,6 +28,7 @@
                <input type="hidden" id="last_page_flag"     value="{{ test_page_info.0.last_page_flag }}" />
                <input type="hidden" id="prve_page_date"     value="{{ test_page_info.0.prve_page_date }}" />
                <input type="hidden" id="next_page_date"     value="{{ test_page_info.0.next_page_date }}" />
+                <input type="hidden" id="sourceGubun"       value=""  />
 
                <div class="title-view">
                     <a id="prve_page_flag_y" href="#" class="btn-v btn-prve">이전</a>
