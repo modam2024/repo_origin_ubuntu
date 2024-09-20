@@ -142,4 +142,7 @@ def fn_comma_process_of_convert(original_sentence, converted_sentence):
     result_converted_sentn = result_converted_sentn.replace("Mr.", "Mr")
     result_converted_sentn = result_converted_sentn.replace("Dr.", "Dr")
 
+    if len(result_converted_sentn) == 2:
+       result_converted_sentn = result_converted_sentn.replace(".", "")
+
     return result_whitespace_converted, result_converted_sentn, result_original_sentn, result_translated_sentn
