@@ -97,7 +97,12 @@ def fn_preparation_process_of_convert(sent, p_text_original_sentence):
         elif (token.pos_ == 'VERB' or token.pos_ == 'AUX') and (token.tag_ == 'VBD' or token.tag_ == 'VBN') and token.text.lower() in past_verbs:
              converted_tokens.append(' ,,')
         else:
-            converted_tokens.append(token.text)  # 다른 단어는 그대로 추가
+            str_token = token.text
+            if (len(str_token.strip()) == 2 or str_token.strip() == "Ms." or
+               str_token.strip() == "Mr."   or str_token.strip() == "Miss."):
+               str_token = str_token.replace(".", "")
+               original_sentence = original_sentence.replace(token.text.strip(), str_token)
+            converted_tokens.append(str_token)  # 다른 단어는 그대로 추가
 
     # 변환된 토큰들을 하나의 텍스트로 결합하여 문장 리스트에 추가
     converted_sentence = ' '.join(converted_tokens)
@@ -141,8 +146,5 @@ def fn_comma_process_of_convert(original_sentence, converted_sentence):
     result_converted_sentn = result_converted_sentn.replace("Miss.", "Miss")
     result_converted_sentn = result_converted_sentn.replace("Mr.", "Mr")
     result_converted_sentn = result_converted_sentn.replace("Dr.", "Dr")
-
-    if len(result_converted_sentn) == 2:
-       result_converted_sentn = result_converted_sentn.replace(".", "")
 
     return result_whitespace_converted, result_converted_sentn, result_original_sentn, result_translated_sentn
