@@ -1,12 +1,15 @@
     function  artcl_contents_display() {
         $('#artcl_content1').css("display", "block");
         $('#artcl_wspace_content1').css("display", "none");
+        $('#artcl_cnvrtd_content1').css("display", "none");
         $('#artcl_org_content1').css("display", "none");
         $('#artcl_content2').css("display", "block");
         $('#artcl_wspace_content2').css("display", "none");
+        $('#artcl_cnvrtd_content2').css("display", "none");
         $('#artcl_org_content2').css("display", "none");
         $('#artcl_content3').css("display", "block");
         $('#artcl_wspace_content3').css("display", "none");
+        $('#artcl_cnvrtd_content3').css("display", "none");
         $('#artcl_org_content3').css("display", "none");
     }
 
@@ -28,7 +31,7 @@
                 $('#artcl_wspace_content3').css("display", "block");
             }
 
-            var text = $('#artcl_wspace_content' + index).val().trim();
+            var text = $('#artcl_cnvrtd_content' + index).val().trim();
             splitTextAndSpeakBySentence(text);
         });
     }
@@ -136,9 +139,11 @@
 
                     if (res_rslt_sentns.length > 0) {
                         var v_artcl_wspace_content = "#artcl_wspace_content" + res_question_no;
+                        var v_artcl_cnvrtd_content = "#artcl_cnvrtd_content" + res_question_no;
                         var v_artcl_org_content    = "#artcl_org_content" + res_question_no;
                         // 첫 번째 결과만 사용
                         $(v_artcl_wspace_content).val(res_rslt_sentns[0][0]);
+                        $(v_artcl_cnvrtd_content).val(res_rslt_sentns[0][1]);
                         $(v_artcl_org_content).val(res_rslt_sentns[0][2]);
                     }
                 },

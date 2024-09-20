@@ -63,6 +63,10 @@ def convert_sentence(request):
             # 문장에서 각 품사를 변환
             for sent in sentences:
                 original_sentence = sent.text
+
+
+
+
                 # 어플 공통 : 대상 영문장을 변환문장시 전처리한다.
                 original_sentence, converted_sentence = comn_func.fn_preparation_process_of_convert(sent, original_sentence)
                 converted_sentences.append((original_sentence, converted_sentence))

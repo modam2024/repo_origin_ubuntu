@@ -137,4 +137,9 @@ def fn_comma_process_of_convert(original_sentence, converted_sentence):
     result_whitespace_converted = result_whitespace_converted.replace(" - ", "-")
     result_converted_sentn = result_converted_sentn.replace(" - ", "-")
 
+    result_converted_sentn = result_converted_sentn.replace("Ms.", "Ms")
+    result_converted_sentn = result_converted_sentn.replace("Miss.", "Miss")
+    result_converted_sentn = result_converted_sentn.replace("Mr.", "Mr")
+    result_converted_sentn = result_converted_sentn.replace("Dr.", "Dr")
+
     return result_whitespace_converted, result_converted_sentn, result_original_sentn, result_translated_sentn
