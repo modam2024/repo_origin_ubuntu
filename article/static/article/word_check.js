@@ -292,6 +292,13 @@
                 };
                 url = BASE_URL + "app_news_study/news_study/?" + $.param(back_data);
                 window.location.href = url;
+            } else if (source_gubun === "living") {
+                let back_data = {
+                    chapter:   $("#selected_chapter").val(),
+                    status : "C",
+                };
+                url = BASE_URL + "app_living_english/living-english/?" + $.param(back_data);
+                window.location.href = url;
             } else {
                 alert("호출 페이지가 존재 하지 않습니다.");
             }

@@ -153,6 +153,7 @@ def main_word_check(request):
     source_gubun   = request.GET.get("gubun")
     test_page_date = request.GET.get("test_page_date")
     selected_date  = request.GET.get("selected_date")
+    selected_chapter  = request.GET.get("selected_chapter")
 
     existing_words = sql_statement_article.sql_dao(request, "sqls_main_word_check", "")
 
@@ -180,7 +181,8 @@ def main_word_check(request):
         "group_codes": group_codes,
         "source_gubun": source_gubun,
         "test_page_date": test_page_date,
-        "selected_date": selected_date,
+        "selected_date" : selected_date,
+        "selected_chapter": selected_chapter,
     }
 
     return render(request, "word_check.html", values)
