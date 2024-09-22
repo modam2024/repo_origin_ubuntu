@@ -298,10 +298,6 @@
                     chapter: tmp_selected_chapter,
                     status : "C",
                 };
-                // chapter 값이 'None' 일 경우 파라미터 값을 빈 문자열로 설정
-                if (back_data.get('chapter') === 'None') {
-                    back_data.set('chapter', '');
-                }
                 url = BASE_URL + "app_living_english/living-english/?" + $.param(back_data);
                 window.location.href = url;
             } else {
