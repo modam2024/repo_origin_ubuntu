@@ -293,8 +293,9 @@
                 url = BASE_URL + "app_news_study/news_study/?" + $.param(back_data);
                 window.location.href = url;
             } else if (source_gubun === "living") {
+                let tmp_selected_chapter = $("#selected_chapter").val() || "";
                 let back_data = {
-                    chapter:   $("#selected_chapter").val(),
+                    chapter: tmp_selected_chapter,
                     status : "C",
                 };
                 url = BASE_URL + "app_living_english/living-english/?" + $.param(back_data);
