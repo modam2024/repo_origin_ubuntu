@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 @csrf_exempt
 @login_required(login_url='/login/')
 def submit_topic(request):
+    # ## 공통 ## 작업 히스토리 저장
     res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "submit_topic")
 
     # POST 요청일 때만 처리

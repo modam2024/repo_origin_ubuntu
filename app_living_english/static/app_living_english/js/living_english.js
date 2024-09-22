@@ -176,7 +176,7 @@
             let strTopicDurEnd   = objTopicDurEnd.value;
 
             $.ajax({
-                url: "/article/save-topic/",
+                url: "/app_living_english/save-topic/",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({
@@ -338,7 +338,7 @@
                 selectd_chapter: selectd_chapter,
             };
             $.ajax({
-                url: '/article/complete-chapter/',
+                url: '/app_living_english/complete-chapter/',
                 type: 'GET',
                 data: data,
                 success: function(response) {
@@ -368,7 +368,7 @@
                 selectd_chapter: selectd_chapter,
             };
             $.ajax({
-                url: '/article/uncomplete-chapter/',
+                url: '/app_living_english/uncomplete-chapter/',
                 type: 'GET',
                 data: data,
                 success: function() {

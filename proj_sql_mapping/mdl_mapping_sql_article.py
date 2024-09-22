@@ -196,31 +196,6 @@ def sql_dao(request, sql_name, p_param):
 
         '''
         #############################################################
-        # FUNC ID : sqls_uncomplete_chapter
-        # 함수명 : tb_chapter_title 데이블 완료상태, 날짜 최기화
-        # 작성일 : 2024.07.20
-        ############################################################# '''
-        if sql_name == "sqls_uncomplete_chapter":
-            selectd_chapter = request.GET.get("selectd_chapter")
-
-            try:
-                uncomplete_query  = " UPDATE tb_chapter_title      "
-                uncomplete_query += "    SET status         = 'C'  "
-                uncomplete_query += "      , finish_date    = NULL "
-                uncomplete_query += "  WHERE user_id        = %s   "
-                uncomplete_query += "    AND src_chapter    = %s   "
-                uncomplete_params = (current_username, selectd_chapter, )
-                cursor.execute(uncomplete_query, uncomplete_params)
-
-
-            except Exception as e:
-                print("Chapter Uncomplete query failed:", e)
-                selectd_chapter = "0"
-
-            return selectd_chapter
-
-        '''
-        #############################################################
         # FUNC ID : sqls_call_process
         # 함수명 : 형태소 기반 단어 분류 진행 조회
         # 작성일 : 2024.07.20
@@ -303,61 +278,6 @@ def sql_dao(request, sql_name, p_param):
         ##############
          INSERT BLOCK
         ############## '''
-        '''
-        #############################################################
-        # FUNC ID : sqliu_save_topic
-        # 함수명 : tb_chapter_title 데이블 완료상태, 날짜 최기화
-        # 작성일 : 2024.07.20
-        #############################################################  '''
-        if sql_name == "sqliu_save_topic":
-            try:
-                # 요청의 본문을 JSON으로 파싱
-                data = json.loads(request.body)
-                topic_num = data.get("topic_num")
-                audio_file_date = data.get("audio_file_date")  # 소스 Url 추가
-                volume_size = data.get("volume_size")  # 소스 Title 추가
-                topic_kr = data.get("topic_kr")  # 소스 Type 추가
-                topic_en = data.get("topic_en")  # 소스 Type 추가
-                topic_dur_start = data.get("topic_dur_start")  # 소스 Type 추가
-                topic_dur_end = data.get("topic_dur_end")  # 소스 Type 추가
-
-                # 접속 객체 생성
-                conn = proj_connector(request)
-                cursor = conn.cursor()
-
-                ins_topic_query = "  INSERT INTO tb_living_english_topic "
-                ins_topic_query += " ( "
-                ins_topic_query += "  user_id, topic_num, audio_file_date, volume_size, topic_kr, topic_en, topic_dur_start,  "
-                ins_topic_query += "  topic_dur_end, native_dur_start, native_dur_end, etc_dur1_start, etc_dur1_end, "
-                ins_topic_query += "  etc_dur2_start, etc_dur2_end, etc_dur3_start, etc_dur3_end, study_status, "
-                ins_topic_query += "  topic_frequency, native_frequency, curr_point, create_date, start_date, finish_date "
-                ins_topic_query += " ) "
-                ins_topic_query += " values "
-                ins_topic_query += " ( "
-                ins_topic_query += "   %s, %s, %s, %s, %s, %s, %s, %s, 0, 0, 0, 0, 0, 0, 0, 0, 'C', '0', '0', '', "
-                ins_topic_query += "   date_format( now(), '%Y-%m-%d %H:%i:%S' ), '', '' "
-                ins_topic_query += " ) "
-                ins_topic_params = (current_username, topic_num, audio_file_date, volume_size, topic_kr, topic_en, topic_dur_start, topic_dur_end)
-
-                cursor.execute(ins_topic_query, ins_topic_params)
-
-                int_test_cnt = 1
-
-            except Exception as e:
-                upd_topic_query = " UPDATE tb_living_english_topic "
-                upd_topic_query += "    SET topic_dur_start = %s "
-                upd_topic_query += "      , topic_dur_end   = %s "
-                upd_topic_query += "      , start_date      = date_format(now(),'%Y-%m-%d %H:%i:%S') "
-                upd_topic_query += " WHERE  user_id         = %s "
-                upd_topic_query += "   AND  topic_num       = %s "
-
-                upd_topic_params = (topic_dur_start, topic_dur_end, current_username, topic_num,)
-                cursor.execute(upd_topic_query, upd_topic_params)
-
-                int_test_cnt = 2
-
-            return int_test_cnt
-
         '''
         #############################################################
         # FUNC ID : sqli_create_word

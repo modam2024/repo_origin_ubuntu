@@ -616,60 +616,6 @@ def goto_mobile(request):
 
     return JsonResponse({"result": "Go to Mobile"})
 
-@login_required(login_url='/login/')
-def complete_chapter(request):
-    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "complete_chapter")
-
-    selectd_chapter = request.GET.get("selectd_chapter")
-
-    # 접속 객체 생성
-    conn, cursor, current_username = create_connection(request)
-
-    try:
-        complete_query  = " UPDATE tb_chapter_title "
-        complete_query += "    SET status         = 'D' "
-        complete_query += "      , complete_count = complete_count + 1 "
-        complete_query += "      , finish_date    = date_format(now(),'%Y-%m-%d %H:%i:%S') "
-        complete_query += " WHERE  user_id        = %s "
-        complete_query += "   AND  src_chapter    = %s "
-        complete_params = (current_username, selectd_chapter,)
-        cursor.execute(complete_query, complete_params)
-
-        max_chapter_num = proj_sql_statement.sql_dao(request, "sqls_retrieve_ing_chapter_num", selectd_chapter);
-        return JsonResponse({"complete_next_chapter": max_chapter_num})
-    except Exception as e:
-        print("Chapter Complete query failed:", e)
-        return JsonResponse({"message": "완료 오류 발생."})
-    finally:
-        close_connection(conn, cursor)
-
-'''
-#############################################################
-# 함수명 : tb_chapter_title 데이블 완료상태, 날짜 최기화
-# 작성일 : 2024.07.20
-#############################################################
-'''
-@login_required(login_url='/login/')
-def uncomplete_chapter(request):
-    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "uncomplete_chapter")
-
-    selectd_chapter = sql_statement_article.sql_dao(request, "sqls_uncomplete_chapter", "")
-
-    return JsonResponse({"uncomplete_chapter": selectd_chapter})
-
-@csrf_exempt
-@login_required(login_url='/login/')
-def save_topic(request):
-    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "save_topic")
-
-    if request.method == "POST":
-        rtn_code = sql_statement_article.sql_dao(request, "sqliu_save_topic", "")
-
-        if rtn_code == 1:
-            return JsonResponse({"message": "생성 완료"})
-        elif rtn_code == 2:
-            return JsonResponse({"message": "갱신 완료"})
-
 @csrf_exempt
 @login_required(login_url='/login/')
 def create_word(request):

@@ -198,27 +198,27 @@
         //          FUNCTION 끝
         // ############################
 
-        // 모든 '.chapter-link' 클래스를 가진 <a> 태그에 대해 클릭 이벤트 리스너를 추가
-        // 동적으로 클래스명이 구성되기 때문에 상위의 document 에 이벤트를 전달한다.
-        $(document).on('click', '.chapter-link', function(e) {
-            e.preventDefault();
-            let selectd_chapter = $(this).attr('href'); // 목표 URL 추출
-            let data = {
-                selectd_chapter: selectd_chapter,
-            };
-            $.ajax({
-                url: '/article/uncomplete-chapter/',
-                type: 'GET',
-                data: data,
-                success: function() {
-                  $("#resMessage").val("미완료 처리 했습니다.");
-                  $("#searchButton").click();
-                },
-                error: function(xhr, status, error) {
-                  $("#resMessage").val("미완료처리 오류 발생 : " + error);
-                }
-            });
-        });
+        // // 모든 '.chapter-link' 클래스를 가진 <a> 태그에 대해 클릭 이벤트 리스너를 추가
+        // // 동적으로 클래스명이 구성되기 때문에 상위의 document 에 이벤트를 전달한다.
+        // $(document).on('click', '.chapter-link', function(e) {
+        //     e.preventDefault();
+        //     let selectd_chapter = $(this).attr('href'); // 목표 URL 추출
+        //     let data = {
+        //         selectd_chapter: selectd_chapter,
+        //     };
+        //     $.ajax({
+        //         url: '/article/uncomplete-chapter/',
+        //         type: 'GET',
+        //         data: data,
+        //         success: function() {
+        //           $("#resMessage").val("미완료 처리 했습니다.");
+        //           $("#searchButton").click();
+        //         },
+        //         error: function(xhr, status, error) {
+        //           $("#resMessage").val("미완료처리 오류 발생 : " + error);
+        //         }
+        //     });
+        // });
 
         let selChapter = $("#selChapter").val();
         let newCount   = $('#newCount').val();

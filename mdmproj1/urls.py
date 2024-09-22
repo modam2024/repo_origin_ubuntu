@@ -60,9 +60,6 @@ urlpatterns = [
     path('article/word_detail/'        , article_views.word_detail       ,  name='word_detail'),
     path('article/save-wordinfo/'      , article_views.save_wordinfo     ,  name='save_wordinfo'),
     path('article/complete-word/'      , article_views.complete_word     ,  name='complete_word'),
-    path('article/complete-chapter/'   , article_views.complete_chapter  ,  name='complete_chapter'),
-    path('article/uncomplete-chapter/' , article_views.uncomplete_chapter,  name='uncomplete_chapter'),
-    path('article/save-topic/'         , article_views.save_topic,          name='save-topic'),
     path('article/create-word/'        , article_views.create_word,         name='create-word'),
 
     path('test-batch/'                 , btch_five_test.test_batch,         name='test_batch'),

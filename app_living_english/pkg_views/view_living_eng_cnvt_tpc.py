@@ -6,6 +6,7 @@ from proj_sql_mapping import mdl_mapping_sql_proj as sql_statement
 
 @login_required(login_url='/login/')
 def main_cnvrt_tpc_exec(request):
+    # ## 공통 ## 작업 히스토리 저장
     res_value = sql_statement.sql_dao(request, "sqli_click_study_hist", "main_cnvrt_tpc_exec")
     existing_topic = sql_statement.sql_dao(request, "sqls_proj_converted_sentn", "main_cnvrt_tpc_exec")
 
