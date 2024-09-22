@@ -16,6 +16,8 @@ from proj_sql_mapping import mdl_mapping_sql_article as sql_statement_article
 from proj_common import mdl_common_proj as proj_comn_func
 from proj_common import mdl_morph_words_proj as morph_new_words
 
+import app_living_english.pkg_sql_statement.sql_statement as sql_statement_living
+
 # nltk 리소스 다운로드 (서버 시작 시 한 번만 수행하면 됩니다)
 nltk.download("punkt")
 nltk.download("averaged_perceptron_tagger")
@@ -169,6 +171,9 @@ def main_word_check(request):
 
     titles = [(url, title) for url, title in existing_titles]
     group_codes = proj_comn_func.get_group_codes(request)
+
+    if source_gubun == "living" and not selected_chapter:
+        selected_chapter = sql_statement_living.sql_dao(request, "sqls_existing_max_chapter_num", "")
 
     values = {
         "rows": rows,
