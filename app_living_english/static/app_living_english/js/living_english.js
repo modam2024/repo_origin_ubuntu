@@ -291,7 +291,7 @@
                     "sourceType": sourceType
                 }),
                 success: function(response) {
-                    let living_url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&source_status=C&gubun=living';
+                    let living_url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  +  + '&selected_chapter=' + encodeURIComponent(selChapter)  +  '&source_status=C&gubun=living';
                     window.location.href = living_url;
                 },
                 error: function(xhr) {
