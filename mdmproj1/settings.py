@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'mdl_login_info',
     'index',
     'balance',
-    'article',
     'corsheaders',
     'app_open_article',
     'app_word_work',
