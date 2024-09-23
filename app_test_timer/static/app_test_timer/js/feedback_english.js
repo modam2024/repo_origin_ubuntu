@@ -81,7 +81,7 @@
         //     let sourceTitle = $("#selChapter").val();
         //     let sourceType  = $("#searchGrpCd").val();
         //
-        //     let url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&source_status=C';
+        //     let url = '/app_word_work/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&source_status=C';
         //     //window.location.href = url;
         //     window.open(url, '_blank');
         // });

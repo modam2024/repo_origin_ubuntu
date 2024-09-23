@@ -70,7 +70,7 @@
                     "sourceType": sourceType
                 }),
                 success: function(response) {
-                    new_url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&test_page_date=' + encodeURIComponent(test_page_date) + '&source_status=C' + '&gubun=test';
+                    new_url = '/app_word_work/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&test_page_date=' + encodeURIComponent(test_page_date) + '&source_status=C' + '&gubun=test';
                     window.location.href = new_url;
                 },
                 error: function(xhr) {
@@ -98,7 +98,7 @@
             let sourceUrl   = $("#hddn_url").val();
             let sourceTitle = $("#selChapter").val();
             let sourceType  = $("#searchGrpCd").val();
-            let url = '/article/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&source_status=C';
+            let url = '/app_word_work/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(sourceType)  + '&source_status=C';
             //window.location.href = url;
             window.open(url, '_blank');
         });
@@ -207,7 +207,7 @@
         //         selectd_chapter: selectd_chapter,
         //     };
         //     $.ajax({
-        //         url: '/article/uncomplete-chapter/',
+        //         url: '/app_word_work/uncomplete-chapter/',
         //         type: 'GET',
         //         data: data,
         //         success: function() {

@@ -44,8 +44,8 @@ mdmproj1/asgi.py
 mdmproj1/wsgi.py
 
 # article 어플리케이션 관리
-!article/            # article 디렉터리는 무시하지 않음
-article/             # article 디렉터리 내의 모든 파일 무시
+!app_open_article/            # article 디렉터리는 무시하지 않음
+app_open_article/             # article 디렉터리 내의 모든 파일 무시
 !article/**/*.html  # html 허용
 !article/**/*.js     # js 허용
 !article/**/*.css   # css 허용
@@ -53,7 +53,7 @@ article/             # article 디렉터리 내의 모든 파일 무시
 !article/**/*.jpg   # jpg 허용
 !article/**/*.txt   # txt 허용
 !article/**/*.py    # py 허용
-article/**/common.py  # common.py 파일 무시
+app_open_article/**/common.py  # common.py 파일 무시
 
 # app_news_study 어플리케이션 관리
 !app_news_study/            # app_news_study 디렉터리는 무시하지 않음

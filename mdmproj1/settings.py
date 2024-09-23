@@ -41,9 +41,11 @@ INSTALLED_APPS = [
     'balance',
     'article',
     'corsheaders',
-    "app_news_study",
-    "app_test_timer",
-    "app_living_english",
+    'app_open_article',
+    'app_word_work',
+    'app_news_study',
+    'app_test_timer',
+    'app_living_english',
 ]
 
 MIDDLEWARE = [
@@ -132,7 +134,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-LOGIN_REDIRECT_URL = '/article/'
+LOGIN_REDIRECT_URL = '/app_open_article/'
 
 LOGOUT_REDIRECT_URL = '/login/'
 

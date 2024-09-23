@@ -134,6 +134,27 @@ def sql_dao(request, sql_name, p_param):
 
            return existing_word
 
+        '''
+        #############################################################
+        # CALL ID : sqls_group_code
+        # 작업     : group_code 에서 구분코드를 조회한다.        
+        # 작성일   : 2024.09.16
+        # 작성자   : 이용학 
+        ############################################################# '''
+        if sql_name == "sqls_group_code":
+
+            group_query  = " SELECT group_code         "
+            group_query += "   FROM tb_group_code      "
+            group_query += "  WHERE user_id = %s       "
+            group_query += "  ORDER BY group_order ASC "
+            group_params = (current_username,)
+            cursor.execute(group_query, group_params)
+
+            existing_group_code = cursor.fetchall()
+            group_codes = [group_code[0] for group_code in existing_group_code]
+
+            return group_codes
+
         ''' 
         ##############
          INSERT BLOCK
@@ -326,7 +347,7 @@ def check_login_status(request):
     full_url  = request.build_absolute_uri()
     base_url  = "http://modameng.com:8000"
     local_url = "http://localhost:8001"
-    page_url  = "/article/main-wordcheck/?source_url=&source_title=&source_type=ALL&source_status=C"
+    page_url  = "/app_word_work/main-wordcheck/?source_url=&source_title=&source_type=ALL&source_status=C"
 
     if base_url in full_url:
         source_url = base_url + page_url
