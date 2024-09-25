@@ -87,12 +87,12 @@ def sql_dao(request, sql_name, p_param):
                     query += " WHERE user_id    = %s     "
                     query += "   AND src_url is not null "
                     query += "   AND group_code = %s     "
-                    query += "   AND status     = %s     "
+                    # query += "   AND status     = %s     "
                     query += " ORDER BY init_status DESC, create_date DESC "
                     params = (
                         current_username,
                         source_type,
-                        "C",
+                        # "C",
                     )
 
                 cursor.execute(query, params)
@@ -305,18 +305,6 @@ def sql_dao(request, sql_name, p_param):
             complete_query1 += "   AND  word    = %s "
             complete_params1 = (current_username, completeWord,)
             cursor.execute(complete_query1, complete_params1)
-
-        if sql_name == "sqlu_daily_voca_status":
-            completeWord = p_param
-
-            complete_query2  = " UPDATE daily_voca   "
-            complete_query2 += "    SET status = 'D' "
-            complete_query2 += "      , finish_date = date_format(now(),'%Y-%m-%d %H:%i:%S') "
-            complete_query2 += " WHERE  user_id = %s "
-            complete_query2 += "   AND  word    = %s "
-            complete_params2 = (current_username, completeWord,)
-
-            cursor.execute(complete_query2, complete_params2)
 
         if sql_name == "sqlu_daily_voca_status":
             completeWord = p_param
