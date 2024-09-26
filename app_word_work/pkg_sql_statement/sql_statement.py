@@ -87,7 +87,7 @@ def sql_dao(request, sql_name, p_param):
                     query += " WHERE user_id    = %s     "
                     query += "   AND src_url is not null "
                     query += "   AND group_code = %s     "
-                    # query += "   AND status     = %s     "
+                    # query += "   AND status     = %s   "
                     query += " ORDER BY init_status DESC, create_date DESC "
                     params = (
                         current_username,
@@ -115,7 +115,7 @@ def sql_dao(request, sql_name, p_param):
             wrd_title = request.GET.get("wrd_title")
 
             try:
-                query = "  SELECT ifnull(word,''), ifnull(word_guess,''), ifnull(tag,''), ifnull(mean,''), ifnull(group_code,''), ifnull(word_eng_example,''), ifnull(word_kor_example,''), ifnull(word_eng_example2,''), ifnull(word_kor_example2,'') "
+                query  = " SELECT ifnull(word,''), ifnull(word_guess,''), ifnull(tag,''), ifnull(mean,''), ifnull(group_code,''), ifnull(word_eng_example,''), ifnull(word_kor_example,''), ifnull(word_eng_example2,''), ifnull(word_kor_example2,'') "
                 query += "   FROM daily_voca    "
                 query += "  WHERE user_id = %s  "
                 query += "    AND word    = %s  "
