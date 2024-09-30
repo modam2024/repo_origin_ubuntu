@@ -71,6 +71,7 @@ def get_wordnet_pos(treebank_tag, lemma):
     else:
         # WordNetLemmatizer에서 사용되지 않는 태그의 경우 None 반환
         return None
+
 def fn_word_syns_en(p_word):
     # 단어의 의미를 찾기
     syns = wordnet.synsets(p_word)

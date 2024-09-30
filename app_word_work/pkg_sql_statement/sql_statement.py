@@ -237,42 +237,6 @@ def sql_dao(request, sql_name, p_param):
         ############## '''
         '''
         #############################################################
-        # FUNC ID : sqli_create_word
-        # 함수명 : tb_chapter_title 데이블 완료상태, 날짜 최기화
-        # 작성일 : 2024.07.20
-        ############################################################# '''
-        if sql_name == "sqli_create_word":
-
-            # 요청의 본문을 JSON으로 파싱
-            data = json.loads(request.body)
-            wrd_word = data.get("wrd_word")
-            wrd_title = data.get("wrd_title")
-            wrd_group_code = data.get("wrd_group")
-
-            try:
-                ins_word_query = "  INSERT INTO processed_words   "
-                ins_word_query += " ( no, user_id, word, src_title, group_code ) "
-                ins_word_query += " values "
-                ins_word_query += " ( 0, %s, %s, %s, %s ) "
-                ins_word_params = (current_username, wrd_word, wrd_title, wrd_group_code)
-                cursor.execute(ins_word_query, ins_word_params)
-
-                ins_voca_query = "  INSERT INTO daily_voca   "
-                ins_voca_query += " ( num, user_id, word, src_title, group_code ) "
-                ins_voca_query += " values "
-                ins_voca_query += " ( 0, %s, %s, %s, %s  ) "
-                ins_voca_params = (current_username, wrd_word, wrd_title, wrd_group_code)
-                cursor.execute(ins_voca_query, ins_voca_params)
-
-                int_ins_cnt = 1
-
-            except Exception as e:
-                int_ins_cnt = 0
-
-            return int_ins_cnt
-
-        '''
-        #############################################################
         # FUNC ID : sqli_confirm_word_check    
         # 함수명 : process_info 생성
         # 작성일 : 2024.07.20

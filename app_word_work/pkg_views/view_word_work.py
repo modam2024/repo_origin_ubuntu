@@ -159,73 +159,74 @@ def confirm_word_check(request):
                         print("Update query failed:", e)
 
             # Unchecked 된 경우
-            for unchecked_word in unchecked_words:
-                try:
-                    mean_kr_text = get_mean_kr_from_naver_dic(unchecked_word)
+            if unchecked_words:
+                for unchecked_word in unchecked_words:
+                    try:
+                        mean_kr_text = get_mean_kr_from_naver_dic(unchecked_word)
 
-                    # mean_kr_text가 None 또는 빈 문자열일 경우 '*N'으로 설정
-                    if not mean_kr_text:
-                        mean_kr_text = "*N"
+                        # mean_kr_text가 None 또는 빈 문자열일 경우 '*N'으로 설정
+                        if not mean_kr_text:
+                            mean_kr_text = "*N"
 
-                    undone_row_num = undone_row_num + 1
+                        undone_row_num = undone_row_num + 1
 
-                    # processed_words의 meaning update
-                    upd_mean_query =  " UPDATE processed_words   "
-                    upd_mean_query += "    SET no      = %s      "
-                    upd_mean_query += "      , status  = 'C'     "
-                    upd_mean_query += "      , init_status = 'B' "
-                    upd_mean_query += "      , mean_kr = %s      "
-                    upd_mean_query += "      , start_date  = date_format(now(),'%Y-%m-%d %H:%i:%S') "
-                    upd_mean_query += "      , finish_date = NULL "
-                    upd_mean_query += "  WHERE user_id     = %s   "
-                    upd_mean_query += "    AND word        = %s   "
-                    upd_mean_params = (
-                        undone_row_num,
-                        mean_kr_text,
-                        current_username,
-                        unchecked_word,
-                    )
-                    cursor.execute(upd_mean_query, upd_mean_params)
+                        # processed_words의 meaning update
+                        upd_mean_query =  " UPDATE processed_words   "
+                        upd_mean_query += "    SET no      = %s      "
+                        upd_mean_query += "      , status  = 'C'     "
+                        upd_mean_query += "      , init_status = 'B' "
+                        upd_mean_query += "      , mean_kr = %s      "
+                        upd_mean_query += "      , start_date  = date_format(now(),'%Y-%m-%d %H:%i:%S') "
+                        upd_mean_query += "      , finish_date = NULL "
+                        upd_mean_query += "  WHERE user_id     = %s   "
+                        upd_mean_query += "    AND word        = %s   "
+                        upd_mean_params = (
+                            undone_row_num,
+                            mean_kr_text,
+                            current_username,
+                            unchecked_word,
+                        )
+                        cursor.execute(upd_mean_query, upd_mean_params)
 
-                    # daily_voca의 meaning update
-                    upd_mean_daily_voca_query =  " UPDATE daily_voca   "
-                    upd_mean_daily_voca_query += "    SET num    =  %s "
-                    upd_mean_daily_voca_query += "      , status = 'C' "
-                    upd_mean_daily_voca_query += "      , mean   = %s  "
-                    upd_mean_daily_voca_query += "      , start_date  = date_format(now(),'%Y-%m-%d %H:%i:%S') "
-                    upd_mean_daily_voca_query += "      , finish_date = NULL "
-                    upd_mean_daily_voca_query += "  WHERE user_id = %s  "
-                    upd_mean_daily_voca_query += "    AND word    = %s  "
-                    upd_mean_daily_voca_params = (
-                        undone_row_num,
-                        mean_kr_text,
-                        current_username,
-                        unchecked_word,
-                    )
-                    cursor.execute(
-                        upd_mean_daily_voca_query, upd_mean_daily_voca_params
-                    )
+                        # daily_voca의 meaning update
+                        upd_mean_daily_voca_query =  " UPDATE daily_voca   "
+                        upd_mean_daily_voca_query += "    SET num    =  %s "
+                        upd_mean_daily_voca_query += "      , status = 'C' "
+                        upd_mean_daily_voca_query += "      , mean   = %s  "
+                        upd_mean_daily_voca_query += "      , start_date  = date_format(now(),'%Y-%m-%d %H:%i:%S') "
+                        upd_mean_daily_voca_query += "      , finish_date = NULL "
+                        upd_mean_daily_voca_query += "  WHERE user_id = %s  "
+                        upd_mean_daily_voca_query += "    AND word    = %s  "
+                        upd_mean_daily_voca_params = (
+                            undone_row_num,
+                            mean_kr_text,
+                            current_username,
+                            unchecked_word,
+                        )
+                        cursor.execute(
+                            upd_mean_daily_voca_query, upd_mean_daily_voca_params
+                        )
 
-                    # 2024.01.23 추가
-                    proc_query = " UPDATE process_info "
-                    proc_query += "    SET undone_cnt     = undone_cnt + 1 "
-                    proc_query += "      , undone_tot_cnt = %s "
-                    proc_query += "      , done_tot_cnt   = %s "
-                    proc_query += "      , create_date    = date_format(now(),'%Y-%m-%d %H:%i:%S') "
-                    proc_query += " WHERE  user_id   = %s   "
-                    proc_query += "   AND  src_title = %s   "
-                    proc_params = (
-                        unchecked_words_count,
-                        checked_words_count,
-                        current_username,
-                        selected_title,
-                    )
+                        # 2024.01.23 추가
+                        proc_query = " UPDATE process_info "
+                        proc_query += "    SET undone_cnt     = undone_cnt + 1 "
+                        proc_query += "      , undone_tot_cnt = %s "
+                        proc_query += "      , done_tot_cnt   = %s "
+                        proc_query += "      , create_date    = date_format(now(),'%Y-%m-%d %H:%i:%S') "
+                        proc_query += " WHERE  user_id   = %s   "
+                        proc_query += "   AND  src_title = %s   "
+                        proc_params = (
+                            unchecked_words_count,
+                            checked_words_count,
+                            current_username,
+                            selected_title,
+                        )
 
-                    proc_cursor.execute(proc_query, proc_params)
-                    proc_conn.commit()
+                        proc_cursor.execute(proc_query, proc_params)
+                        proc_conn.commit()
 
-                except Exception as e:
-                    print("Update mean_kr failed: ", e)
+                    except Exception as e:
+                        print("Update mean_kr failed: ", e)
 
             # 처리 성공 응답
             return JsonResponse(
@@ -507,9 +508,22 @@ def create_word(request):
     res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "create_word")
 
     if request.method == "POST":
-       rtn_code = sql_statement.sql_dao(request, "sqli_create_word", "")
+       data = json.loads(request.body)
+       strWord = data.get("wrd_word")
 
-       if rtn_code == 1:
-          return JsonResponse({"message": "신규단어 추가 완료"})
-       elif rtn_code == 2:
-          return JsonResponse({"message": "신규단어 추가 오류"})
+       dic_words_info = {
+            "word_insert_count": 1,
+            "lemma_word": strWord,
+            'tag': "",
+            'tag_text': "",
+            "source_url": "http://modameng.com:8000/app_word_work/main-wordcheck/?source_url=&source_title=&source_type=ALL&source_status=C",
+            "source_type": "ALL",
+            "source_title": "create new words",
+            "mean_en_text": "",
+       }
+       rtn = proj_sql_statement.sql_dao(request, "sqlii_processed_words", dic_words_info)
+       if "sqlii_processed_words" in rtn:
+           proj_sql_statement.sql_dao(request, "sqluu_cond_processed_words", dic_words_info)
+           return JsonResponse({"message": "신규단어 업데이트 완료"})
+       else:
+           return JsonResponse({"message": "신규단어 추가 완료"})

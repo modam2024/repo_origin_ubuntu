@@ -113,6 +113,31 @@ def sql_dao(request, sql_name, p_param):
 
         '''
         #############################################################
+        # CALL ID : sqls_daily_voca_mean
+        # 작업     : daily_voca 에서 한글 뜻을 읽어온다.
+        # 작성일   : 2024.10.01
+        # 작성자   : 이용학 
+        ############################################################# '''
+        if sql_name == "sqls_daily_voca_mean":
+           lemma_word = p_param
+
+           # 쿼리 정의
+           voca_query  = " SELECT ifnull(mean,'X') as mean "
+           voca_query += "   FROM daily_voca      "
+           voca_query += "  WHERE user_id = %s    "
+           voca_query += "    AND word    = %s    "
+           voca_param = (current_username, lemma_word,)
+
+           # 쿼리 실행
+           cursor.execute(voca_query, voca_param)
+           existing_mean = cursor.fetchone()
+
+           str_existing_mean = existing_mean[0]
+
+           return str_existing_mean
+
+        '''
+        #############################################################
         # CALL ID : sqls_processed_words
         # 작업     : processed_words 에 대상 단어의 정보가 존재하는지 확인        
         # 작성일   : 2024.09.16
@@ -252,76 +277,63 @@ def sql_dao(request, sql_name, p_param):
 
             dic_words_info = p_param
 
-            existing_word_2   = dic_words_info["existing_word_2"]
+            # existing_word_2   = dic_words_info["existing_word_2"]
             lemma_word        = dic_words_info["lemma_word"]
             source_url        = dic_words_info["source_url"]
             source_type       = dic_words_info["source_type"]
             source_title      = dic_words_info["source_title"]
-            mean_en_text      = dic_words_info["mean_en_text"]
+            # mean_en_text      = dic_words_info["mean_en_text"]
 
             try:
+                mean_en_text = morph_new_words.fn_word_syns_en(lemma_word)
+                mean_kr_text = sql_dao(request, "sqls_daily_voca_mean",  lemma_word)
+
+                if mean_en_text == "":
+                   mean_en_text = "None"
+                
                 renewal_query  = " UPDATE processed_words    "
                 renewal_query += "    SET src_url      = %s  "
                 renewal_query += "      , group_code   = %s  "
-                renewal_query += "      , init_status  = 'A' "
+                renewal_query += "      , status       = 'C' "
+                renewal_query += "      , init_status  = 'B' "
                 renewal_query += "      , src_title    = %s  "
-                if existing_word_2 == "X":
-                   mean_en_text = morph_new_words.fn_word_syns_en(lemma_word)
-                   renewal_query += "   , mean_en  = %s "
-                renewal_query += "      , start_date = date_format(now(), '%Y-%m-%d %H:%i:%S') "
+                renewal_query += "      , mean_kr      = %s  "
+                renewal_query += "      , mean_en      = %s  "
+                renewal_query += "      , start_date   = date_format(now(), '%Y-%m-%d %H:%i:%S') "
                 renewal_query += "      , create_date  = now() "
                 renewal_query += "      , finish_date  = NULL  "
                 renewal_query += "  WHERE word    = %s "
                 renewal_query += "    AND user_id = %s "
-
-                if existing_word_2 == "X":
-                    renewal_params = (
-                        source_url,
-                        source_type,
-                        source_title,
-                        mean_en_text,
-                        lemma_word,
-                        current_username,
-                    )
-                else:
-                    renewal_params = (
-                        source_url,
-                        source_type,
-                        source_title,
-                        lemma_word,
-                        current_username,
-                    )
+                renewal_params = (
+                    source_url,
+                    source_type,
+                    source_title,
+                    mean_kr_text,
+                    mean_en_text,
+                    lemma_word,
+                    current_username,
+                )
                 cursor.execute(renewal_query, renewal_params)
 
-                renewal_query = " UPDATE daily_voca "
-                renewal_query += "    SET src_url    = %s "
-                renewal_query += "      , group_code = %s "
-                renewal_query += "      , src_title  = %s "
-                if existing_word_2 == "X":
-                    mean_en_text = morph_new_words.fn_word_syns_en(lemma_word)
-                    renewal_query += "      , mean_en  = %s "
-                renewal_query += "      , create_date  = now() "
-                renewal_query += "      , finish_date  = NULL  "
-                renewal_query += " WHERE  word    = %s "
-                renewal_query += "   AND  user_id = %s "
-                if existing_word_2 == "X":
-                    renewal_params = (
-                        source_url,
-                        source_type,
-                        source_title,
-                        mean_en_text,
-                        lemma_word,
-                        current_username,
-                    )
-                else:
-                    renewal_params = (
-                        source_url,
-                        source_type,
-                        source_title,
-                        lemma_word,
-                        current_username,
-                    )
-                cursor.execute(renewal_query, renewal_params)
+                voca_query  = " UPDATE daily_voca "
+                voca_query += "    SET src_url    = %s "
+                voca_query += "      , group_code = %s "
+                voca_query += "      , src_title  = %s "
+                voca_query += "      , tag        = %s "
+                voca_query += "      , status     = 'C' "
+                voca_query += "      , create_date  = now() "
+                voca_query += "      , finish_date  = NULL  "
+                voca_query += " WHERE  word    = %s "
+                voca_query += "   AND  user_id = %s "
+                voca_params = (
+                    source_url,
+                    source_type,
+                    source_title,
+                    mean_en_text,
+                    lemma_word,
+                    current_username,
+                )
+                cursor.execute(voca_query, voca_params)
 
             except Exception as e:
                 print("Renewal query failed:", e)

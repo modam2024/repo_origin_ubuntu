@@ -214,7 +214,7 @@ label {
     overflow-y: auto; /* 옵션이 높이를 초과할 경우 스크롤바 표시 */
 }
 
-#backBtn, #searchBtn, #refreshBtn, #deleteBtn {
+#backBtn, #searchBtn, #refreshBtn, #deleteBtn, #createWord {
     background-color: #8C0028;
     color : white;
 }

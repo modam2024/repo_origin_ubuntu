@@ -210,29 +210,6 @@
             });
         });
 
-        $("#createWord").click(function() {
-            var wrdTitle  = $("#wrd_title").val();
-            var wrdWord   = $("#txt_word").val();
-            var wrdGroup   = $("#wrd_group").val();
-            var sendStatus = "C";
-
-            $.ajax({
-                url: '/app_word_work/create-word/',
-                type: 'POST',
-                contentType: "application/json",
-                data: JSON.stringify({
-                    "wrd_word": wrdWord,
-                    "wrd_status": sendStatus,
-                    "wrd_title": wrdTitle,
-                    "wrd_group": wrdGroup,
-
-                }),
-                success: function(response) {
-                    $("#resMessage").val(response.message);
-                }
-            });
-        });
-
         $('textarea').blur(function(e) {
             $("#submitButton").click();
         });

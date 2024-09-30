@@ -30,18 +30,50 @@
            sourceUrl = $('#titleList option:selected').val();
            window.open(decodeURIComponent(sourceUrl), '_blank');
         });
-  
-        $("#wordCheckBtn, #wordCheckBtn2" ).click(function() {
+
+        $("#wordCheckBtn" ).click(function() {
             // 5초 동안 마우스 변경;
             setCursorShap(5000);
             $("#resMessage").val("Starting");
             var checkedWords = $('input[name="rowCheck"]:checked').map(function() {
-                return $(this).closest('tr').find('td:nth-child(3)').text(); // üũ�� �ܾ� ���� �ؽ�Ʈ ����
+                return $(this).closest('tr').find('td:nth-child(3)').text();
+            }).get();
+
+            var unCheckedWords = $('input[name="rowCheck"]:not(:checked)').map(function() {
+                return $(this).closest('tr').find('td:nth-child(3)').text();
+            }).get();
+
+            var selectedTitle = $('#titleList option:selected').text();
+
+
+            var sendStatus = "D";
+
+            $.ajax({
+                url: '/app_word_work/confirm-wordcheck/',
+                type: 'POST',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    "words": checkedWords,
+                    "unchckd_words": unCheckedWords,
+                    "selected_status": sendStatus,
+                    "selected_title": selectedTitle,
+                }),
+                success: function(response) {
+                    $("#resMessage").val("success(First Finish)");
+                    $("#refreshBtn").click();
+                }
+            });
+        });
+
+        $("#wordCheckBtn2" ).click(function() {
+            // 5초 동안 마우스 변경;
+            setCursorShap(5000);
+            $("#resMessage").val("Starting");
+            var checkedWords = $('input[name="rowCheck"]:checked').map(function() {
+                return $(this).closest('tr').find('td:nth-child(3)').text();
             }).get();
         
-            var unCheckedWords = $('input[name="rowCheck"]:not(:checked)').map(function() {
-                return $(this).closest('tr').find('td:nth-child(3)').text(); // üũ���� ���� �ܾ� ���� �ؽ�Ʈ ����
-            }).get();
+            var unCheckedWords = "";
             
             var selectedTitle = $('#titleList option:selected').text();
             
@@ -54,7 +86,7 @@
                 contentType: "application/json",
                 data: JSON.stringify({ 
                     "words": checkedWords,
-                    "unchckd_words": unCheckedWords, // üũ���� ���� �ܾ�鵵 ����
+                    "unchckd_words": unCheckedWords,
                     "selected_status": sendStatus,
                     "selected_title": selectedTitle,
                 }),
@@ -203,6 +235,24 @@
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
+                }
+            });
+        });
+
+        $("#createWord").click(function() {
+            var wrdWord    = $("#txt_word").val();
+
+            $.ajax({
+                url: '/app_word_work/create-word/',
+                type: 'POST',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    "wrd_word": wrdWord,
+                }),
+                success: function(response) {
+                    $("#resMessage").val(response.message);
+                    $("#txt_word").val("");
+                    $("#refreshBtn").click();
                 }
             });
         });
