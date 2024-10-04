@@ -444,6 +444,7 @@ def get_mean_kr_from_naver_dic(en_word):
         for meaning in meanings:
             meaning = meaning.replace("(=)", "").strip()
             meaning = meaning.replace("(→)", "").strip()
+            meaning = meaning.replace("(↔)", "").strip()
             meaning_kr += meaning + "\n"
 
     except Exception as e:
