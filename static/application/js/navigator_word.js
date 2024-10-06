@@ -66,7 +66,7 @@
         setCursorShap(5000);
         var encodedWord = encodeURIComponent(word); // Encodes the word for URL
         var url = "http://en.dict.naver.com/#/search?query=" + encodedWord;
-        var popupSpecs = "width=600,height=1000,left=200,top=10,resizable=yes,scrollbars=yes,status=yes";
+        var popupSpecs = "width=800,height=1000,left=200,top=10,resizable=yes,scrollbars=yes,status=yes";
         window.open(url, 'popupWindow', popupSpecs);
     }
 
