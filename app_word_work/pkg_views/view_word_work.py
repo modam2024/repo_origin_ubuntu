@@ -25,20 +25,21 @@ def main_word_check(request):
     source_title   = request.GET.get("source_title")
     source_status  = request.GET.get("source_status")
     source_type    = request.GET.get("source_type")
+    sel_level      = request.GET.get("sel_level")
     source_gubun   = request.GET.get("gubun")
     test_page_date = request.GET.get("test_page_date")
     selected_date  = request.GET.get("selected_date")
     selected_chapter  = request.GET.get("selected_chapter")
 
-    existing_words = sql_statement.sql_dao(request, "sqls_main_word_check", "")
-
-    rows = []
-    rows_cnt = 0
-
-    for record in existing_words:
-        cur_no, cur_word, cur_mean_en, cur_tag_text, cur_create_date = record
-        rows.append([cur_no, cur_word, cur_mean_en, cur_tag_text, cur_create_date])
-        rows_cnt += 1
+    # existing_words = sql_statement.sql_dao(request, "sqls_main_word_check", "")
+    #
+    # rows = []
+    # rows_cnt = 0
+    #
+    # for record in existing_words:
+    #     cur_no, cur_word, cur_mean_en, cur_tag_text, cur_create_date = record
+    #     rows.append([cur_no, cur_word, cur_mean_en, cur_tag_text, cur_create_date])
+    #     rows_cnt += 1
 
     existing_titles = sql_statement.sql_dao(request, "sqls_main_word_check2", "")
 
@@ -49,13 +50,14 @@ def main_word_check(request):
         selected_chapter = sql_statement_living.sql_dao(request, "sqls_existing_max_chapter_num", "")
 
     values = {
-        "rows": rows,
+        # "rows": rows,
         "titles": titles,
-        "rows_cnt": rows_cnt,
+        # "rows_cnt": rows_cnt,
         "source_url": source_url,
         "source_title": source_title,
         "source_status": source_status,
         "source_type": source_type,
+        "sel_level": sel_level,
         "group_codes": group_codes,
         "source_gubun": source_gubun,
         "test_page_date": test_page_date,
@@ -64,6 +66,32 @@ def main_word_check(request):
     }
 
     return render(request, "word_check.html", values)
+
+@csrf_exempt
+@login_required(login_url='/login/')
+def main_word_table(request):
+    # ## 공통 ## 작업 히스토리 저장
+    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "main_word_table")
+
+    source_title  = request.GET.get("source_title")
+    source_status = request.GET.get("source_status")
+    source_type   = request.GET.get("source_type")
+    sel_level     = request.GET.get("sel_level")
+
+    existing_words = sql_statement.sql_dao(request, "sqls_main_word_table", "")
+
+    rows = []
+    rows_cnt = 0
+
+    cur_no = 0
+    for record in existing_words:
+        cur_word, cur_mean_en, cur_tag_text, cur_create_date = record
+        cur_no = cur_no + 1
+        rows.append([cur_no, cur_word, cur_mean_en, cur_tag_text, cur_create_date])
+        rows_cnt += 1
+
+    # 처리 성공 응답
+    return JsonResponse({"rows": rows, "rows_cnt": rows_cnt})
 
 @csrf_exempt
 @login_required(login_url='/login/')
@@ -110,50 +138,34 @@ def confirm_word_check(request):
                     try:
                         done_row_num = done_row_num + 1
 
-                        upd_query1  = " UPDATE processed_words   "
-                        upd_query1 += "    SET no          = %s  "
-                        upd_query1 += "      , status      = 'D' "
-                        upd_query1 += "      , init_status = 'A' "
-                        upd_query1 += "      , finish_date = date_format(now(),'%Y-%m-%d %H:%i:%S')   "
-                        upd_query1 += " WHERE  user_id     = %s  "
-                        upd_query1 += "   AND  word        = %s  "
-                        upd_query1 += "   AND  init_status = 'A' "
                         upd_params1 = (
                             done_row_num,
                             current_username,
                             checked_word,
                         )
-                        cursor.execute(upd_query1, upd_params1)
 
-                        upd_query1 = " UPDATE processed_words   "
-                        upd_query1 += "    SET no          = %s  "
-                        upd_query1 += "      , status      = 'D' "
-                        upd_query1 += "      , init_status = 'B' "
-                        upd_query1 += "      , finish_date = date_format(now(),'%Y-%m-%d %H:%i:%S')   "
-                        upd_query1 += " WHERE  user_id     = %s  "
-                        upd_query1 += "   AND  word        = %s  "
-                        upd_query1 += "   AND  status      = 'C' "
-                        upd_params1 = (
-                            done_row_num,
-                            current_username,
-                            checked_word,
-                        )
-                        cursor.execute(upd_query1, upd_params1)
+                        rtn_msg = sql_statement.sql_dao(request, "sqlu_processed_words_init_status_for_a", upd_params1)
+                        print(rtn_msg)
 
-                        update_word_count += 1
-
-                        upd_query2 = " UPDATE daily_voca "
-                        upd_query2 += "    SET num         = %s  "
-                        upd_query2 += "      , status      = 'D' "
-                        upd_query2 += "      , finish_date = date_format(now(),'%Y-%m-%d %H:%i:%S') "
-                        upd_query2 += " WHERE  user_id     = %s  "
-                        upd_query2 += "   AND  word        = %s  "
                         upd_params2 = (
                             done_row_num,
                             current_username,
                             checked_word,
                         )
-                        cursor.execute(upd_query2, upd_params2)
+
+                        rtn_msg = sql_statement.sql_dao(request, "sqlu_processed_words_status_for_c", upd_params2)
+                        print(rtn_msg)
+
+                        update_word_count += 1
+
+                        upd_params3 = (
+                            done_row_num,
+                            current_username,
+                            checked_word,
+                        )
+
+                        rtn_msg = sql_statement.sql_dao(request, "sqlu_daily_voca_status_for_all", upd_params3)
+                        print(rtn_msg)
 
                     except Exception as e:
                         print("Update query failed:", e)
@@ -170,51 +182,16 @@ def confirm_word_check(request):
 
                         undone_row_num = undone_row_num + 1
 
-                        # processed_words의 meaning update
-                        upd_mean_query =  " UPDATE processed_words   "
-                        upd_mean_query += "    SET no      = %s      "
-                        upd_mean_query += "      , status  = 'C'     "
-                        upd_mean_query += "      , init_status = 'B' "
-                        upd_mean_query += "      , mean_kr = %s      "
-                        upd_mean_query += "      , start_date  = date_format(now(),'%Y-%m-%d %H:%i:%S') "
-                        upd_mean_query += "      , finish_date = NULL "
-                        upd_mean_query += "  WHERE user_id     = %s   "
-                        upd_mean_query += "    AND word        = %s   "
                         upd_mean_params = (
                             undone_row_num,
                             mean_kr_text,
                             current_username,
                             unchecked_word,
                         )
-                        cursor.execute(upd_mean_query, upd_mean_params)
 
-                        # daily_voca의 meaning update
-                        upd_mean_daily_voca_query =  " UPDATE daily_voca   "
-                        upd_mean_daily_voca_query += "    SET num    =  %s "
-                        upd_mean_daily_voca_query += "      , status = 'C' "
-                        upd_mean_daily_voca_query += "      , mean   = %s  "
-                        upd_mean_daily_voca_query += "      , start_date  = date_format(now(),'%Y-%m-%d %H:%i:%S') "
-                        upd_mean_daily_voca_query += "      , finish_date = NULL "
-                        upd_mean_daily_voca_query += "  WHERE user_id = %s  "
-                        upd_mean_daily_voca_query += "    AND word    = %s  "
-                        upd_mean_daily_voca_params = (
-                            undone_row_num,
-                            mean_kr_text,
-                            current_username,
-                            unchecked_word,
-                        )
-                        cursor.execute(
-                            upd_mean_daily_voca_query, upd_mean_daily_voca_params
-                        )
+                        rtn_msg = sql_statement.sql_dao(request, "sqlu_processed_words_status_to_c_for_word", upd_mean_params)
+                        print(rtn_msg)
 
-                        # 2024.01.23 추가
-                        proc_query = " UPDATE process_info "
-                        proc_query += "    SET undone_cnt     = undone_cnt + 1 "
-                        proc_query += "      , undone_tot_cnt = %s "
-                        proc_query += "      , done_tot_cnt   = %s "
-                        proc_query += "      , create_date    = date_format(now(),'%Y-%m-%d %H:%i:%S') "
-                        proc_query += " WHERE  user_id   = %s   "
-                        proc_query += "   AND  src_title = %s   "
                         proc_params = (
                             unchecked_words_count,
                             checked_words_count,
@@ -222,8 +199,8 @@ def confirm_word_check(request):
                             selected_title,
                         )
 
-                        proc_cursor.execute(proc_query, proc_params)
-                        proc_conn.commit()
+                        rtn_msg = sql_statement.sql_dao(request, "sqlu_process_info_counts_for_title", proc_params)
+                        print(rtn_msg)
 
                     except Exception as e:
                         print("Update mean_kr failed: ", e)
@@ -261,6 +238,7 @@ def confirm_word_check(request):
             {"status": "error", "message": "Invalid request"}, status=400
         )
 
+@csrf_exempt
 @login_required(login_url='/login/')
 def word_detail(request):
     # ## 공통 ## 작업 히스토리 저장
@@ -381,6 +359,7 @@ def save_wordinfo(request):
 
     return JsonResponse({"message": "OK"})
 
+@csrf_exempt
 @login_required(login_url='/login/')
 def complete_word(request):
     # ## 공통 ## 작업 히스토리 저장
@@ -392,6 +371,19 @@ def complete_word(request):
     sql_statement.sql_dao(request, "sqlu_daily_voca_status",      completeWord)
 
     return JsonResponse({"message": "COMPLETED"})
+
+@csrf_exempt
+@login_required(login_url='/login/')
+def change_wordlevel(request):
+    # ## 공통 ## 작업 히스토리 저장
+    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "change_wordlevel")
+
+    data = json.loads(request.body)
+    checked_words = data.get("words")
+
+    sql_statement.sql_dao(request, "sqluu_processed_words_daily_voca_level", checked_words)
+
+    return JsonResponse({"message": "COMPLETED LEVEL CHANGE"})
 
 @login_required(login_url='/login/')
 def call_process(request):
@@ -462,29 +454,6 @@ def delete_content(request):
 
     # 처리 성공 응답
     return JsonResponse({"rows_cnt": rows_cnt})
-
-@login_required(login_url='/login/')
-def main_word_table(request):
-    # ## 공통 ## 작업 히스토리 저장
-    res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "main_word_table")
-
-    source_title = request.GET.get("source_title")
-    source_status = request.GET.get("source_status")
-
-    existing_words = sql_statement.sql_dao(request, "sqls_main_word_table", "")
-
-    rows = []
-    rows_cnt = 0
-
-    cur_no = 0
-    for record in existing_words:
-        cur_word, cur_mean_en, cur_tag_text, cur_create_date = record
-        cur_no = cur_no + 1
-        rows.append([cur_no, cur_word, cur_mean_en, cur_tag_text, cur_create_date])
-        rows_cnt += 1
-
-    # 처리 성공 응답
-    return JsonResponse({"rows": rows, "rows_cnt": rows_cnt})
 
 # 초기화 버튼 클릭시 (단어검증)
 @login_required(login_url='/login/')

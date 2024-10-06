@@ -17,6 +17,10 @@
                        {% endfor %}
                     </select>&nbsp;
                     <button type="button" id="searchBtn"><i class="fas fa-search"></i>조회</button>&nbsp; &nbsp;
+                    <select id="searchLevel">
+                        <option value="A" selected >전체</option>
+                        <option value="E">별표</option>
+                    </select>&nbsp;
                     COUNT:&nbsp <input type="text" id="rows_cnt" value="{{ rows_cnt }}" style="text-align:center; width:40px;" readonly></input>&nbsp&nbsp
                     <button type="button" id="backBtn"><i class="fas fa-undo"></i>되돌아가기</button>&nbsp; &nbsp;
                     <input type="text" id="txt_word" value=""/>
@@ -43,6 +47,7 @@
                 <input type="hidden" id="sourceTitle"    value="{{ source_title }}"   />
                 <input type="hidden" id="sourceStatus"   value="{{ source_status }}"  />
                 <input type="hidden" id="sourceType"     value="{{ source_type }}"    />
+                <input type="hidden" id="selLevel"       value="{{ sel_level }}"      />
                 <input type="hidden" id="sourceGubun"    value="{{ source_gubun }}"   />
                 <input type="hidden" id="test_page_date" value="{{ test_page_date }}" />
                 <input type="hidden" id="selected_date"  value="{{ selected_date }}"  />
@@ -82,8 +87,9 @@
                         <li><a href="#" id="wordCheckBtn2">전체체크빼기>대상체크하기(미완료->완료)</a></li>
                         <li><a href="#" id="unDoneProcess">완료조회>체크빼기(완료->미완료)</a></li>
                         <li style="border-bottom: 3px solid #aaa;"></li>
-                        <li><a href="#" id="callProcess" style="background-color:#aaa;color:black;">DONE 진행상태</a></li>
-                        <li><a href="#" id="gotoInit" style="background-color:#aaa;color:black;">초기화</a></li>
+                        <li><a href="#" id="callProcess" >DONE 진행상태</a></li>
+                        <li><a href="#" id="fixWordLevel" >중요단어 지정</a></li>
+                        <li><a href="#" id="gotoInit" >초기화</a></li>
                         <li><a href="#" id="sourceBtn">GO SOURCE</a></li>
                     </ul>
                 </div>

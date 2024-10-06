@@ -218,3 +218,9 @@ label {
     background-color: #8C0028;
     color : white;
 }
+
+#callProcess, #gotoInit, #fixWordLevel {
+    background-color:white;
+    color:black;
+    border: 1px solid #3B6F85;
+}

@@ -33,7 +33,7 @@
         e.preventDefault();
         // 5초 동안 마우스 변경;
         setCursorShap(5000);
-        window.location.href = BASE_URL + 'app_word_work/main-wordcheck/?source_url=&source_title=&source_type=ALL&source_status=C';
+        window.location.href = BASE_URL + 'app_word_work/main-wordcheck/?source_url=&source_title=&source_type=ALL&sel_level=A&source_status=C';
     });
     
     $("#livingEnglish").click(function() {

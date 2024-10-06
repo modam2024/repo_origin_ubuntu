@@ -12,9 +12,12 @@
         var sourceUrl     = $('#sourceUrl').val();
         var sourceStatus  = $('#sourceStatus').val();
         var sourceType    = $('#sourceType').val();
-    
+        var selLevel      = $('#selLevel').val();
+
         $('#searchGrpCd').val(sourceType);
-    
+        $('#searchLevel').val(selLevel);
+
+
         // Select ����� ���� ����� ������ ����
         $('#titleList').change(function() {
             var selectedValue = $(this).val();
@@ -158,7 +161,30 @@
                 }
             });
         });
-        
+
+
+        $("#fixWordLevel" ).click(function() {
+            // 5초 동안 마우스 변경;
+            setCursorShap(5000);
+            $("#resMessage").val("Change Level");
+            var checkedWords = $('input[name="rowCheck"]:checked').map(function() {
+                return $(this).closest('tr').find('td:nth-child(3)').text();
+            }).get();
+
+            $.ajax({
+                url: '/app_word_work/change-wordlevel/',
+                type: 'POST',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    "words": checkedWords,
+                }),
+                success: function(response) {
+                    $("#resMessage").val("Changed Levels");
+                    $("#refreshBtn").click();
+                }
+            });
+        });
+
         $("#gotoInit").click(function() {
         
             var sourceTitle   = $('#titleList option:selected').text();
@@ -175,24 +201,24 @@
                 }
             });
         });        
-        
+
         $("#searchBtn").click(function() {
             var searchGrpCd = $('#searchGrpCd option:selected').text();
+            var searchLevel = $('#searchLevel option:selected').val();
 
-            var url = '/app_word_work/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(searchGrpCd)  + '&source_status=C';
-            window.location.href = url; 
+            var url = '/app_word_work/main-wordcheck/?source_url=' + encodeURIComponent(sourceUrl) + '&source_title=' + encodeURIComponent(sourceTitle) + '&source_type=' + encodeURIComponent(searchGrpCd) + '&sel_level=' + encodeURIComponent(searchLevel) + '&source_status=C';
+            window.location.href = url;
         });
-        
+
         $("#refreshBtn").click(function() {
             // 3초 동안 마우스 변경;
             setCursorShap(3000);
 
-            var selectedTitle = $('#titleList option:selected').text();
-            var selectedStatus = $('#wordStatus option:selected').val();
+            var selectedTitle  = $('#titleList   option:selected').text();
+            var selectedStatus = $('#wordStatus  option:selected').val();
 
-            var searchGrpCd = $('#searchGrpCd option:selected').text();
-            //selectedTitle  = encodeURIComponent(selectedTitle);
-            //selectedStatus = encodeURIComponent(selectedStatus);
+            var searchGrpCd    = $('#searchGrpCd option:selected').text();
+            var searchLevel    = $('#searchLevel option:selected').val();
 
             if (searchGrpCd != "NEWS") {
                 $("#sourceBtn").css("display", "none");
@@ -202,9 +228,10 @@
                 url: BASE_URL + 'app_word_work/main-wordtable/',
                 type: 'GET',
                 data: {
-                    'source_title': selectedTitle,
+                    'source_title' : selectedTitle,
                     'source_status': selectedStatus,
-                    'source_type': searchGrpCd
+                    'source_type'  : searchGrpCd,
+                    'sel_level'    : searchLevel
                 },
                 success: function(response) {
                   
@@ -291,6 +318,14 @@
             $("#wordStatus option").each(function() {
                 if ($(this).val() === sourceStatus) {
                     $('#wordStatus').val($(this).val()).trigger('change');
+                }
+            });
+        }
+
+        if (selLevel) {
+            $("#searchLevel option").each(function() {
+                if ($(this).val() === selLevel) {
+                    $('#searchLevel').val($(this).val()).trigger('change');
                 }
             });
         }

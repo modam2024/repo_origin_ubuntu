@@ -15,4 +15,6 @@ urlpatterns = [
     path('save-wordinfo/',     view_word_work.save_wordinfo,      name='save_wordinfo'),
     path('complete-word/',     view_word_work.complete_word,      name='complete_word'),
     path('create-word/',       view_word_work.create_word,        name='create-word'),
+    path('change-wordlevel/',  view_word_work.change_wordlevel,   name='change-wordlevel'),
+
 ]

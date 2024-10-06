@@ -32,6 +32,26 @@
         });
 
         // 오리지날 대화 내용 재생
+        $(".convSpeech").click(function() {
+            var cnvt_text = ""
+            var txtAreaId = "";  // 해당 텍스트 영역의 ID 생성
+
+            // 버튼에 해당하는 textarea의 ID를 동적으로 가져옵니다.
+            var buttonId = $(this).attr('id');
+            var index = buttonId.replace('convSpeech', '');  // '1', '2' 등의 숫자를 추출
+
+            var txtAreaId = "#converted_sentn" + index;  // 해당 텍스트 영역의 ID 생성
+            var tmp_cnvt_text = $(txtAreaId).val();  // 텍스트 영역의 값을 가져옵니다.
+            if ( index == "0") {
+                $("#converted_sentn0-1").hide();
+                $("#converted_sentn0-2").show();
+                tmp_cnvt_text = tmp_cnvt_text.replace(":", "")
+            }
+            cnvt_text = splitCnvtText(tmp_cnvt_text)
+            splitTextAndSpeakBySentence(cnvt_text);  // 추출된 단어로 함수 호출
+        });
+
+        // 오리지날 대화 내용 재생
         $(".originalSpeech").click(function() {
             var cnvt_text = ""
             var txtAreaId = "";  // 해당 텍스트 영역의 ID 생성
@@ -53,6 +73,10 @@
             cnvt_text = cnvt_text.replace(":", "")
 
             splitTextAndSpeakBySentence(cnvt_text);  // 추출된 단어로 함수 호출
+        });
+
+        $(".stopSpeech").click(function() {
+            stopSpeaking();
         });
 
         $('textarea').blur(function(e) {

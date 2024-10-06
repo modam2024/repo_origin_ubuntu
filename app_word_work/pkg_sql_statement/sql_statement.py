@@ -33,6 +33,7 @@ def sql_dao(request, sql_name, p_param):
             source_title  = request.GET.get("source_title")
             source_status = request.GET.get("source_status")
             source_type   = request.GET.get("source_type")
+            sel_level     = request.GET.get("sel_level")
 
             try:
                 if source_type == "ALL":
@@ -41,8 +42,15 @@ def sql_dao(request, sql_name, p_param):
                     query += " WHERE  user_id    = %s  "
                     query += "   AND status     != 'D' "
                     query += "   AND init_status = 'B' "
+                    if sel_level == "E":
+                       query += "   AND level    = %s  "
                     query += " ORDER BY DATE(create_date) DESC, no ASC "
-                    params = (current_username,)
+                    query += " LIMIT 10 "
+
+                    if sel_level == "E":
+                       params = (current_username, sel_level)
+                    else:
+                       params = (current_username,)
                 else:
                     query  = "SELECT no, word, mean_en, mean_kr, DATE(create_date) as create_date "
                     query += "  FROM processed_words   "
@@ -50,8 +58,13 @@ def sql_dao(request, sql_name, p_param):
                     query += "   AND status      = %s  "
                     query += "   AND src_title   = %s  "
                     query += "   AND group_code  = %s  "
+                    if sel_level == "E":
+                       query += "   AND level    = %s  "
                     query += " ORDER BY DATE(create_date) DESC, no ASC "
-                    params = (current_username, source_status, source_title, source_type)
+                    if sel_level == "E":
+                       params = (current_username, source_status, source_title, source_type, sel_level)
+                    else:
+                       params = (current_username, source_status, source_title, source_type,)
 
                 cursor.execute(query, params)
 
@@ -59,6 +72,8 @@ def sql_dao(request, sql_name, p_param):
                 print("Database query failed:", e)
 
             existing_words = cursor.fetchall()
+
+            print(existing_words)
 
             return existing_words
 
@@ -203,24 +218,40 @@ def sql_dao(request, sql_name, p_param):
             source_title  = request.GET.get("source_title")
             source_status = request.GET.get("source_status")
             source_type   = request.GET.get("source_type")
+            sel_level     = request.GET.get("sel_level")
 
             try:
                 if source_type == "ALL":
-                    query  = "SELECT word, mean_en, mean_kr, group_code as create_date "
-                    query += "  FROM processed_words   "
-                    query += " WHERE  user_id    = %s  "
-                    query += "   AND status     != 'D' "
-                    query += "   AND init_status = 'B' "
-                    query += "   AND group_code != 'TOPS' "
-                    query += " ORDER BY CASE WHEN group_code = 'TOPS' THEN 0 ELSE 1 END, DATE(create_date) DESC, no ASC "
+                    query  = " SELECT word, mean_en, mean_kr, group_code as create_date "
+                    query += "   FROM processed_words   "
+                    query += "  WHERE  user_id    = %s  "
+                    query += "    AND status     != 'D' "
+                    query += "    AND init_status = 'B' "
+                    query += "    AND group_code != 'TOPS' "
+                    if sel_level == "E":
+                       query += " AND level    = %s  "
+                    query += " ORDER BY group_code, DATE(create_date) DESC, no ASC "
                     query += " LIMIT 10 "
-                    params = (current_username,)
+
+                    if sel_level == "E":
+                       params = (current_username, sel_level)
+                    else:
+                       params = (current_username,)
+
                 else:
-                    query  = "SELECT word, mean_en, mean_kr, DATE(create_date) as create_date "
-                    query += "  FROM processed_words   "
-                    query += " WHERE user_id = %s      "
-                    query += "   AND status  = %s and src_title = %s    "
-                    params = (current_username, source_status, source_title)
+                    query  = " SELECT word, mean_en, mean_kr, DATE(create_date) as create_date "
+                    query += "   FROM processed_words  "
+                    query += "  WHERE user_id   = %s   "
+                    query += "    AND status    = %s   "
+                    query += "    AND src_title = %s   "
+                    if sel_level == "E":
+                       query += " AND level  = %s   "
+                    query += " ORDER BY DATE(create_date) DESC, no ASC "
+
+                    if sel_level == "E":
+                       params = (current_username, source_status, source_title, sel_level)
+                    else:
+                       params = (current_username, source_status, source_title, )
 
                 cursor.execute(query, params)
 
@@ -362,6 +393,157 @@ def sql_dao(request, sql_name, p_param):
             re_title_cnt = 1
 
             return re_title_cnt
+
+        '''
+        #############################################################
+        # FUNC ID : sqlu_processed_words_init_status_for_a    
+        # 함수명 : init_status 가 A 인 단어의 status 상태를 완료로 변경
+        # 작성일 : 2024.10.06
+        #############################################################  '''
+        if sql_name == "sqlu_processed_words_init_status_for_a":
+           upd_params1 = p_param
+
+           upd_query1  = " UPDATE processed_words   "
+           upd_query1 += "    SET no          = %s  "
+           upd_query1 += "      , status      = 'D' "
+           upd_query1 += "      , init_status = 'A' "
+           upd_query1 += "      , finish_date = date_format(now(),'%Y-%m-%d %H:%i:%S')   "
+           upd_query1 += " WHERE  user_id     = %s  "
+           upd_query1 += "   AND  word        = %s  "
+           upd_query1 += "   AND  init_status = 'A' "
+
+           cursor.execute(upd_query1, upd_params1)
+
+           print(upd_params1)
+
+           return "sqlu_processed_words_init_status_for_a OK"
+
+        '''
+        #############################################################
+        # FUNC ID : sqlu_processed_words_status_for_c    
+        # 함수명 : init_status 가 A 인 단어의 status 상태를 완료로 변경
+        # 작성일 : 2024.10.06
+        #############################################################  '''
+        if sql_name == "sqlu_processed_words_status_for_c":
+           upd_params2 = p_param
+
+           upd_query2 =  " UPDATE processed_words   "
+           upd_query2 += "    SET no          = %s  "
+           upd_query2 += "      , status      = 'D' "
+           upd_query2 += "      , init_status = 'B' "
+           upd_query2 += "      , finish_date = date_format(now(),'%Y-%m-%d %H:%i:%S')   "
+           upd_query2 += " WHERE  user_id     = %s  "
+           upd_query2 += "   AND  word        = %s  "
+           upd_query2 += "   AND  status      = 'C' "
+
+           cursor.execute(upd_query2, upd_params2)
+
+           print(upd_params2)
+
+           return "sqlu_processed_words_status_for_c OK"
+
+        '''
+        #############################################################
+        # FUNC ID : sqlu_daily_voca_status_for_all    
+        # 함수명   : 해당하는 단어의 daily_voca 상태 완료 처리
+        # 작성일   : 2024.10.06
+        #############################################################  '''
+        if sql_name == "sqlu_daily_voca_status_for_all":
+           upd_params3 = p_param
+
+           upd_query3  = " UPDATE daily_voca        "
+           upd_query3 += "    SET num         = %s  "
+           upd_query3 += "      , status      = 'D' "
+           upd_query3 += "      , finish_date = date_format(now(),'%Y-%m-%d %H:%i:%S') "
+           upd_query3 += " WHERE  user_id     = %s  "
+           upd_query3 += "   AND  word        = %s  "
+
+           cursor.execute(upd_query3, upd_params3)
+
+           print(upd_params3)
+
+           return "sqlu_daily_voca_status_for_all OK"
+
+        '''
+        #############################################################
+        # FUNC ID : sqlu_processed_words_status_to_c_for_word    
+        # 함수명 : processed_words 의 단어 상태를 진행으로 변경
+        # 작성일 : 2024.10.06
+        #############################################################  '''
+        if sql_name == "sqlu_processed_words_status_to_c_for_word":
+           upd_mean_params = p_param
+
+           # processed_words의 meaning update
+           upd_mean_query  = " UPDATE processed_words   "
+           upd_mean_query += "    SET no      = %s      "
+           upd_mean_query += "      , status  = 'C'     "
+           upd_mean_query += "      , init_status = 'B' "
+           upd_mean_query += "      , mean_kr = %s      "
+           upd_mean_query += "      , start_date  = date_format(now(),'%Y-%m-%d %H:%i:%S') "
+           upd_mean_query += "      , finish_date = NULL "
+           upd_mean_query += "  WHERE user_id     = %s   "
+           upd_mean_query += "    AND word        = %s   "
+
+           cursor.execute(upd_mean_query, upd_mean_params)
+
+           print(upd_mean_params)
+
+           return "sqlu_processed_words_status_to_c_for_word OK"
+
+        '''
+        #############################################################
+        # FUNC ID : sqlu_process_info_counts_for_title    
+        # 함수명 : process_info 의 타이틀별 건수 변경
+        # 작성일 : 2024.10.06
+        #############################################################  '''
+        if sql_name == "sqlu_process_info_counts_for_title":
+           proc_params = p_param
+
+           # 2024.01.23 추가
+           proc_query = " UPDATE process_info "
+           proc_query += "    SET undone_cnt     = undone_cnt + 1 "
+           proc_query += "      , undone_tot_cnt = %s "
+           proc_query += "      , done_tot_cnt   = %s "
+           proc_query += "      , create_date    = date_format(now(),'%Y-%m-%d %H:%i:%S') "
+           proc_query += " WHERE  user_id   = %s   "
+           proc_query += "   AND  src_title = %s   "
+
+           cursor.execute(proc_query, proc_params)
+
+           print(proc_params)
+
+           return "sqlu_process_info_counts_for_title OK"
+
+        '''
+        #############################################################
+        # FUNC ID : sqluu_processed_words_daily_voca_level    
+        # 함수명 : processed_words, daily_voca 의 중요도 변경
+        # 작성일 : 2024.10.06
+        #############################################################  '''
+        if sql_name == "sqluu_processed_words_daily_voca_level":
+           checked_words = p_param
+
+           for each_word in checked_words:
+               # processed_words level 변경
+               upd_level_query  = " UPDATE processed_words    "
+               upd_level_query += "    SET level   = 'E'      "
+               upd_level_query += "      , finish_date = NULL "
+               upd_level_query += "  WHERE user_id     = %s   "
+               upd_level_query += "    AND word        = %s   "
+               upd_level_param = ( current_username, each_word )
+               cursor.execute(upd_level_query, upd_level_param)
+
+               # daily_voca  order_priority 변경
+               upd_priority_query  = " UPDATE daily_voca           "
+               upd_priority_query += "    SET order_priority = 'H' "
+               upd_priority_query += "      , priority_date  = date_format(now(),'%Y-%m-%d %H:%i:%S') "
+               upd_priority_query += "      , finish_date = NULL   "
+               upd_priority_query += "  WHERE user_id     = %s     "
+               upd_priority_query += "    AND word        = %s     "
+               upd_priority_param = ( current_username, each_word )
+               cursor.execute(upd_priority_query, upd_priority_param)
+
+           return "sqluu_processed_words_daily_voca_level OK"
 
         ''' 
         ##############
