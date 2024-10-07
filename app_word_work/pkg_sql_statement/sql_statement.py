@@ -73,8 +73,6 @@ def sql_dao(request, sql_name, p_param):
 
             existing_words = cursor.fetchall()
 
-            print(existing_words)
-
             return existing_words
 
         '''
@@ -93,7 +91,7 @@ def sql_dao(request, sql_name, p_param):
                     query += " WHERE  user_id    = %s  "
                     query += "   AND status     != 'D' "
                     query += "   AND init_status = 'B' "
-                    query += " ORDER BY DATE(create_date) DESC, no ASC "
+                    query += " ORDER BY src_title ASC  "
                     query += " LIMIT 10 "
                     params = (current_username,)
                 else:
@@ -103,7 +101,7 @@ def sql_dao(request, sql_name, p_param):
                     query += "   AND src_url is not null "
                     query += "   AND group_code = %s     "
                     # query += "   AND status     = %s   "
-                    query += " ORDER BY init_status DESC, create_date DESC "
+                    query += " ORDER BY src_title ASC    "
                     params = (
                         current_username,
                         source_type,
@@ -230,7 +228,7 @@ def sql_dao(request, sql_name, p_param):
                     query += "    AND group_code != 'TOPS' "
                     if sel_level == "E":
                        query += " AND level    = %s  "
-                    query += " ORDER BY group_code, DATE(create_date) DESC, no ASC "
+                    query += " ORDER BY group_code, DATE(create_date) DESC, word ASC "
                     query += " LIMIT 10 "
 
                     if sel_level == "E":
@@ -246,7 +244,7 @@ def sql_dao(request, sql_name, p_param):
                     query += "    AND src_title = %s   "
                     if sel_level == "E":
                        query += " AND level  = %s   "
-                    query += " ORDER BY DATE(create_date) DESC, no ASC "
+                    query += " ORDER BY DATE(create_date) DESC, word ASC "
 
                     if sel_level == "E":
                        params = (current_username, source_status, source_title, sel_level)
@@ -262,6 +260,31 @@ def sql_dao(request, sql_name, p_param):
 
             return existing_words
 
+        '''
+        #############################################################
+        # FUNC ID : sqls_process_info_step_status      
+        # 함수명   : 1차 완료 처리 상태 조회
+        # 작성일   : 2024.10.07
+        #############################################################  '''
+        if sql_name == "sqls_process_info_step_status":
+            src_title = p_param
+
+            try:
+                status_query  = " SELECT ifnull(step,'X') "
+                status_query += "   FROM process_info     "
+                status_query += "  WHERE user_id   = %s   "
+                status_query += "    AND src_title = %s   "
+                status_params = (current_username, src_title,)
+                cursor.execute(status_query, status_params)
+
+            except Exception as e:
+                print("Database query failed:", e)
+
+            tmp_status = cursor.fetchone()
+            res_status = tmp_status[0]
+
+            return res_status
+
         ''' 
         ##############
          INSERT BLOCK
@@ -273,13 +296,16 @@ def sql_dao(request, sql_name, p_param):
         # 작성일 : 2024.07.20
         ############################################################# '''
         if sql_name == "sqli_confirm_word_check":
-            selected_title = p_param
+
+            data = json.loads(request.body)
+            selected_title  = data.get("selected_title")
+            selected_step   = data.get("step")
 
             # 2024.01.23 추가- process_info 데이터 생성
             proc_insert_query  = " INSERT INTO process_info "
-            proc_insert_query += " (user_id, src_title, undone_cnt, undone_tot_cnt, done_tot_cnt) "
-            proc_insert_query += " VALUES (%s, %s, 0, 0, 0) "
-            proc_insert_params = (current_username, selected_title,)
+            proc_insert_query += " (user_id, src_title, undone_cnt, undone_tot_cnt, done_tot_cnt, step) "
+            proc_insert_query += " VALUES (%s, %s, 0, 0, 0, %s) "
+            proc_insert_params = (current_username, selected_title, selected_step)
 
             cursor.execute(proc_insert_query, proc_insert_params)
 
@@ -414,8 +440,6 @@ def sql_dao(request, sql_name, p_param):
 
            cursor.execute(upd_query1, upd_params1)
 
-           print(upd_params1)
-
            return "sqlu_processed_words_init_status_for_a OK"
 
         '''
@@ -438,8 +462,6 @@ def sql_dao(request, sql_name, p_param):
 
            cursor.execute(upd_query2, upd_params2)
 
-           print(upd_params2)
-
            return "sqlu_processed_words_status_for_c OK"
 
         '''
@@ -459,8 +481,6 @@ def sql_dao(request, sql_name, p_param):
            upd_query3 += "   AND  word        = %s  "
 
            cursor.execute(upd_query3, upd_params3)
-
-           print(upd_params3)
 
            return "sqlu_daily_voca_status_for_all OK"
 
@@ -486,8 +506,6 @@ def sql_dao(request, sql_name, p_param):
 
            cursor.execute(upd_mean_query, upd_mean_params)
 
-           print(upd_mean_params)
-
            return "sqlu_processed_words_status_to_c_for_word OK"
 
         '''
@@ -509,8 +527,6 @@ def sql_dao(request, sql_name, p_param):
            proc_query += "   AND  src_title = %s   "
 
            cursor.execute(proc_query, proc_params)
-
-           print(proc_params)
 
            return "sqlu_process_info_counts_for_title OK"
 

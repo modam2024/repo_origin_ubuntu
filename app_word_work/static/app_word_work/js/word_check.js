@@ -57,9 +57,10 @@
                 contentType: "application/json",
                 data: JSON.stringify({
                     "words": checkedWords,
-                    "unchckd_words": unCheckedWords,
+                    "unchckd_words"  : unCheckedWords,
                     "selected_status": sendStatus,
-                    "selected_title": selectedTitle,
+                    "selected_title" : selectedTitle,
+                    "selected_step"  : "A",
                 }),
                 success: function(response) {
                     $("#resMessage").val("success(First Finish)");
@@ -89,9 +90,10 @@
                 contentType: "application/json",
                 data: JSON.stringify({ 
                     "words": checkedWords,
-                    "unchckd_words": unCheckedWords,
+                    "unchckd_words"  : unCheckedWords,
                     "selected_status": sendStatus,
-                    "selected_title": selectedTitle,
+                    "selected_title" : selectedTitle,
+                    "selected_step"  : "B",
                 }),
                 success: function(response) {
                     $("#resMessage").val("success(First Finish)");
@@ -129,9 +131,10 @@
                 contentType: "application/json",
                 data: JSON.stringify({ 
                     "words": checkedWords,
-                    "unchckd_words": unCheckedWords, // üũ���� ���� �ܾ�鵵 ����
+                    "unchckd_words"  : unCheckedWords, // üũ���� ���� �ܾ�鵵 ����
                     "selected_status": sendStatus,
-                    "selected_title": selectedTitle,
+                    "selected_title" : selectedTitle,
+                    "selected_step"  : "C",
                 }),
                 success: function(response) {
                     $("#resMessage").val("UnDone Process");
@@ -236,6 +239,13 @@
                 success: function(response) {
                   
                     $("#rows_cnt").val(response.rows_cnt);
+                    var check_step = response.step_status;
+
+                    if (check_step === 'A')
+                    {
+                        $("#wordCheckBtn").prop("disabled", true);
+                        $("#wordCheckBtn").css("background-color", "grey");
+                    }
                   
                     // Clear existing table rows
                     $(".table-container table tr:not(:first)").remove();

@@ -90,8 +90,10 @@ def main_word_table(request):
         rows.append([cur_no, cur_word, cur_mean_en, cur_tag_text, cur_create_date])
         rows_cnt += 1
 
+    step_status = sql_statement.sql_dao(request, "sqls_process_info_step_status", source_title)
+
     # 처리 성공 응답
-    return JsonResponse({"rows": rows, "rows_cnt": rows_cnt})
+    return JsonResponse({"rows": rows, "rows_cnt": rows_cnt, "step_status": step_status})
 
 @csrf_exempt
 @login_required(login_url='/login/')
@@ -110,16 +112,17 @@ def confirm_word_check(request):
 
         try:
             data = json.loads(request.body)
-            checked_words = data.get("words")
+            checked_words   = data.get("words")
             unchecked_words = data.get("unchckd_words")
             selected_status = data.get("selected_status")
-            selected_title = data.get("selected_title")
+            selected_title  = data.get("selected_title")
+            # selected_step   = data.get("selected_step")
 
             # process_info 삭제
             rtn_code = sql_statement.sql_dao(request, "sqld_confirm_word_check", selected_title)
 
             # process_info 생성
-            rtn_code = sql_statement.sql_dao(request, "sqli_confirm_word_check", selected_title)
+            rtn_code = sql_statement.sql_dao(request, "sqli_confirm_word_check", "")
 
             # 2024.01.23 추가- process_info 개별 count 데이터 초기화
             if checked_words is not None:
@@ -486,8 +489,8 @@ def create_word(request):
             "lemma_word": strWord,
             'tag': "",
             'tag_text': "",
-            "source_url": "http://modameng.com:8000/app_word_work/main-wordcheck/?source_url=&source_title=&source_type=ALL&source_status=C",
-            "source_type": "ALL",
+            "source_url": "http://modameng.com:8000/app_word_work/main-wordcheck/?source_url=&source_title=&source_type=ETC&source_status=C",
+            "source_type": "ETC",
             "source_title": "create new words",
             "mean_en_text": "",
        }
