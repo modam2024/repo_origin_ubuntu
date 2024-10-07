@@ -92,6 +92,9 @@ def main_word_table(request):
 
     step_status = sql_statement.sql_dao(request, "sqls_process_info_step_status", source_title)
 
+    if step_status == "A" or step_status == "B" or step_status == "C":
+       step_status = "A"
+
     # 처리 성공 응답
     return JsonResponse({"rows": rows, "rows_cnt": rows_cnt, "step_status": step_status})
 

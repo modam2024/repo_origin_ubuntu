@@ -39,7 +39,7 @@
             // 5초 동안 마우스 변경;
             setCursorShap(5000);
             if ($("#check_step").val() === "A") {
-               $("#resMessage").val("1차처리 완료되어 재실행 안됨");
+               $("#resMessage").val("1차 완료 재실행 안됨");
                return;
             } else {
                $("#resMessage").val("Starting");
