@@ -91,7 +91,7 @@ def sql_dao(request, sql_name, p_param):
                     query += " WHERE  user_id    = %s  "
                     query += "   AND status     != 'D' "
                     query += "   AND init_status = 'B' "
-                    query += " ORDER BY src_title ASC  "
+                    query += " ORDER BY create_date DESC, src_title ASC  "
                     query += " LIMIT 10 "
                     params = (current_username,)
                 else:
@@ -101,7 +101,7 @@ def sql_dao(request, sql_name, p_param):
                     query += "   AND src_url is not null "
                     query += "   AND group_code = %s     "
                     # query += "   AND status     = %s   "
-                    query += " ORDER BY src_title ASC    "
+                    query += " ORDER BY create_date DESC, src_title ASC "
                     params = (
                         current_username,
                         source_type,
@@ -299,7 +299,7 @@ def sql_dao(request, sql_name, p_param):
 
             data = json.loads(request.body)
             selected_title  = data.get("selected_title")
-            selected_step   = data.get("step")
+            selected_step   = data.get("selected_step")
 
             # 2024.01.23 추가- process_info 데이터 생성
             proc_insert_query  = " INSERT INTO process_info "

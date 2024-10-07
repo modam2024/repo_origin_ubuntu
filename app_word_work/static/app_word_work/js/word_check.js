@@ -34,10 +34,14 @@
            window.open(decodeURIComponent(sourceUrl), '_blank');
         });
 
-        $("#wordCheckBtn" ).click(function() {
+        $("#wordCheckBtn" ).click(function(event) {
+             event.preventDefault();  // 이 코드를 추가하여 클릭 이벤트를 막을 수 있습니다.
             // 5초 동안 마우스 변경;
             setCursorShap(5000);
             $("#resMessage").val("Starting");
+            if ($("#check_step").val() === "A") {
+               return;
+            }
             var checkedWords = $('input[name="rowCheck"]:checked').map(function() {
                 return $(this).closest('tr').find('td:nth-child(3)').text();
             }).get();
@@ -240,11 +244,15 @@
                   
                     $("#rows_cnt").val(response.rows_cnt);
                     var check_step = response.step_status;
+                    $("#check_step").val(check_step);
 
                     if (check_step === 'A')
                     {
                         $("#wordCheckBtn").prop("disabled", true);
                         $("#wordCheckBtn").css("background-color", "grey");
+                    } else {
+                        $("#wordCheckBtn").prop("disabled", false);
+                        $("#wordCheckBtn").css("background-color", "#4D92AA");
                     }
                   
                     // Clear existing table rows

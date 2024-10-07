@@ -148,7 +148,6 @@ def confirm_word_check(request):
                         )
 
                         rtn_msg = sql_statement.sql_dao(request, "sqlu_processed_words_init_status_for_a", upd_params1)
-                        print(rtn_msg)
 
                         upd_params2 = (
                             done_row_num,
@@ -157,7 +156,6 @@ def confirm_word_check(request):
                         )
 
                         rtn_msg = sql_statement.sql_dao(request, "sqlu_processed_words_status_for_c", upd_params2)
-                        print(rtn_msg)
 
                         update_word_count += 1
 
@@ -168,7 +166,6 @@ def confirm_word_check(request):
                         )
 
                         rtn_msg = sql_statement.sql_dao(request, "sqlu_daily_voca_status_for_all", upd_params3)
-                        print(rtn_msg)
 
                     except Exception as e:
                         print("Update query failed:", e)
@@ -193,7 +190,6 @@ def confirm_word_check(request):
                         )
 
                         rtn_msg = sql_statement.sql_dao(request, "sqlu_processed_words_status_to_c_for_word", upd_mean_params)
-                        print(rtn_msg)
 
                         proc_params = (
                             unchecked_words_count,
@@ -203,7 +199,6 @@ def confirm_word_check(request):
                         )
 
                         rtn_msg = sql_statement.sql_dao(request, "sqlu_process_info_counts_for_title", proc_params)
-                        print(rtn_msg)
 
                     except Exception as e:
                         print("Update mean_kr failed: ", e)
