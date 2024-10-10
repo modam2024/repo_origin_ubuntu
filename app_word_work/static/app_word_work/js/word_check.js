@@ -280,7 +280,7 @@
                         $('.table-container table').append(newRow);
                     });
 
-                    $("#checkAll").checkbox.checked();
+                    $("#checkAll").prop("checked", true);  // 마스터 체크박스 체크
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
