@@ -279,6 +279,8 @@
                         newRow.append($('<td>').text(rec_create_date));
                         $('.table-container table').append(newRow);
                     });
+
+                    $("#checkAll").checkbox.checked();
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
