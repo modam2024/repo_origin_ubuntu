@@ -85,9 +85,9 @@ def main_word_table(request):
 
     cur_no = 0
     for record in existing_words:
-        cur_word, cur_mean_en, cur_tag_text, cur_create_date = record
+        cur_word, cur_mean_en, cur_tag_text, cur_create_date, level = record
         cur_no = cur_no + 1
-        rows.append([cur_no, cur_word, cur_mean_en, cur_tag_text, cur_create_date])
+        rows.append([cur_no, cur_word, cur_mean_en, cur_tag_text, cur_create_date, level])
         rows_cnt += 1
 
     step_status = sql_statement.sql_dao(request, "sqls_process_info_step_status", source_title)

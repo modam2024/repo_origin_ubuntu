@@ -220,7 +220,7 @@ def sql_dao(request, sql_name, p_param):
 
             try:
                 if source_type == "ALL":
-                    query  = " SELECT word, mean_en, mean_kr, group_code as create_date "
+                    query  = " SELECT word, mean_en, mean_kr, group_code as create_date, level "
                     query += "   FROM processed_words   "
                     query += "  WHERE  user_id    = %s  "
                     query += "    AND status     != 'D' "
@@ -237,7 +237,7 @@ def sql_dao(request, sql_name, p_param):
                        params = (current_username,)
 
                 else:
-                    query  = " SELECT word, mean_en, mean_kr, DATE(create_date) as create_date "
+                    query  = " SELECT word, mean_en, mean_kr, DATE(create_date) as create_date, level "
                     query += "   FROM processed_words  "
                     query += "  WHERE user_id   = %s   "
                     query += "    AND status    = %s   "

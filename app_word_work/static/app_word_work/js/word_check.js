@@ -263,8 +263,12 @@
                     var safeTitle = selectedTitle.replace(/'/g, "\\'");
 
                     $.each(response.rows, function(i, record) {
-                      
-                        var rec_number  = record[0];
+                        let tmp_star = "";
+                        if ( record[5] === 'E' ) {
+                            tmp_star = "*";
+                        }
+
+                        var rec_number  = record[0]+tmp_star;
                         var rec_word    = record[1];
                         var rec_mean_en = record[2];
                         var rec_mean_kr = record[3];
