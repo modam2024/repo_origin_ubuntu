@@ -481,10 +481,12 @@ def create_word(request):
     if request.method == "POST":
        data     = json.loads(request.body)
        strGrpCd = data.get("wrd_grpcd")
+       strTitle = data.get("wrd_title")
        strWord  = data.get("wrd_word")
 
        if strGrpCd == "ALL":
           strGrpCd = "ETC"
+          strTitle = "create new words"
 
        dic_words_info = {
             "word_insert_count": 1,
@@ -493,7 +495,7 @@ def create_word(request):
             'tag_text': "",
             "source_url": "http://modameng.com:8000/app_word_work/main-wordcheck/?source_url=&source_title=&source_type=ETC&source_status=C",
             "source_type": strGrpCd,
-            "source_title": "create new words",
+            "source_title": strTitle,
             "mean_en_text": "",
        }
        rtn = proj_sql_statement.sql_dao(request, "sqlii_processed_words", dic_words_info)

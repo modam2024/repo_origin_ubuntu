@@ -294,6 +294,7 @@
 
         $("#createWord").click(function() {
             var wrdGrpCd = $('#searchGrpCd option:selected').val();
+            var wrdTitle = $('#titleList option:selected').text();
             var wrdWord  = $("#txt_word").val();
 
             $.ajax({
@@ -302,6 +303,7 @@
                 contentType: "application/json",
                 data: JSON.stringify({
                     "wrd_grpcd": wrdGrpCd,
+                    "wrd_title": wrdTitle,
                     "wrd_word": wrdWord,
                 }),
                 success: function(response) {
