@@ -90,20 +90,20 @@
            var txtAreaExampleEng = $('#txt_eng_example');
           
            if (txtAreaExampleEng.height() != orgEngExpHeight) {
-              txtAreaExampleEng.height(orgEngExpHeight);
+              txtAreaExampleEng.height(txtAreaExampleEng.prop('scrollHeight'));
            } else {
-              txtAreaExampleEng.height(txtAreaExampleEng.prop('scrollHeight')); 
+              txtAreaExampleEng.height(orgEngExpHeight);
            }
-        });      
+        });
 
         // 영문 예문 클릭 이벤트 핸들러 추가
         $("#expandExampleEng2").click(function() {
            var txtAreaExampleEng2 = $('#txt_eng_example2');
           
            if (txtAreaExampleEng2.height() != orgEngExp2Height) {
-              txtAreaExampleEng2.height(orgEngExp2Height);
+              txtAreaExampleEng2.height(txtAreaExampleEng2.prop('scrollHeight'));
            } else {
-              txtAreaExampleEng2.height(txtAreaExampleEng2.prop('scrollHeight')); 
+              txtAreaExampleEng2.height(orgEngExp2Height);
            }
         });      
 
@@ -113,9 +113,9 @@
            var txtAreaKor = $('#txt_kor_example');
           
            if (txtAreaKor.height() != orgKorHeight) {
-              txtAreaKor.height(orgKorHeight);
+              txtAreaKor.height(txtAreaKor.prop('scrollHeight'));
            } else {
-              txtAreaKor.height(txtAreaKor.prop('scrollHeight')); 
+              txtAreaKor.height(orgKorHeight);
            }   
         });      
         
@@ -124,10 +124,10 @@
            var txtAreaKor2 = $('#txt_kor_example2');
           
            if (txtAreaKor2.height() != orgKor2Height) {
-              txtAreaKor2.height(orgKor2Height);
+              txtAreaKor2.height(txtAreaKor2.prop('scrollHeight'));
            } else {
-              txtAreaKor2.height(txtAreaKor2.prop('scrollHeight')); 
-           }   
+              txtAreaKor2.height(orgKor2Height);
+           }
         });
         
         $("#clearWord").click(function() {

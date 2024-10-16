@@ -275,13 +275,18 @@ def sql_dao(request, sql_name, p_param):
                 status_query += "  WHERE user_id   = %s   "
                 status_query += "    AND src_title = %s   "
                 status_params = (current_username, src_title,)
+
                 cursor.execute(status_query, status_params)
 
             except Exception as e:
                 print("Database query failed:", e)
 
             tmp_status = cursor.fetchone()
-            res_status = tmp_status[0]
+
+            if tmp_status is not None:
+                res_status = tmp_status[0]
+            else:
+                res_status = "X"
 
             return res_status
 

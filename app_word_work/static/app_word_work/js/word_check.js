@@ -293,13 +293,15 @@
         });
 
         $("#createWord").click(function() {
-            var wrdWord    = $("#txt_word").val();
+            var wrdGrpCd = $('#searchGrpCd option:selected').val();
+            var wrdWord  = $("#txt_word").val();
 
             $.ajax({
                 url: '/app_word_work/create-word/',
                 type: 'POST',
                 contentType: "application/json",
                 data: JSON.stringify({
+                    "wrd_grpcd": wrdGrpCd,
                     "wrd_word": wrdWord,
                 }),
                 success: function(response) {
@@ -417,15 +419,25 @@
         });
 
         if (sourceType === "ALL") {
+            $("#titleList").prop("disabled",  true);
+            $("#wordStatus").prop("disabled", true);
             $("#refreshBtn").prop("disabled", true);
-            $("#deleteBtn").prop("disabled", true);
+            $("#deleteBtn").prop("disabled",  true);
+            $("#titleList").css("color",      "white");
+            $("#wordStatus").css("color",     "white");
+            $("#titleList").css("background-color",  "grey");
+            $("#wordStatus").css("background-color", "grey");
             $("#refreshBtn").css("background-color", "grey");
-            $("#deleteBtn").css("background-color", "grey");
+            $("#deleteBtn").css("background-color",  "grey");
         } else {
+            $("#titleList").prop("disabled",  false);
+            $("#wordStatus").prop("disabled", false);
             $("#refreshBtn").prop("disabled", false);
-            $("#deleteBtn").prop("disabled", false);
+            $("#deleteBtn").prop("disabled",  false);
+            $("#titleList").css("background-color",  "white");
+            $("#wordStatus").css("background-color", "white");
             $("#refreshBtn").css("background-color", "#8C0028");
-            $("#deleteBtn").css("background-color", "#8C0028");
+            $("#deleteBtn").css("background-color",  "#8C0028");
         }
 
         $("#refreshBtn").click();
