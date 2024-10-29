@@ -43,6 +43,9 @@ mdmproj1/serve.py
 mdmproj1/asgi.py
 mdmproj1/wsgi.py
 
+# 음성
+ffmpeg/
+
 # article 어플리케이션 관리
 !app_open_article/            # article 디렉터리는 무시하지 않음
 app_open_article/             # article 디렉터리 내의 모든 파일 무시
