@@ -4,15 +4,16 @@ from django.http import JsonResponse
 from django.shortcuts import render
 import whisper
 
-# Whisper 모델 로드 (서버 시작 시 로드)
-model = whisper.load_model("large")
-
 def transcription(request):
     return render(request, 'transcription.html')
 
 @csrf_exempt
 def transcribe_audio(request):
     if request.method == 'POST' and request.FILES.get('audio'):
+
+        # Whisper 모델 로드 (서버 시작 시 로드)
+        model = whisper.load_model("base")
+
         audio_file = request.FILES['audio']
         audio_path = f'uploads/{audio_file.name}'
 
