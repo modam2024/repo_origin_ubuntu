@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 import whisper
 
-def transcription(request):
+def index(request):
     return render(request, 'transcription.html')
 
 @csrf_exempt
