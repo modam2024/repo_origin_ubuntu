@@ -99,6 +99,7 @@
 
     //웹브라우져 TTS 기능 사용
     function speak(text) {
+        stopSpeaking();
         // 텍스트를 음성으로 변환 요청을 Ajax로 보냅니다.
         $.ajax({
             url: '/text-to-speech/',
