@@ -106,21 +106,12 @@
             type: 'POST',
             data: {
                 text: text,
-                lang: 'en'
+                lang: 'ko'
             },
             success: function(data) {
                 if (data.status === 'success') {
-                    // Base64 데이터를 디코딩하여 Blob 객체로 변환
-                    const audioBase64 = data.audio_base64;
-                    const audioData = atob(audioBase64);  // Base64 디코딩
-                    const arrayBuffer = new Uint8Array(audioData.length);
-
-                    for (let i = 0; i < audioData.length; i++) {
-                        arrayBuffer[i] = audioData.charCodeAt(i);
-                    }
-
-                    const blob = new Blob([arrayBuffer], { type: 'audio/mpeg' });
-                    const audioUrl = URL.createObjectURL(blob);
+                    // MP3 파일 URL을 받아서 오디오 객체 생성
+                    let audioUrl = data.audio_url;
                     audio = new Audio(audioUrl);
 
                     // 오디오 재생
@@ -134,6 +125,43 @@
             }
         });
     }
+
+    // function speak(text) {
+    //     stopSpeaking();
+    //     // 텍스트를 음성으로 변환 요청을 Ajax로 보냅니다.
+    //     $.ajax({
+    //         url: '/text-to-speech/',
+    //         type: 'POST',
+    //         data: {
+    //             text: text,
+    //             lang: 'en'
+    //         },
+    //         success: function(data) {
+    //             if (data.status === 'success') {
+    //                 // Base64 데이터를 디코딩하여 Blob 객체로 변환
+    //                 const audioBase64 = data.audio_base64;
+    //                 const audioData = atob(audioBase64);  // Base64 디코딩
+    //                 const arrayBuffer = new Uint8Array(audioData.length);
+    //
+    //                 for (let i = 0; i < audioData.length; i++) {
+    //                     arrayBuffer[i] = audioData.charCodeAt(i);
+    //                 }
+    //
+    //                 const blob = new Blob([arrayBuffer], { type: 'audio/mpeg' });
+    //                 const audioUrl = URL.createObjectURL(blob);
+    //                 audio = new Audio(audioUrl);
+    //
+    //                 // 오디오 재생
+    //                 audio.play();
+    //             } else {
+    //                 console.error('Error:', data.message);
+    //             }
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error('Error:', error);
+    //         }
+    //     });
+    // }
 
     // 단어 클릭 이벤트 핸들러 추가
     $("#naverWord").click(function() {
