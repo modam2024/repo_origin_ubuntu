@@ -38,7 +38,7 @@ def close_connection(conn, cursor):
 def handle_sql_error(e, sql_name):
     """SQL 오류를 처리하고 적절하게 로그를 남김."""
     print(f"{sql_name} 실행 실패: ", e)
-    return f"{sql_name} 오류 발생"
+    return 9
 
 # 이제 sql_mapping.py 및 sql_mapping_article.py에서 데이터베이스 연결 설정과
 # 해제 코드를 반복하지 않고 이 함수들을 가져와 사용할 수 있습니다:

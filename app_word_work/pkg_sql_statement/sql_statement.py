@@ -496,20 +496,33 @@ def sql_dao(request, sql_name, p_param):
         # 작성일 : 2024.10.06
         #############################################################  '''
         if sql_name == "sqlu_processed_words_status_to_c_for_word":
-           upd_mean_params = p_param
+           undone_row_num   = p_param[0]
+           mean_kr_text     = p_param[1]
+           current_username = p_param[2]
+           unchecked_word   = p_param[3]
 
            # processed_words의 meaning update
            upd_mean_query  = " UPDATE processed_words   "
-           upd_mean_query += "    SET no      = %s      "
-           upd_mean_query += "      , status  = 'C'     "
+           upd_mean_query += "    SET status  = 'C'     "
            upd_mean_query += "      , init_status = 'B' "
            upd_mean_query += "      , mean_kr = %s      "
            upd_mean_query += "      , start_date  = date_format(now(),'%Y-%m-%d %H:%i:%S') "
            upd_mean_query += "      , finish_date = NULL "
            upd_mean_query += "  WHERE user_id     = %s   "
            upd_mean_query += "    AND word        = %s   "
-
+           upd_mean_params = (mean_kr_text, current_username, unchecked_word,)
            cursor.execute(upd_mean_query, upd_mean_params)
+
+           # daily_voca  order_priority 변경
+           upd_mean_query2  = " UPDATE daily_voca        "
+           upd_mean_query2 += "    SET status  = 'C'     "
+           upd_mean_query2 += "      , mean    = %s      "
+           upd_mean_query2 += "      , start_date  = date_format(now(),'%Y-%m-%d %H:%i:%S') "
+           upd_mean_query2 += "      , finish_date = NULL "
+           upd_mean_query2 += "  WHERE user_id     = %s   "
+           upd_mean_query2 += "    AND word        = %s   "
+           upd_mean_params2 = (mean_kr_text, current_username, unchecked_word,)
+           cursor.execute(upd_mean_query2, upd_mean_params2)
 
            return "sqlu_processed_words_status_to_c_for_word OK"
 

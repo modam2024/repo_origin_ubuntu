@@ -69,8 +69,11 @@
                     "selected_step"  : "A",
                 }),
                 success: function(response) {
-                    $("#resMessage").val("success(First Finish)");
+                    $("#resMessage").val(response.message);
                     $("#refreshBtn").click();
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
                 }
             });
         });
