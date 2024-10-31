@@ -32,7 +32,9 @@
             }
 
             var text = $('#artcl_cnvrtd_content' + index).val().trim();
-            splitTextAndSpeakBySentence(text);
+            // 2024.10.31 : gtts 사용으로 주석처리
+            // splitTextAndSpeakBySentence(text);
+            speak(text);
         });
     }
 
@@ -56,7 +58,9 @@
             }
 
             var text = $('#artcl_org_content' + index).val().trim();
-            splitTextAndSpeakBySentence(text);
+            // 2024.10.31 : gtts 사용으로 주석처리
+            // splitTextAndSpeakBySentence(text);
+            speak(text);
         });
     }
 

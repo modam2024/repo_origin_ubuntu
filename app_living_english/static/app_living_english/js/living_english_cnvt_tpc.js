@@ -28,7 +28,10 @@
                 tmp_cnvt_text = tmp_cnvt_text.replace(":", "")
             }
             cnvt_text = splitCnvtText(tmp_cnvt_text)
-            splitTextAndSpeakBySentence(cnvt_text);  // 추출된 단어로 함수 호출
+            // 2024.10.31 : gtts 사용으로 주석처리
+            // splitTextAndSpeakBySentence(cnvt_text);  // 추출된 단어로 함수 호출
+            alert(cnvt_text);
+            speak(cnvt_text);
         });
 
         // 오리지날 대화 내용 재생
@@ -48,7 +51,9 @@
                 tmp_cnvt_text = tmp_cnvt_text.replace(":", "")
             }
             cnvt_text = splitCnvtText(tmp_cnvt_text)
-            splitTextAndSpeakBySentence(cnvt_text);  // 추출된 단어로 함수 호출
+            // 2024.10.31 : gtts 사용으로 주석처리
+            // splitTextAndSpeakBySentence(cnvt_text);  // 추출된 단어로 함수 호출
+            speak(cnvt_text);
         });
 
         // 오리지날 대화 내용 재생
@@ -72,7 +77,9 @@
             cnvt_text = splitCnvtText(tmp_cnvt_text)
             cnvt_text = cnvt_text.replace(":", "")
 
-            splitTextAndSpeakBySentence(cnvt_text);  // 추출된 단어로 함수 호출
+            // 2024.10.31 : gtts 사용으로 주석처리
+            // splitTextAndSpeakBySentence(cnvt_text);  // 추출된 단어로 함수 호출
+            speak(cnvt_text);
         });
 
         $(".stopSpeech").click(function() {

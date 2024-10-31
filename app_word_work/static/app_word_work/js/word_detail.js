@@ -58,7 +58,9 @@
            }   
            */
            var word = txtAreaExampleEng.val();
-           splitTextAndSpeakBySentence(word);
+            // 2024.10.31 : gtts 사용으로 주석처리
+            // splitTextAndSpeakBySentence(word);
+            speak(word);
         });        
         
         // 영문 예문 클릭 이벤트 핸들러 추가
@@ -72,7 +74,9 @@
            }
            */
            var word = txtAreaExampleEng2.val();
-           splitTextAndSpeakBySentence(word);
+           // 2024.10.31 : gtts 사용으로 주석처리
+           // splitTextAndSpeakBySentence(word);
+           speak(word);
         });
         
         $('#expandGuessing').click(function() {

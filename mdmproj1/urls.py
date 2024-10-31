@@ -37,5 +37,8 @@ urlpatterns = [
 
     path('proj-common/submit_analysis_words/', proj_mdl_common.submit_analysis_words, name='submit-article'),
     path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('favicon.ico'))),
+
+    # 2024.10.31. 추가
+    path('text-to-speech/', proj_mdl_common.text_to_speech, name='text_to_speech'),
 ]
  

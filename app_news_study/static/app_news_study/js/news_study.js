@@ -5,7 +5,9 @@ function speaking(order) {
     for (news_sentence of arr_news_sentence)
     {
         news_sentence = news_sentence + ".";
-        splitTextAndSpeakBySentence(news_sentence);
+        // 2024.10.31 : gtts 사용으로 주석처리
+        //splitTextAndSpeakBySentence(news_sentence);
+        speak(news_sentence);
     }
 };
 
@@ -15,7 +17,9 @@ function convert_speaking(order) {
     for (news_sentence of arr_news_sentence)
     {
         news_sentence = news_sentence + ".";
-        splitTextAndSpeakBySentence(news_sentence);
+        // 2024.10.31 : gtts 사용으로 주석처리
+        // splitTextAndSpeakBySentence(news_sentence);
+        speak(news_sentence);
     }
 };
 
