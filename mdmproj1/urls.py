@@ -22,6 +22,8 @@ urlpatterns = [
     path('app_news_study/',     include('app_news_study.urls')),
     path('app_test_timer/',     include('app_test_timer.urls')),
     path('app_living_english/', include('app_living_english.urls')),
+    # 2024.11.04 추가
+    path('app_recognize_speech/', include('app_recognize_speech.urls')),
 
     # 기타 url 패턴들
     path('', proj_sql_statement.check_login_status, name='check_login_status'),

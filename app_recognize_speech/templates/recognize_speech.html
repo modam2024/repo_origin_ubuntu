@@ -1,0 +1,17 @@
+{% load static %}
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Audio Recorder</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <h1>음성 녹음 테스트</h1>
+        <button id="start">녹음 시작</button>
+        <button id="stop" >녹음 중지</button><p>
+        <label> 인식된 내용: </label><br>
+        <textarea id="result" ></textarea>
+        <textarea id="prv_result" style="visibility: hidden"></textarea>
+        <script src="{% static 'app_recognize_speech/js/recognize_speech.js' %}"></script>
+    </body>
+</html>

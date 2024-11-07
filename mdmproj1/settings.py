@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'app_news_study',
     'app_test_timer',
     'app_living_english',
+    'app_recognize_speech',
 ]
 
 MIDDLEWARE = [

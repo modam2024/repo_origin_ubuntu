@@ -9,7 +9,7 @@ function speaking(order) {
         //splitTextAndSpeakBySentence(news_sentence);
         speak(news_sentence);
     }
-};
+}
 
 function convert_speaking(order) {
     var news_sentence = $("#artcl_convert_content"+order).val();
@@ -21,9 +21,8 @@ function convert_speaking(order) {
         // splitTextAndSpeakBySentence(news_sentence);
         speak(news_sentence);
     }
-};
+}
 
-// proj_mdm_prep 사용
 function callEngIdiom(keyno, groupno) {
     var in_keyno   = keyno;
     var in_groupno = groupno;
