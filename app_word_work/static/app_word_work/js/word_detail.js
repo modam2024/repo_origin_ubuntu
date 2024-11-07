@@ -38,13 +38,13 @@
         // 단어 클릭 이벤트 핸들러 추가
         $("#txt_word").click(function() {
             var word = $(this).val();
-            splitTextAndSpeak(word);
+            speak(word);
         });        
         
         // 단어 클릭 이벤트 핸들러 추가
         $("#speakDefEng").click(function() {
             var word = $("#txt_defeng").val();
-            splitTextAndSpeak(word);
+            speak(word);
         });        
         
         // 영문 예문 클릭 이벤트 핸들러 추가

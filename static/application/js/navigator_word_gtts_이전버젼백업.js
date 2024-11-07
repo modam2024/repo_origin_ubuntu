@@ -203,7 +203,7 @@
     // 단어 클릭 이벤트 핸들러 추가
     $("#naverWord").click(function() {
         var word = $(this).val();
-        splitTextAndSpeak(word);
+        speak(word);
     });
 
     function stopSpeaking() {
