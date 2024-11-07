@@ -366,7 +366,7 @@
         $('table').on('click', 'td:nth-child(3)', function() {
             var word = $(this).text();
             $('#naverWord').val(word);
-            splitTextAndSpeak(word);
+            speak(word);
         });
         
         $("#checkAll").click(function(){
