@@ -1,3 +1,5 @@
+import os
+
 import nltk
 from django.contrib.auth.decorators import login_required
 # 2024.04.28 : spacy 포함
