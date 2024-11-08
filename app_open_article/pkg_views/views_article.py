@@ -9,7 +9,7 @@ from proj_common import mdl_common_proj as proj_comn_func
 from proj_sql_mapping import mdl_mapping_sql_proj as proj_sql_statement
 
 # NLTK 데이터 디렉토리 설정 (사용자의 홈 디렉토리 아래)
-nltk_data_dir = os.path.join(os.path.expanduser('~'), 'nltk_data')
+nltk_data_dir = os.path.join(os.path.expanduser('~'), 'apache_nltk_data')
 
 # NLTK 데이터 디렉토리 존재 여부 확인 및 생성
 if not os.path.exists(nltk_data_dir):
