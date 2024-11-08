@@ -1,7 +1,4 @@
 # 2024.04.28 : spacy 포함
-
-import nltk
-# 2024.04.28 : spacy 포함
 from django.views.decorators.csrf import csrf_exempt
 
 import app_living_english.pkg_sql_statement.sql_statement as sql_statement

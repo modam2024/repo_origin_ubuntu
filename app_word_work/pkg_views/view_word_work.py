@@ -126,7 +126,7 @@ def confirm_word_check(request):
 
             # process_info 생성
             rtn_code = sql_statement.sql_dao(request, "sqli_confirm_word_check", "")
-            print("step1")
+
             # 2024.01.23 추가- process_info 개별 count 데이터 초기화
             if checked_words is not None:
                 checked_words_count = len(checked_words)
@@ -149,7 +149,7 @@ def confirm_word_check(request):
                             current_username,
                             checked_word,
                         )
-                        print("step2")
+
                         rtn_msg = sql_statement.sql_dao(request, "sqlu_processed_words_init_status_for_a", upd_params1)
 
                         upd_params2 = (
@@ -157,7 +157,7 @@ def confirm_word_check(request):
                             current_username,
                             checked_word,
                         )
-                        print("step3")
+
                         rtn_msg = sql_statement.sql_dao(request, "sqlu_processed_words_status_for_c", upd_params2)
 
                         update_word_count += 1
@@ -167,7 +167,7 @@ def confirm_word_check(request):
                             current_username,
                             checked_word,
                         )
-                        print("step4")
+
                         rtn_msg = sql_statement.sql_dao(request, "sqlu_daily_voca_status_for_all", upd_params3)
 
                     except Exception as e:
