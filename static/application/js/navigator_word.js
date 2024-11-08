@@ -17,8 +17,7 @@
         e.preventDefault();
         // 5초 동안 마우스 변경;
         setCursorShap(5000);
-        alert('app_open_article/article/');
-        window.location.href = BASE_URL + 'app_open_article/article/';
+        window.location.href = BASE_URL + 'app_open_article/open_article/';
     });
 
     // NEWS SITES 클릭 이벤트
