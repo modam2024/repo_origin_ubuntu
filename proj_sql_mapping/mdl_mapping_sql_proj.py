@@ -357,7 +357,8 @@ def sql_dao(request, sql_name, p_param):
 @login_required(login_url='/login/')
 def check_login_status(request):
     full_url  = request.build_absolute_uri()
-    base_url  = "http://modameng.com:8000"
+    # base_url  = "http://modameng.com:8000"
+    base_url  = "http://modameng.com"
     local_url = "http://localhost:8001"
     page_url  = "/app_word_work/main-wordcheck/?source_url=&source_title=&source_type=ALL&sel_level=A&source_status=C"
 
