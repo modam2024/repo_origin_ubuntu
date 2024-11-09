@@ -111,7 +111,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -143,27 +142,47 @@ LOGOUT_REDIRECT_URL = '/login/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#LYH:20240223 - INFO ?????? HTTP ??u ?α?? ???? ??μ??? ????? ????.
+#LYH:20241108, collection with apache2
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '/home/modam/pyDjangoDEV/mdmproj1/debug.log',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['console'],
-            'level': 'WARNING',
-        },
-        'django.request': {
-            'handlers': ['console'],
-            'level': 'WARNING',  # HTTP ??u ?α? ?????? WARNING???? ????
-            'propagate': False,
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
         },
     },
 }
+
+#LYH:20240223
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'WARNING',
+#         },
+#         'django.request': {
+#             'handlers': ['console'],
+#             'level': 'WARNING',  # HTTP ??u ?α? ?????? WARNING???? ????
+#             'propagate': False,
+#         },
+#     },
+# }
 
 #LYH:20240905 -collection all static files
 STATIC_ROOT = os.path.join(BASE_DIR, 'proj_all_static')
