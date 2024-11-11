@@ -24,7 +24,11 @@ SECRET_KEY = 'django-insecure-!!#!b!l+%0@@%1uj#&9snl)i6^*!!z$tci^044%a&em)iq*0)k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '210.114.14.134', 'modamtech.com', 'modameng.com', '192.168.45.49', '218.237.202.116', '119.205.220.168']
+# THE OBJECTIVES IS TO RESOLVE CONFLICTS BETWEEN TWO DJANGO SERVER SERVICES
+SESSION_COOKIE_NAME = 'modam_mdmproj1_sssn_00'
+CSRF_COOKIE_NAME    = 'modam_mdmproj1_csrf_00'
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '210.114.14.134', 'modamtech.com', 'modameng.com', '192.168.45.49', '218.237.202.116', '119.205.220.168']
 
 # Application definition
 
@@ -133,7 +137,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# LOGIN_REDIRECT_URL = '/app_open_article/'
+LOGIN_REDIRECT_URL = '/app_word_work/main-wordcheck/?source_url=&source_title=&source_type=ALL&sel_level=A&source_status=C'
 
 LOGOUT_REDIRECT_URL = '/login/'
 
@@ -142,47 +146,47 @@ LOGOUT_REDIRECT_URL = '/login/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#LYH:20241108, collection with apache2
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': '/home/modam/pyDjangoDEV/mdmproj1/debug.log',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-}
-
-#LYH:20240223
+#LYH:20241108, 아파치 설정
 # LOGGING = {
 #     'version': 1,
 #     'disable_existing_loggers': False,
 #     'handlers': {
-#         'console': {
-#             'class': 'logging.StreamHandler',
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': '/var/log/mdmproj1/debug.log',
 #         },
 #     },
 #     'loggers': {
 #         'django': {
-#             'handlers': ['console'],
-#             'level': 'WARNING',
-#         },
-#         'django.request': {
-#             'handlers': ['console'],
-#             'level': 'WARNING',  # HTTP ??u ?α? ?????? WARNING???? ????
-#             'propagate': False,
+#             'handlers': ['file'],
+#             'level': 'DEBUG',
+#             'propagate': True,
 #         },
 #     },
 # }
+
+#LYH:20240223, 로컬의 설정
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+        },
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'WARNING',  # HTTP ??u ?α? ?????? WARNING???? ????
+            'propagate': False,
+        },
+    },
+}
 
 #LYH:20240905 -collection all static files
 STATIC_ROOT = os.path.join(BASE_DIR, 'proj_all_static')
