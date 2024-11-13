@@ -35,30 +35,42 @@
         });
 
         $("#wordCheckBtn" ).click(function(event) {
-             event.preventDefault();  // 이 코드를 추가하여 클릭 이벤트를 막을 수 있습니다.
+            event.preventDefault();  // 이 코드를 추가하여 클릭 이벤트를 막을 수 있습니다.
             // 5초 동안 마우스 변경;
             setCursorShap(5000);
             if ($("#check_step").val() === "A") {
-               $("#resMessage").val("1차 완료 재실행 안됨");
-               return;
+                $("#resMessage").val("1차 완료 재실행 안됨");
+                return;
             } else {
-               $("#resMessage").val("Starting");
+                $("#resMessage").val("Starting");
             }
-            var checkedWords = $('input[name="rowCheck"]:checked').map(function() {
+            var checkedWords = $('input[name="rowCheck"]:checked').map(function () {
                 return $(this).closest('tr').find('td:nth-child(3)').text();
             }).get();
 
-            var unCheckedWords = $('input[name="rowCheck"]:not(:checked)').map(function() {
+            var unCheckedWords = $('input[name="rowCheck"]:not(:checked)').map(function () {
                 return $(this).closest('tr').find('td:nth-child(3)').text();
             }).get();
 
             var selectedTitle = $('#titleList option:selected').text();
 
-
             var sendStatus = "D";
 
+            var v_url = "";
+
+            alert(location.hostname);
+            alert(location.port);
+
+            if (location.hostname === 'modameng.com' && location.port === '8000') {
+               v_url = "http://modameng.com:8001/app_word_work/confirm-wordcheck/";
+            } else {
+                v_url = "/app_word_work/confirm-wordcheck/";
+            }
+
+            alert(v_url);
+
             $.ajax({
-                url: '/app_word_work/confirm-wordcheck/',
+                url: v_url,
                 type: 'POST',
                 contentType: "application/json",
                 data: JSON.stringify({

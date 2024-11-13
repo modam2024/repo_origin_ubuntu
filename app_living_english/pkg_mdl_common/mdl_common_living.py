@@ -29,7 +29,6 @@ def make_page_info(request):
             break
         else:
             number += 1
-
         try:
             url = "https://free.ybmclass.com/free/eng/eng_ybm_view.asp?idx={}".format(
                 max_chapter_num

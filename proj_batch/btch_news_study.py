@@ -60,6 +60,8 @@ def batch_news_study(request):
                         'KEYITEM': list_keyitems
                     }
 
+                    res_value = sql_statement.sql_dao(request, "sqli_batch_news_study_hist", news_info)
+
                     bl_exit = False
                     for each_key_item in list_keyitems:
                         if len(each_key_item['Text']) > 800:
@@ -79,7 +81,5 @@ def batch_news_study(request):
 
     # 저장처리가 완료된 이후에 불필요한 데이터 삭제
     sql_statement.sql_dao(request, "sqld_invalid_news_info", "")
-
-    res_value = sql_statement.sql_dao(request, "sqli_batch_news_study_hist", news_info)
 
     return HttpResponse("CREATE NEWS FINISH")
