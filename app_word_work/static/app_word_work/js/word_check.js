@@ -56,18 +56,10 @@
 
             var sendStatus = "D";
 
-            var v_url = "";
-
-            if (location.hostname === 'modameng.com' && location.port === '') {
-               v_url = "http://modameng.com:8001/app_word_work/confirm-wordcheck/";
-            } else if (location.hostname === 'modameng.com' && location.port === '8000') {
-                v_url = "/app_word_work/confirm-wordcheck/";
-            } else {
-                v_url = "/app_word_work/confirm-wordcheck/";
-            }
+            var v_url = chooseUrl();
 
             $.ajax({
-                url: v_url,
+                url: v_url + "/app_word_work/confirm-wordcheck/",
                 type: 'POST',
                 contentType: "application/json",
                 data: JSON.stringify({

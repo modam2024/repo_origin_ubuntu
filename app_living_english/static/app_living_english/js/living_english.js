@@ -278,8 +278,10 @@
             let sourceTitle = $("#selTitle").val();
             let sourceType  = $("#searchGrpCd").val();
 
+            var v_url = chooseUrl();
+
             $.ajax({
-                url: "/proj-common/submit_analysis_words/",
+                url: v_url + "/proj-common/submit_analysis_words/",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({

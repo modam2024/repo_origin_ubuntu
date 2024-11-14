@@ -59,8 +59,11 @@
             let test_page_date     = $('#test_page_date').val();
 
             var new_url = ""
+
+            var v_url = chooseUrl();
+
             $.ajax({
-                url: "/proj-common/submit_analysis_words/",
+                url: v_url + "/proj-common/submit_analysis_words/",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({ 

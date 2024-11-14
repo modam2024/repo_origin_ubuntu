@@ -24,10 +24,12 @@
             var articleContent = $("#artcl_content").val();
             var sourceUrl      = $("#src_url").val(); 
             var sourceTitle    = $("#src_title").val(); 
-            var sourceType     = $("#src_type").val(); 
+            var sourceType     = $("#src_type").val();
+
+            var v_url = chooseUrl();
 
             $.ajax({
-                url: "/proj-common/submit_analysis_words/",
+                url: v_url + "/proj-common/submit_analysis_words/",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({ 

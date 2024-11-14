@@ -308,8 +308,10 @@ $(document).ready(function() { // applied
         let sourceUrl = BASE_URL + "app_news_study/news_study/"+v_titleVaule;
         var new_url   = ""
 
+        var v_url = chooseUrl();
+
         $.ajax({
-            url: "/proj-common/submit_analysis_words/",
+            url: v_url + "/proj-common/submit_analysis_words/",
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify({

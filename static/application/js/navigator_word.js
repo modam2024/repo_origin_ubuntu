@@ -211,6 +211,20 @@
         var url = BASE_URL + "app_test_timer/test-english/?" + $.param(back_data);
         window.location.href = url;
     }
+    // TEST ENGLISH 클릭 이벤트
+    function chooseUrl() {
+        var v_url = "";
+
+        if (location.hostname === 'modameng.com' && location.port === '') {
+            v_url = "http://modameng.com:8001";
+        } else if (location.hostname === 'modameng.com' && location.port === '8000') {
+            v_url = "";
+        } else {
+            v_url = "";
+        }
+
+        return v_url;
+    }
 
     // window.onunload = function() {
     //     fnLogout();
