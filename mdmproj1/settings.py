@@ -28,7 +28,7 @@ DEBUG = True
 SESSION_COOKIE_NAME = 'modam_mdmproj1_sssn_00'
 CSRF_COOKIE_NAME    = 'modam_mdmproj1_csrf_00'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '210.114.14.134', 'modamtech.com', 'modameng.com', '192.168.45.49', '218.237.202.116', '119.205.220.168']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '210.114.14.134', 'modamtech.com', 'modameng.com', 'www.modameng.com', '192.168.45.49', '218.237.202.116', '119.205.220.168']
 
 # Application definition
 
