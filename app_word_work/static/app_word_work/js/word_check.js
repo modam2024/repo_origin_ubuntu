@@ -58,16 +58,13 @@
 
             var v_url = "";
 
-            alert(location.hostname);
-            alert(location.port);
-
-            if (location.hostname === 'modameng.com' && location.port === '8000') {
+            if (location.hostname === 'modameng.com' && location.port === '') {
                v_url = "http://modameng.com:8001/app_word_work/confirm-wordcheck/";
+            } else if (location.hostname === 'modameng.com' && location.port === '8000') {
+                v_url = "/app_word_work/confirm-wordcheck/";
             } else {
                 v_url = "/app_word_work/confirm-wordcheck/";
             }
-
-            alert(v_url);
 
             $.ajax({
                 url: v_url,
