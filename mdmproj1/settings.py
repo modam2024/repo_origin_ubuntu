@@ -15,6 +15,10 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -22,7 +26,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!!#!b!l+%0@@%1uj#&9snl)i6^*!!z$tci^044%a&em)iq*0)k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = False
 
 # THE OBJECTIVES IS TO RESOLVE CONFLICTS BETWEEN TWO DJANGO SERVER SERVICES
 SESSION_COOKIE_NAME = 'modam_mdmproj1_sssn_00'
@@ -147,46 +152,47 @@ LOGOUT_REDIRECT_URL = '/login/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #LYH:20241108, 아파치 설정
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'file': {
-#             'level': 'DEBUG',
-#             'class': 'logging.FileHandler',
-#             'filename': '/var/log/mdmproj1/debug.log',
-#         },
-#     },
-#     'loggers': {
-#         'django': {
-#             'handlers': ['file'],
-#             'level': 'DEBUG',
-#             'propagate': True,
-#         },
-#     },
-# }
-
-#LYH:20240223, 로컬의 설정
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            # 'filename': '/var/log/mdmproj1/debug.log',
+            'filename': os.path.join(BASE_DIR, 'error_log') + 'debug.log',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['console'],
-            'level': 'WARNING',
-        },
-        'django.request': {
-            'handlers': ['console'],
-            'level': 'WARNING',
-            'propagate': False,
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
         },
     },
 }
+
+#LYH:20240223, 로컬의 설정
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'WARNING',
+#         },
+#         'django.request': {
+#             'handlers': ['console'],
+#             'level': 'WARNING',
+#             'propagate': False,
+#         },
+#     },
+# }
 
 #LYH:20240905 -collection all static files
 STATIC_ROOT = os.path.join(BASE_DIR, 'proj_all_static')

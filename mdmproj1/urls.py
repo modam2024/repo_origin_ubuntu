@@ -13,6 +13,8 @@ from proj_batch import btch_news_study
 from proj_sql_mapping import mdl_mapping_sql_proj as proj_sql_statement
 from proj_common import mdl_common_proj as proj_mdl_common
 
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # 어플리케이션 url 참조
@@ -43,4 +45,6 @@ urlpatterns = [
     # 2024.10.31. 추가
     path('text-to-speech/', proj_mdl_common.text_to_speech, name='text_to_speech'),
 ]
- 
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

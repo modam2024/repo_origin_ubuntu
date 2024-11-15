@@ -113,7 +113,6 @@
                     // MP3 파일 URL을 받아서 오디오 객체 생성
                     let audioUrl = data.audio_url;
                     audio = new Audio(audioUrl);
-
                     // 오디오 재생
                     audio.play();
                 } else {

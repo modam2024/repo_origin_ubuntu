@@ -18,6 +18,7 @@ from proj_sql_mapping import mdl_mapping_sql_proj as proj_sql_statement
 # 2024.09.23 : app_word_work 로 어플리케이션 분리
 @login_required(login_url='/login/')
 def main_word_check(request):
+
     # ## 공통 ## 작업 히스토리 저장
     res_value = proj_sql_statement.sql_dao(request, "sqli_click_study_hist", "main_word_check")
 
