@@ -173,8 +173,10 @@
                 test_page_date: $("#test_page_date").val(),
             };
 
+            var v_url = chooseUrl();
+
             $.ajax({
-                url: "/app_test_timer/test-result/",
+                url : v_url + "/app_test_timer/test-result/",
                 type: 'GET',
                 data: checked_data,
                 success: function(response) {
