@@ -96,14 +96,16 @@
             setCursorShap(10000);
 
             $("#resMessage").val("테스트 페이지로 이동중입니다.");
+            alert("1111111111111111")
+            window.history.back();
 
-            let back_data = {
-                check:   "none",
-                status:  "C",
-                wdate:   $("#test_page_date").val(),
-            };
-            var url = BASE_URL + "app_test_timer/test-english/?" + $.param(back_data);
-            window.location.href = url;
+            // let back_data = {
+            //     check:   "none",
+            //     status:  "C",
+            //     wdate:   $("#test_page_date").val(),
+            // };
+            // var url = BASE_URL + "app_test_timer/test-english/?" + $.param(back_data);
+            // window.location.href = url;
         });
 
         // #2024.03.20-titleList 셀렉터에 대한 change 이벤트 핸들러를 설정
