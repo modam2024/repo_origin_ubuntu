@@ -110,8 +110,8 @@ def sql_dao(request, sql_name, p_param):
 
             select_query = "  SELECT DISTINCT trgt_order_no, trgt_page_date "
             select_query += "   FROM tb_part5_feedback_page "
-            select_query += "  WHERE user_id = %s          "
-            select_query += "    AND trgt_page_date = %s   "
+            select_query += "  WHERE user_id = %s           "
+            select_query += "    AND trgt_page_date = %s    "
             select_param = (current_username, v_trgt_page_date,)
 
             # 쿼리 실행
@@ -132,7 +132,7 @@ def sql_dao(request, sql_name, p_param):
         if sql_name == "sqls_test_page_result_info":
 
             pagedate_query  = " SELECT DISTINCT trgt_order_no, trgt_page_date "
-            pagedate_query += "   FROM tb_part5_test_page       "
+            pagedate_query += "   FROM tb_part5_test_page      "
             pagedate_query += "  WHERE user_id = %s            "
             pagedate_query += "   ORDER BY trgt_page_date DESC "
             pagedate_param  = (current_username,)

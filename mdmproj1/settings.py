@@ -26,8 +26,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 SECRET_KEY = 'django-insecure-!!#!b!l+%0@@%1uj#&9snl)i6^*!!z$tci^044%a&em)iq*0)k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
 # THE OBJECTIVES IS TO RESOLVE CONFLICTS BETWEEN TWO DJANGO SERVER SERVICES
 SESSION_COOKIE_NAME = 'modam_mdmproj1_sssn_00'
@@ -157,16 +157,16 @@ LOGGING = {
     'disable_existing_loggers': False,
     'handlers': {
         'file': {
-            'level': 'ERROR',
+            'level': 'DEBUG',
             'class': 'logging.FileHandler',
             # 'filename': '/var/log/mdmproj1/debug.log',
-            'filename': os.path.join(BASE_DIR, 'error_log') + 'debug.log',
+            'filename': os.path.join(BASE_DIR, 'error_log', 'debug.log'),
         },
     },
     'loggers': {
         'django': {
             'handlers': ['file'],
-            'level': 'ERROR',
+            'level': 'DEBUG',
             'propagate': True,
         },
     },
