@@ -206,8 +206,8 @@
         setupSpeakConvEngHandler(2);
         setupSpeakConvEngHandler(3);
 
-        $('#convertExampleEng1').click();
-        $('#convertExampleEng2').click();
-        $('#convertExampleEng3').click();
+        //$('#convertExampleEng1').click();
+        //$('#convertExampleEng2').click();
+        //$('#convertExampleEng3').click();
     });
     
