@@ -262,50 +262,23 @@ def sql_dao(request, sql_name, p_param):
         ############################################################ '''
         if sql_name == "sqls_test_page_content_cnt":
             v_trgt_order_no  = p_param['trgt_order_no']
-            v_trgt_page_date = p_param['trgt_page_date']
-            v_question_no    = p_param['question_no']
 
             select_query  = " SELECT  count(*) as cnt     "
             select_query += "   FROM  tb_part5_test_page  "
             select_query += "  WHERE  user_id = %s        "
             select_query += "    AND  trgt_order_no  = %s "
-            select_query += "    AND  trgt_page_date = %s "
-            select_query += "    AND  question_no    = %s "
 
-            select_param = (current_username, v_trgt_order_no, v_trgt_page_date, v_question_no)
+            select_param = (current_username, v_trgt_order_no,)
 
             # 쿼리 실행
             cursor.execute(select_query, select_param)
-            v_test_cnt   = cursor.fetchone()
-            int_test_cnt = int(v_test_cnt[0])
+            v_test_cnt = cursor.fetchone()
 
-            return int_test_cnt
-
-        '''
-        ############################################################
-        # CALL ID : sqls_test_page_content_cnt
-        # 함수명   : 테스트 문제 입력 여부 판단 함수  
-        # 작성일   : 2024.06.20
-        # 작업     : 테스트 문제 존재 여부로 판단해서 INSERT 여부 결정 목적   
-        ############################################################ '''
-        if sql_name == "sqls_test_page_content_cnt":
-            v_trgt_order_no  = p_param['trgt_order_no']
-            v_trgt_page_date = p_param['trgt_page_date']
-            v_question_no    = p_param['question_no']
-
-            select_query  = "    SELECT count(*) as cnt     "
-            select_query += "      FROM tb_part5_test_page  "
-            select_query += "  ORDER BY user_id = %s        "
-            select_query += "    AND  trgt_order_no  = %s "
-            select_query += "    AND  trgt_page_date = %s "
-            select_query += "    AND  question_no    = %s "
-
-            select_param = (current_username, v_trgt_order_no, v_trgt_page_date, v_question_no)
-
-            # 쿼리 실행
-            cursor.execute(select_query, select_param)
-            v_test_cnt   = cursor.fetchone()
-            int_test_cnt = int(v_test_cnt[0])
+            try:
+                int_test_cnt = int(v_test_cnt[0])
+            except ValueError as e:
+                print("Error converting to integer:", e)
+                return 0  # 또는 적절한 오류 처리
 
             return int_test_cnt
 
@@ -507,7 +480,7 @@ def sql_dao(request, sql_name, p_param):
 
             v_test_page_content_cnt = sql_dao(request, "sqls_test_page_content_cnt", p_param)
 
-            if v_test_page_content_cnt == 1:
+            if int(v_test_page_content_cnt) > 0:
                 print("already inserted in tb_part5_test_page")
             else:
                 insert_query = " INSERT INTO tb_part5_test_page "
@@ -555,7 +528,6 @@ def sql_dao(request, sql_name, p_param):
                 sql_dao(request, "sqld_batch_part5_test_hist", p_param)
                 print("sqli_batch_part5_test_hist finished")
 
-                
             return "OK"
 
         '''

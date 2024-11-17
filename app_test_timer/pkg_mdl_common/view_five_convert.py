@@ -27,14 +27,6 @@ def convert_sentence(request):
         word_insert_count = 0
 
         try:
-            # 데이터베이스 설정
-            conn = proj_connector(request)
-            cursor = conn.cursor()
-        except mysql.connector.Error as e:
-            # MySQL 연결 또는 쿼리 실행 오류 처리
-            return JsonResponse({"status": "error", "message": str(e)}, status=500)
-
-        try:
             # 요청의 본문을 JSON으로 파싱
             data = json.loads(request.body)
 
@@ -63,9 +55,6 @@ def convert_sentence(request):
             # 문장에서 각 품사를 변환
             for sent in sentences:
                 original_sentence = sent.text
-
-
-
 
                 # 어플 공통 : 대상 영문장을 변환문장시 전처리한다.
                 original_sentence, converted_sentence = comn_func.fn_preparation_process_of_convert(sent, original_sentence)
@@ -109,6 +98,4 @@ def convert_sentence(request):
             return JsonResponse({"status": "error", "message": str(e)}, status=500)
 
         finally:
-            if conn is not None:
-                conn.commit()
-                cursor.close()
+            print("convert_sentence OK")

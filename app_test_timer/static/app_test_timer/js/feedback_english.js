@@ -96,7 +96,7 @@
             setCursorShap(10000);
 
             $("#resMessage").val("테스트 페이지로 이동중입니다.");
-            alert("1111111111111111")
+
             window.history.back();
 
             // let back_data = {
