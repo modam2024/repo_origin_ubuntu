@@ -152,47 +152,47 @@ LOGOUT_REDIRECT_URL = '/login/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #LYH:20241108, 아파치 설정
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            # 'filename': '/var/log/mdmproj1/debug.log',
-            'filename': os.path.join(BASE_DIR, 'error_log', 'debug.log'),
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-}
-
-#LYH:20240223, 로컬의 설정
 # LOGGING = {
 #     'version': 1,
 #     'disable_existing_loggers': False,
 #     'handlers': {
-#         'console': {
-#             'class': 'logging.StreamHandler',
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             # 'filename': '/var/log/mdmproj1/debug.log',
+#             'filename': os.path.join(BASE_DIR, 'error_log', 'debug.log'),
 #         },
 #     },
 #     'loggers': {
 #         'django': {
-#             'handlers': ['console'],
-#             'level': 'WARNING',
-#         },
-#         'django.request': {
-#             'handlers': ['console'],
-#             'level': 'WARNING',
-#             'propagate': False,
+#             'handlers': ['file'],
+#             'level': 'DEBUG',
+#             'propagate': True,
 #         },
 #     },
 # }
+
+#LYH:20240223, 로컬의 설정
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+        },
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+    },
+}
 
 #LYH:20240905 -collection all static files
 STATIC_ROOT = os.path.join(BASE_DIR, 'proj_all_static')

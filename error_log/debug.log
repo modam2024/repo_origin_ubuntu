@@ -1844,3 +1844,770 @@ django.template.base.VariableDoesNotExist: Failed lookup for key [last_page_flag
 (0.016) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 2 LIMIT 21; args=(2,); alias=default
 (0.047) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2024-11-16 02:54:59.693289' AND "django_session"."session_key" = 'nzi7k8frnm73idvre39flnncnohuj66c') LIMIT 21; args=('2024-11-16 02:54:59.693289', 'nzi7k8frnm73idvre39flnncnohuj66c'); alias=default
 (0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 2 LIMIT 21; args=(2,); alias=default
+(0.000) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2024-11-16 06:48:34.856338' AND "django_session"."session_key" = 'nzi7k8frnm73idvre39flnncnohuj66c') LIMIT 21; args=('2024-11-16 06:48:34.856338', 'nzi7k8frnm73idvre39flnncnohuj66c'); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 2 LIMIT 21; args=(2,); alias=default
+(0.000) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2024-11-16 06:48:34.877007' AND "django_session"."session_key" = 'nzi7k8frnm73idvre39flnncnohuj66c') LIMIT 21; args=('2024-11-16 06:48:34.877007', 'nzi7k8frnm73idvre39flnncnohuj66c'); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 2 LIMIT 21; args=(2,); alias=default
+Exception while resolving variable 'wrd_word' in template 'word_check.html'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'wrd_word'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 886, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+AttributeError: type object 'RequestContext' has no attribute 'wrd_word'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'wrd_word'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [wrd_word] in [{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: <function csrf.<locals>._get_val at 0x000001F2BBD47AF0>>, 'request': <WSGIRequest: GET '/app_word_work/main-wordcheck/?source_url=&source_title=&source_type=ALL&sel_level=A&source_status=C'>, 'user': <SimpleLazyObject: <User: polomono>>, 'perms': PermWrapper(<SimpleLazyObject: <User: polomono>>), 'messages': <FallbackStorage: request=<WSGIRequest: GET '/app_word_work/main-wordcheck/?source_url=&source_title=&source_type=ALL&sel_level=A&source_status=C'>>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}, {'titles': [('http://localhost:8001/app_news_study/news_study/2169959', 'Issue : 2024-11-15 : 안성재 셰프 흑백 요리사는 감성적 여정'), ('https://free.ybmclass.com/free/eng/eng_ybm_view.asp?idx=4807', '그 기계 좀 내려놓지.'), ('https://free.ybmclass.com/free/eng/eng_ybm_view.asp?idx=4806', '간청할게.'), ('http://modameng.com:8000/app_news_study/news_study/2168664', 'Issue : 2024-11-06 : 한국의 암울한 인구 전망 소개한 일론 머스크실제로 더 심각할 수도'), ('http://modameng.com:8000/app_news_study/news_study/2160867', 'Issue : 2024-11-01 : 테이트 모던 터빈홀 접수한 이미래의 핏빛 작품'), ('http://modameng.com:8000/app_news_study/news_study/2168066', 'Issue : 2024-11-04 : 가자 중국인 PSG 팬에게 인종차별 당한 이강인'), ('http://modameng.com:8000/app_news_study/news_study/2168459', 'Issue : 2024-11-05 : 국정원 러시아 파병 북한군 전선 도착 가능성'), ('http://modameng.com:8000/app_test_timer/test-english/?trgt_order_no=3226', 'Part 5 : 3226 : 2024-11-07'), ('https://free.ybmclass.com/free/eng/eng_ybm_view.asp?idx=4805', '헛다리 짚었어'), ('http://modameng.com:8000/app_test_timer/test-english/?trgt_order_no=3219', 'Part 5 : 3219 : 2024-10-15')], 'source_url': '', 'source_title': '', 'source_status': 'C', 'source_type': 'ALL', 'sel_level': 'A', 'group_codes': ['ALL', 'NEWS', 'MOVIES', 'BOOK', 'TOPS', 'TOEIC(LC)', 'TOEIC(RC)', 'YBM(TALK)', 'YBM(TEST)', 'ETC'], 'source_gubun': None, 'test_page_date': None, 'selected_date': None, 'selected_chapter': None}, {}]
+Exception while resolving variable 'rows_cnt' in template 'word_check.html'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'rows_cnt'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 886, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+AttributeError: type object 'RequestContext' has no attribute 'rows_cnt'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'rows_cnt'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [rows_cnt] in [{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: <function csrf.<locals>._get_val at 0x000001F2BBD47AF0>>, 'request': <WSGIRequest: GET '/app_word_work/main-wordcheck/?source_url=&source_title=&source_type=ALL&sel_level=A&source_status=C'>, 'user': <SimpleLazyObject: <User: polomono>>, 'perms': PermWrapper(<SimpleLazyObject: <User: polomono>>), 'messages': <FallbackStorage: request=<WSGIRequest: GET '/app_word_work/main-wordcheck/?source_url=&source_title=&source_type=ALL&sel_level=A&source_status=C'>>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}, {'titles': [('http://localhost:8001/app_news_study/news_study/2169959', 'Issue : 2024-11-15 : 안성재 셰프 흑백 요리사는 감성적 여정'), ('https://free.ybmclass.com/free/eng/eng_ybm_view.asp?idx=4807', '그 기계 좀 내려놓지.'), ('https://free.ybmclass.com/free/eng/eng_ybm_view.asp?idx=4806', '간청할게.'), ('http://modameng.com:8000/app_news_study/news_study/2168664', 'Issue : 2024-11-06 : 한국의 암울한 인구 전망 소개한 일론 머스크실제로 더 심각할 수도'), ('http://modameng.com:8000/app_news_study/news_study/2160867', 'Issue : 2024-11-01 : 테이트 모던 터빈홀 접수한 이미래의 핏빛 작품'), ('http://modameng.com:8000/app_news_study/news_study/2168066', 'Issue : 2024-11-04 : 가자 중국인 PSG 팬에게 인종차별 당한 이강인'), ('http://modameng.com:8000/app_news_study/news_study/2168459', 'Issue : 2024-11-05 : 국정원 러시아 파병 북한군 전선 도착 가능성'), ('http://modameng.com:8000/app_test_timer/test-english/?trgt_order_no=3226', 'Part 5 : 3226 : 2024-11-07'), ('https://free.ybmclass.com/free/eng/eng_ybm_view.asp?idx=4805', '헛다리 짚었어'), ('http://modameng.com:8000/app_test_timer/test-english/?trgt_order_no=3219', 'Part 5 : 3219 : 2024-10-15')], 'source_url': '', 'source_title': '', 'source_status': 'C', 'source_type': 'ALL', 'sel_level': 'A', 'group_codes': ['ALL', 'NEWS', 'MOVIES', 'BOOK', 'TOPS', 'TOEIC(LC)', 'TOEIC(RC)', 'YBM(TALK)', 'YBM(TEST)', 'ETC'], 'source_gubun': None, 'test_page_date': None, 'selected_date': None, 'selected_chapter': None}]
+(0.000) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2024-11-16 06:48:35.933256' AND "django_session"."session_key" = 'nzi7k8frnm73idvre39flnncnohuj66c') LIMIT 21; args=('2024-11-16 06:48:35.933256', 'nzi7k8frnm73idvre39flnncnohuj66c'); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 2 LIMIT 21; args=(2,); alias=default
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Not Found: /app_word_work/main-wordcheck/app_test_timer/test-english
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Not Found: /app_word_work/main-wordcheck/app_test_timer/test-english
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    callback, callback_args, callback_kwargs = self.resolve_request(request)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\core\handlers\base.py", line 313, in resolve_request
+    resolver_match = resolver.resolve(request.path_info)
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\urls\resolvers.py", line 702, in resolve
+    raise Resolver404({"tried": tried, "path": new_path})
+django.urls.exceptions.Resolver404: {'tried': [[<URLResolver <module 'app_open_article.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_open_article\\urls.py'> (None:None) 'app_open_article/'>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordcheck/' [name='main-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'delete-content/' [name='delete-content']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'main-wordtable/' [name='main-word-table']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'confirm-wordcheck/' [name='confirm-word-check']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'call-process/' [name='call-process']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'goto-init/' [name='goto-init']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'word_detail/' [name='word_detail']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'save-wordinfo/' [name='save_wordinfo']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'complete-word/' [name='complete_word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'create-word/' [name='create-word']>], [<URLResolver <module 'app_word_work.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_word_work\\urls.py'> (None:None) 'app_word_work/'>, <URLPattern 'change-wordlevel/' [name='change-wordlevel']>], [<URLResolver <module 'app_news_study.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_news_study\\urls.py'> (None:None) 'app_news_study/'>], [<URLResolver <module 'app_test_timer.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_test_timer\\urls.py'> (None:None) 'app_test_timer/'>], [<URLResolver <module 'app_living_english.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_living_english\\urls.py'> (None:None) 'app_living_english/'>], [<URLResolver <module 'app_recognize_speech.urls' from 'C:\\pyDjangoDEV\\mdmproj1\\app_recognize_speech\\urls.py'> (None:None) 'app_recognize_speech/'>], [<URLPattern '' [name='check_login_status']>], [<URLResolver <URLPattern list> (admin:admin) 'admin/'>], [<URLPattern 'login/' [name='login']>], [<URLPattern 'logout/' [name='logout']>], [<URLPattern 'register/' [name='register']>], [<URLPattern 'balance/'>], [<URLPattern 'test-batch/' [name='test_batch']>], [<URLPattern 'news-batch/' [name='engl-batch']>], [<URLPattern 'engl-batch/' [name='engl-batch']>], [<URLPattern 'proj-common/submit_analysis_words/' [name='submit-article']>], [<URLPattern 'favicon.ico'>], [<URLPattern 'text-to-speech/' [name='text_to_speech']>], [<URLPattern '^media/(?P<path>.*)$'>]], 'path': 'app_word_work/main-wordcheck/app_test_timer/test-english'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 880, in _resolve_lookup
+    current = current[bit]
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 890, in _resolve_lookup
+    current = getattr(current, bit)
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\pyDjangoDEV\mdmproj1\.venv\lib\site-packages\django\template\base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Not Found: /app_word_work/main-wordcheck/app_test_timer/test-english
