@@ -23,7 +23,7 @@ def test_batch(request):
         'next_page_date' : "00000000",
     }
 
-    conn, cursor, current_username = app_con.create_connection(request)
+   # conn, cursor, current_username = app_con.create_connection(request)
 
     tmp_selectd_wdate = sql_statement.sql_dao(request, "sqls_test_info_if_first", "")
 
@@ -70,7 +70,8 @@ def test_batch(request):
         res_value = "test insert failed:"
 
     finally:
-        app_con.close_connection(conn, cursor)
+        print("fianlly")
+        # app_con.close_connection(conn, cursor)
 
     return HttpResponse(res_value)
 

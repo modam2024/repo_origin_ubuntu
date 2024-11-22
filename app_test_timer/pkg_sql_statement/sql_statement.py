@@ -262,13 +262,15 @@ def sql_dao(request, sql_name, p_param):
         ############################################################ '''
         if sql_name == "sqls_test_page_content_cnt":
             v_trgt_order_no  = p_param['trgt_order_no']
+            v_question_no    = p_param['question_no']
 
             select_query  = " SELECT  count(*) as cnt     "
             select_query += "   FROM  tb_part5_test_page  "
             select_query += "  WHERE  user_id = %s        "
             select_query += "    AND  trgt_order_no  = %s "
+            select_query += "    AND  question_no    = %s "
 
-            select_param = (current_username, v_trgt_order_no,)
+            select_param = (current_username, v_trgt_order_no, v_question_no)
 
             # 쿼리 실행
             cursor.execute(select_query, select_param)
